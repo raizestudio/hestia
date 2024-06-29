@@ -1,9 +1,7 @@
 <template>
-  <NuxtLayout>
-    <div>
-      Landing
-    </div>
-  </NuxtLayout>
+  <div>
+    
+  </div>
 </template>
 
 <script lang="ts" setup>
