@@ -1,7 +1,10 @@
 <template>
   <NuxtLayout>
     <div class="flex justify-center items-center flex-grow">
-      <div class="flex items-center flex-col gap-10">
+      <div v-if="isLoading" class="flex justify-center">
+        <span class="loading loading-ring loading-lg"></span>
+      </div>
+      <div v-else class="flex items-center flex-col gap-10">
         <div class="">
           <h1 class="text-4xl font-black select-none">Connexion</h1>
         </div>
@@ -54,6 +57,7 @@ const password = ref("");
 const isUsernameValid = ref(false);
 const isPasswordValid = ref(false);
 const pageTitle = ref("Connexion");
+const isLoading = ref(true);
 
 // Stores
 const userStore = useUserStore();
