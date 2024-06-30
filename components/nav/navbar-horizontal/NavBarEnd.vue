@@ -13,7 +13,7 @@
     <div v-if="userStore.isLogged" class="form-control">
       <input
         type="text"
-        placeholder="Search"
+        placeholder="Recherche"
         class="input input-sm input-bordered w-24 md:w-auto"
       />
     </div>
@@ -43,10 +43,10 @@ const userStore = useUserStore()
 const coreStore = useCoreStore()
 
 // Icons
-import LoginRoundedIcon from "../../icons/material-symbols/LoginRoundedIcon.vue";
-import MoonIcon from "~/components/icons/MoonIcon.vue";
-import SunIcon from "~/components/icons/SunIcon.vue";
-import BellIcon from "~/components/icons/BellIcon.vue";
+import LoginRoundedIcon from "../../assets/icons/material-symbols/LoginRoundedIcon.vue";
+import MoonIcon from "~/components/assets/icons/MoonIcon.vue";
+import SunIcon from "~/components/assets/icons/SunIcon.vue";
+import BellIcon from "~/components/assets/icons/BellIcon.vue";
 import ProfileComponent from "../ProfileComponent.vue";
 
 const linksAnonymousUser = [

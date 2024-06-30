@@ -1,5 +1,7 @@
 {
-  "name": "nuxt-app",
+  "name": "Hestia",
+  "version": "0.0.01x",
+  "author": "Joel P.",
   "private": true,
   "type": "module",
   "scripts": {

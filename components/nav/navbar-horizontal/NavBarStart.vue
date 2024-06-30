@@ -1,6 +1,6 @@
 <template>
   <div class="navbar-start" @click="$router.push('/')">
-    <a class="btn btn-sm btn-ghost text-xl">Hestia</a>
+    <h1 class="text-xl font-black select-none">Hestia</h1>
   </div>
 </template>
 

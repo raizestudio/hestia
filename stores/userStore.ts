@@ -5,12 +5,17 @@ export const useUserStore = defineStore({
   state: () => ({
     isLogged: false,
     user: {
-      name: 'Eduardo',
+      name: '',
       email: ''
     }
   }),
   actions: {
     async authenticate(username: string, password: string) {
+      const response = await $fetch('http://localhost:8000/api/authentication/authenticate/', {
+        method: 'POST',
+        body: JSON.stringify({ username, password })
+      })
+      console.log(response)
       this.isLogged = true
     }
   }

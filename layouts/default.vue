@@ -2,6 +2,7 @@
   <div class="flex flex-col h-screen">
     <NavBarTop />
     <slot />
+    <FooterDefaultLayoutFooter />
   </div>
 </template>
 

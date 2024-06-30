@@ -9,14 +9,33 @@
           <div class="flex flex-col gap-4">
             <label class="input input-bordered flex items-center gap-2">
               <UserIcon />
-              <input v-model="username" type="text" class="grow" placeholder="Username" />
+              <input
+                v-model="username"
+                type="text"
+                class="grow"
+                placeholder="Username"
+                autofocus
+                @change="validateUsername"
+              />
             </label>
             <label class="input input-bordered flex items-center gap-2">
               <KeyIcon />
-              <input v-model="password" type="text" class="grow" placeholder="Password" />
+              <input
+                v-model="password"
+                type="password"
+                class="grow"
+                placeholder="Mot de passe"
+                @change="validatePassword"
+              />
             </label>
           </div>
-          <button class="btn btn-primary" @click="login">Connexion</button>
+          <button
+            class="btn btn-primary"
+            :disabled="!isUsernameValid || !isPasswordValid ? true : false"
+            @click="login"
+          >
+            Connexion
+          </button>
         </div>
       </div>
     </div>
@@ -24,42 +43,44 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref, onMounted } from "vue";
+import pkg from "~/package.json";
 
-const router = useRouter()
+const router = useRouter();
 
 // State
-const username = ref('')
-const password = ref('')
+const username = ref("");
+const password = ref("");
+const isUsernameValid = ref(false);
+const isPasswordValid = ref(false);
+const pageTitle = ref("Connexion");
 
 // Stores
-const userStore = useUserStore()
-
+const userStore = useUserStore();
 
 // Icons
-import KeyIcon from "~/components/icons/KeyIcon.vue";
-import UserIcon from "~/components/icons/UserIcon.vue";
-
+import KeyIcon from "~/components/assets/icons/KeyIcon.vue";
+import UserIcon from "~/components/assets/icons/UserIcon.vue";
 
 const login = async () => {
-  await userStore.authenticate(username.value, password.value)
-  router.push('/')
-}
+  await userStore.authenticate(username.value, password.value);
+  router.push("/dashboard");
+};
 
-const pageTitle = ref('Connexion');
+const validateUsername = () => {
+  isUsernameValid.value = username.value.length > 0;
+};
 
-// useMeta(() => ({
-//   title: pageTitle.value,
-//   meta: [
-//     {
-//       hid: 'description',
-//       name: 'description',
-//       content: 'This is a dynamic page description for the Connexion page',
-//     },
-//   ],
-// }));
+const validatePassword = () => {
+  isPasswordValid.value = password.value.length > 0;
+};
 
-// watch(username, (newUsername) => {
-//   pageTitle.value = newUsername ? `Connexion - ${newUsername}` : 'Connexion';
-// });
+onMounted(() => {
+  document.title = `${pkg.name} - ${pageTitle.value}`;
+});
+
+definePageMeta({
+  title: "login",
+  name: "login",
+});
 </script>
