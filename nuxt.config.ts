@@ -13,7 +13,8 @@ export default defineNuxtConfig({
       exposeConfig: true,
       viewer: true,
     }
-  }
+  },
+  plugins: ['~/plugins/lodash.js']
   
   // build: {
   //   // Other build options...

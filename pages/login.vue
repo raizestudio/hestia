@@ -1,8 +1,9 @@
 <template>
   <NuxtLayout>
-    <div class="flex justify-center items-center flex-grow">
-      <div v-if="isLoading" class="flex justify-center">
+    <SectionFullScreen>
+      <div v-if="isLoading" class="flex flex-col justify-center items-center gap-4">
         <span class="loading loading-ring loading-lg"></span>
+        <span class="text-2xl font-semibold">{{loadingMessage}}</span>
       </div>
       <div v-else class="flex items-center flex-col gap-10">
         <div class="">
@@ -10,24 +11,26 @@
         </div>
         <div class="flex flex-col gap-8">
           <div class="flex flex-col gap-4">
-            <label class="input input-bordered flex items-center gap-2">
+            <label :class="`input input-bordered flex items-center gap-2 ${!isUsernameValid ? 'input-error' : 'input-success'}`">
               <UserIcon />
               <input
                 v-model="username"
                 type="text"
-                class="grow"
+                :class="`grow`"
                 placeholder="Username"
                 autofocus
+                @keyup="validateUsername"
                 @change="validateUsername"
               />
             </label>
-            <label class="input input-bordered flex items-center gap-2">
+            <label :class="`input input-bordered flex items-center gap-2 ${!isPasswordValid ? 'input-error' : 'input-success'}`">
               <KeyIcon />
               <input
                 v-model="password"
                 type="password"
                 class="grow"
                 placeholder="Mot de passe"
+                @keyup="validatePassword"
                 @change="validatePassword"
               />
             </label>
@@ -40,8 +43,11 @@
             Connexion
           </button>
         </div>
+        <div>
+          <span class="btn btn-sm btn-ghost">Je n'arrive pas a me connecter</span>
+        </div>
       </div>
-    </div>
+    </SectionFullScreen>
   </NuxtLayout>
 </template>
 
@@ -57,7 +63,8 @@ const password = ref("");
 const isUsernameValid = ref(false);
 const isPasswordValid = ref(false);
 const pageTitle = ref("Connexion");
-const isLoading = ref(true);
+const isLoading = ref(false);
+const loadingMessage = ref("Chargement...");
 
 // Stores
 const userStore = useUserStore();
@@ -67,8 +74,15 @@ import KeyIcon from "~/components/assets/icons/KeyIcon.vue";
 import UserIcon from "~/components/assets/icons/UserIcon.vue";
 
 const login = async () => {
-  await userStore.authenticate(username.value, password.value);
-  router.push("/dashboard");
+  isLoading.value = true;
+  try {
+    await userStore.authenticate(username.value, password.value);
+    router.push("/dashboard");
+  } catch (error) {
+    console.error(error);
+  } finally {
+    isLoading.value = false;
+  }
 };
 
 const validateUsername = () => {
@@ -81,10 +95,13 @@ const validatePassword = () => {
 
 onMounted(() => {
   document.title = `${pkg.name} - ${pageTitle.value}`;
+  validateUsername();
+  validatePassword();
 });
 
 definePageMeta({
   title: "login",
   name: "login",
+  layout: "anonymous",
 });
 </script>

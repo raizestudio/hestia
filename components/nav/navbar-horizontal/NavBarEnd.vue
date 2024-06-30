@@ -28,14 +28,20 @@
     </button>
 
     <label class="swap swap-rotate">
-      <input type="checkbox" class="" value="light" @click="coreStore.toggleTheme" />
+      <input type="checkbox" class="" value="dark" @click="coreStore.toggleTheme" />
       <SunIcon />
       <MoonIcon />
     </label>
+
+    <button>
+      <SupportAgentIcon class="w-6 h-6" />
+    </button>
   </div>
 </template>
 
 <script lang="ts" setup>
+import {computed} from "vue";
+
 const route = useRoute();
 
 //Stores
@@ -48,6 +54,7 @@ import MoonIcon from "~/components/assets/icons/MoonIcon.vue";
 import SunIcon from "~/components/assets/icons/SunIcon.vue";
 import BellIcon from "~/components/assets/icons/BellIcon.vue";
 import ProfileComponent from "../ProfileComponent.vue";
+import SupportAgentIcon from "~/components/assets/icons/SupportAgentIcon.vue";
 
 const linksAnonymousUser = [
   {
@@ -64,7 +71,6 @@ const links = [
     to: "/getting-started/installation",
   }];
 
-console.log()
 </script>
 
 

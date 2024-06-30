@@ -8,6 +8,7 @@ const config: Config = {
     './pages/**/*.{vue,js,ts}',
     './plugins/**/*.{js,ts}',
     './nuxt.config.{js,ts}',
+    '.error.vue'
   ],
   theme: {
     extend: {},

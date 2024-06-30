@@ -1,9 +1,14 @@
 import { defineStore } from 'pinia'
 
+import type { MenuInterface } from '~/interfaces/CoreInterface'
+
 export const useCoreStore = defineStore({
   id: 'coreStore',
   state: () => ({
-    theme: 'light'
+    isLoading: true,
+    loadingMessage: 'Chargement...',
+    theme: 'light',
+    menus: [] as MenuInterface[]
   }),
   actions: {
 
@@ -24,6 +29,16 @@ export const useCoreStore = defineStore({
       } else {
         this.theme = 'light'
       }
+    },
+
+    async fetchMenus() {
+      const token = localStorage.getItem('token')
+      const response: any = await $fetch('http://localhost:8000/api/menus/user-menu', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      this.menus = response
     }
   }
 })

@@ -1,15 +1,15 @@
 <template>
   <div class="dropdown dropdown-end">
-    <div class="flex items-center btn btn-sm btn-ghost">
-      <div tabindex="0" role="button" class="avatar">
+    <div tabindex="0" class="flex items-center flex-nowrap btn btn-sm btn-ghost" role="button">
+      <div class="avatar">
         <div class="w-7 rounded-full">
           <img
             alt="Tailwind CSS Navbar component"
-            src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+            :src="`http://localhost:8000${userStore.user.avatar}`"
           />
         </div>
       </div>
-      <span class="text-sm whitespace-nowrap">Jhon Doe</span>
+      <span class="text-sm whitespace-nowrap">{{userDisplayName}}</span>
     </div>
 
     <ul
@@ -17,9 +17,9 @@
       class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
     >
       <li>
-        <a class="justify-between">
+        <a class="justify-between" @click="router.push(`user/${userStore.user.username}`)">
           Profil
-          <span class="badge">New</span>
+          <span class="badge">Nouveau</span>
         </a>
       </li>
       <li><a>Préfèrences</a></li>
@@ -29,5 +29,11 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from "vue";
+
+const router = useRouter();
+const userStore = useUserStore()
+
+const userDisplayName = computed(() => userStore.user.first_name ? userStore.user.first_name : userStore.user.username);
 
 </script>
