@@ -23,7 +23,7 @@
         </a>
       </li>
       <li><a>Préfèrences</a></li>
-      <li><a>Déconnexion</a></li>
+      <li @click="logUserOut"><a>Déconnexion</a></li>
     </ul>
   </div>
 </template>
@@ -33,7 +33,14 @@ import { computed } from "vue";
 
 const router = useRouter();
 const userStore = useUserStore()
+const coreStore = useCoreStore()
 
 const userDisplayName = computed(() => userStore.user.first_name ? userStore.user.first_name : userStore.user.username);
 
+const logUserOut = () => {
+  coreStore.isLoading = true;
+  userStore.logout();
+  router.push("/login");
+  coreStore.isLoading = false;
+};
 </script>

@@ -1,11 +1,14 @@
 export default defineNuxtRouteMiddleware((to, from) => {
-  console.log(from);
-  // const token = localStorage.getItem("token");
+  console.log("Navigating from:", from);
   const userStore = useUserStore();
 
   if (!userStore.isLogged) {
+    console.log("User not logged in, redirecting to login.");
     return navigateTo(`/login?redirect=${to.path}`);
-  } else {
-    return navigateTo("/");
-  }
+  } 
+  // else {
+  //   const redirectPath = (to.query.redirect || "/dashboard").toString();
+  //   console.log("User logged in, redirecting to:", redirectPath);
+  //   return navigateTo(redirectPath);
+  // }
 });

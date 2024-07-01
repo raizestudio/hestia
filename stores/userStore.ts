@@ -38,6 +38,26 @@ export const useUserStore = defineStore({
         localStorage.removeItem('token')
         localStorage.removeItem('refresh')
       }
+    },
+    async logout() {
+      localStorage.removeItem('token')
+      localStorage.removeItem('refresh')
+      this.isLogged = false
+      // const token = localStorage.getItem('token')
+      // const refresh = localStorage.getItem('refresh')
+      // try {
+      //   await $fetch('http://localhost:8000/api/authentication/sessions/logout/', {
+      //     method: 'POST',
+      //     headers: {
+      //       Authorization: `Bearer ${token}`
+      //     }
+      //   });
+      //   localStorage.removeItem('token')
+      //   localStorage.removeItem('refresh')
+      //   this.isLogged = false
+      // } catch (error) {
+      //   console.log(error)
+      // }
     }
   }
 })

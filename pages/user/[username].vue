@@ -68,4 +68,11 @@ const dateToLocaleString = (date: string) => {
   const options = { day: 'numeric', month: 'numeric', year: 'numeric' };
   return new Date(date).toLocaleDateString('fr-FR');
 };
+
+definePageMeta({
+  title: 'Utilisateur',
+  description: 'Profil utilisateur',
+  middleware: 'auth',
+
+})
 </script>

@@ -56,6 +56,7 @@ import { ref, onMounted } from "vue";
 import pkg from "~/package.json";
 
 const router = useRouter();
+const route = useRoute();
 
 // State
 const username = ref("");
@@ -77,7 +78,7 @@ const login = async () => {
   isLoading.value = true;
   try {
     await userStore.authenticate(username.value, password.value);
-    router.push("/dashboard");
+    router.push(route.query.redirect as string || "/dashboard");
   } catch (error) {
     console.error(error);
   } finally {

@@ -8,6 +8,7 @@
 <script setup lang="ts">
 import { onMounted, watch, ref } from 'vue'
 const router = useRouter()
+const route = useRoute()
 
 const coreStore = useCoreStore()
 const userStore = useUserStore()
@@ -19,7 +20,7 @@ onMounted(async () => {
   if (token) {
     await userStore.retrieveSessionFromToken();
     console.log(router)
-    router.push('/dashboard')
+    router.push(route.query.redirect as string || "/dashboard")
   }
   coreStore.initializeTheme()
   coreStore.isLoading = false
