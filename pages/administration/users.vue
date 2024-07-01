@@ -164,7 +164,18 @@
 </template>
 
 <script setup lang="ts">
+import { ref, onMounted } from 'vue'
 
+import { useUsers } from '~/composables/api/useUsers';
+
+import type { UserInterface } from '../../interfaces/UserInterface';
+
+const users = ref([] as UserInterface[])
+
+onMounted(async () => {
+  const token = localStorage.getItem('token')
+  const response: any = await useUsers().fetchUsers(token)
+})
 definePageMeta({
   title: 'users',
   name: 'users',

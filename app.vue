@@ -20,7 +20,6 @@ onMounted(async () => {
   const token = localStorage.getItem('token')
   if (token) {
     await userStore.retrieveSessionFromToken();
-    console.log(router)
     router.push(route.query.redirect as string || "/dashboard")
   }
   coreStore.initializeTheme()
