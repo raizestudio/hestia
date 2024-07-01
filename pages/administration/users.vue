@@ -2,7 +2,7 @@
   <NuxtLayout>
     <CardSection>
       <div class="overflow-x-auto">
-        <table class="table">
+        <table class="table table-zebra">
           <!-- head -->
           <thead>
             <tr>
