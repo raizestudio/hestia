@@ -14,6 +14,7 @@ const coreStore = useCoreStore()
 const userStore = useUserStore()
 const forceUpdateFlag = ref(false)
 
+console.log(process.env.NODE_ENV)
 onMounted(async () => {
   coreStore.isLoading = true
   const token = localStorage.getItem('token')
@@ -30,4 +31,5 @@ watch(() => coreStore.theme, (newTheme) => {
   document.documentElement.setAttribute('data-theme', newTheme)
   forceUpdateFlag.value = !forceUpdateFlag.value
 })
+
 </script>

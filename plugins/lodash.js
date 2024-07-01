@@ -1,5 +1,14 @@
-import Vue from 'vue'
-import _ from 'lodash'
+import _ from 'lodash';
 
-// Making lodash available globally in Vue components
-Vue.prototype.$_ = _
+export default defineNuxtPlugin((nuxtApp) => {
+  nuxtApp.provide('lodash', _);
+});
+
+/*
+example usage:
+  import { useNuxtApp } from '#app';
+  const { $lodash } = useNuxtApp();
+  const text = ref('hello');
+  const capitalizedText = ref($lodash.capitalize(text.value));
+  console.log(`DEBUG - capitalizedText: ${capitalizedText.value}`)
+*/
