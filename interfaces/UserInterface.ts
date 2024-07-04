@@ -6,6 +6,7 @@ export interface UserInterface {
     last_name: string;
     avatar: string;
     password: string;
+    is_active: boolean;
     date_joined: string;
     updated_at: string;
     last_login: string;

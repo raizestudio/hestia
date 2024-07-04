@@ -11,9 +11,10 @@
 <script lang="ts" setup>
 import { onMounted } from 'vue';
 import pkg from '~/package.json';
+import _ from 'lodash';
 
 onMounted(() => {
-  document.title = `${pkg.name}`;
+  document.title = `${_.capitalize(pkg.name)}`;
 })
 
 definePageMeta({

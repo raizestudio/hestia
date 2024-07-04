@@ -54,6 +54,7 @@
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
 import pkg from "~/package.json";
+import _ from "lodash";
 
 const router = useRouter();
 const route = useRoute();
@@ -95,7 +96,7 @@ const validatePassword = () => {
 };
 
 onMounted(() => {
-  document.title = `${pkg.name} - ${pageTitle.value}`;
+  document.title = `${_.capitalize(pkg.name)} - ${pageTitle.value}`;
   validateUsername();
   validatePassword();
 });
