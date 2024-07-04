@@ -11,15 +11,18 @@
                   <input type="checkbox" class="checkbox" />
                 </label>
               </th>
-              <th>Name</th>
-              <th>Job</th>
-              <th>Favorite Color</th>
+              <th>Utilisateur</th>
+              <th>Prénom</th>
+              <th>Nom</th>
+              <th>Role</th>
+              <th>Email</th>
+              <th>Est actif</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
             <!-- row 1 -->
-            <tr>
+            <tr v-for="user in users">
               <th>
                 <label>
                   <input type="checkbox" class="checkbox" />
@@ -30,118 +33,25 @@
                   <div class="avatar">
                     <div class="mask mask-squircle h-12 w-12">
                       <img
-                        src="https://img.daisyui.com/tailwind-css-component-profile-2@56w.png"
-                        alt="Avatar Tailwind CSS Component" />
+                        :src="user.avatar"
+                        :alt="`${user.username} avatar`" />
                     </div>
                   </div>
                   <div>
-                    <div class="font-bold">Hart Hagerty</div>
-                    <div class="text-sm opacity-50">United States</div>
+                    <div class="font-bold">{{user.username}}</div>
+                    <div class="text-sm opacity-50">France</div>
                   </div>
                 </div>
               </td>
+              <td>{{user.first_name}}</td>
+              <td>{{user.last_name}}</td>
               <td>
-                Zemlak, Daniel and Leannon
+                Snexi
                 <br />
-                <span class="badge badge-ghost badge-sm">Desktop Support Technician</span>
+                <span class="badge badge-ghost badge-sm">Admin</span>
               </td>
-              <td>Purple</td>
-              <th>
-                <button class="btn btn-ghost btn-xs">details</button>
-              </th>
-            </tr>
-            <!-- row 2 -->
-            <tr>
-              <th>
-                <label>
-                  <input type="checkbox" class="checkbox" />
-                </label>
-              </th>
-              <td>
-                <div class="flex items-center gap-3">
-                  <div class="avatar">
-                    <div class="mask mask-squircle h-12 w-12">
-                      <img
-                        src="https://img.daisyui.com/tailwind-css-component-profile-3@56w.png"
-                        alt="Avatar Tailwind CSS Component" />
-                    </div>
-                  </div>
-                  <div>
-                    <div class="font-bold">Brice Swyre</div>
-                    <div class="text-sm opacity-50">China</div>
-                  </div>
-                </div>
-              </td>
-              <td>
-                Carroll Group
-                <br />
-                <span class="badge badge-ghost badge-sm">Tax Accountant</span>
-              </td>
-              <td>Red</td>
-              <th>
-                <button class="btn btn-ghost btn-xs">details</button>
-              </th>
-            </tr>
-            <!-- row 3 -->
-            <tr>
-              <th>
-                <label>
-                  <input type="checkbox" class="checkbox" />
-                </label>
-              </th>
-              <td>
-                <div class="flex items-center gap-3">
-                  <div class="avatar">
-                    <div class="mask mask-squircle h-12 w-12">
-                      <img
-                        src="https://img.daisyui.com/tailwind-css-component-profile-4@56w.png"
-                        alt="Avatar Tailwind CSS Component" />
-                    </div>
-                  </div>
-                  <div>
-                    <div class="font-bold">Marjy Ferencz</div>
-                    <div class="text-sm opacity-50">Russia</div>
-                  </div>
-                </div>
-              </td>
-              <td>
-                Rowe-Schoen
-                <br />
-                <span class="badge badge-ghost badge-sm">Office Assistant I</span>
-              </td>
-              <td>Crimson</td>
-              <th>
-                <button class="btn btn-ghost btn-xs">details</button>
-              </th>
-            </tr>
-            <!-- row 4 -->
-            <tr>
-              <th>
-                <label>
-                  <input type="checkbox" class="checkbox" />
-                </label>
-              </th>
-              <td>
-                <div class="flex items-center gap-3">
-                  <div class="avatar">
-                    <div class="mask mask-squircle h-12 w-12">
-                      <img
-                        src="https://img.daisyui.com/tailwind-css-component-profile-5@56w.png"
-                        alt="Avatar Tailwind CSS Component" />
-                    </div>
-                  </div>
-                  <div>
-                    <div class="font-bold">Yancy Tear</div>
-                    <div class="text-sm opacity-50">Brazil</div>
-                  </div>
-                </div>
-              </td>
-              <td>
-                Wyman-Ledner
-                <br />
-                <span class="badge badge-ghost badge-sm">Community Outreach Specialist</span>
-              </td>
-              <td>Indigo</td>
+              <td>{{user.email}}</td>
+              <td>{{user.is_active}}</td>
               <th>
                 <button class="btn btn-ghost btn-xs">details</button>
               </th>
@@ -149,13 +59,13 @@
           </tbody>
           <!-- foot -->
           <tfoot>
-            <tr>
+            <!-- <tr>
               <th></th>
               <th>Name</th>
               <th>Job</th>
               <th>Favorite Color</th>
               <th></th>
-            </tr>
+            </tr> -->
           </tfoot>
         </table>
       </div>
@@ -164,9 +74,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 
-import { useUsers } from '~/composables/api/useUsers';
+import { fetchUsers } from '~/composables/api/useUsers';
 
 import type { UserInterface } from '../../interfaces/UserInterface';
 
@@ -174,8 +84,14 @@ const users = ref([] as UserInterface[])
 
 onMounted(async () => {
   const token = localStorage.getItem('token')
-  const response: any = await useUsers().fetchUsers(token)
+  const response: any = await fetchUsers(token)
+  users.value = response
 })
+
+const usersHeaders = computed(() => {
+  return Object.keys(users.value[0])
+})
+
 definePageMeta({
   title: 'users',
   name: 'users',
