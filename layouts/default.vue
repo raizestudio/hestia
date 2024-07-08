@@ -1,7 +1,7 @@
 <template>
   <DefaultLayoutLoading v-if="coreStore.isLoading"/>
   <DefaultDrawer v-else>
-    <div class="flex flex-col h-screen">
+    <div class="flex flex-col h-screen max-h-screen">
       <NavBarTop />
       <slot />
       <FooterDefaultLayoutFooter />

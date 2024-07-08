@@ -1,5 +1,28 @@
 <template>
   <div>
+    <div v-if="coreStore.showCookieBanner" class="toast toast-top toast-center mt-10">
+      <div role="alert" class="alert px-4 py-2">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          class="stroke-info h-4 w-4 shrink-0">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        <span class="text-sm">Ce site utilise des cookies. En continuant la navigation on considère que vous donnez votre accord.</span>
+        <div>
+          <!-- <button class="btn btn-sm">Deny</button> -->
+          <button class="btn btn-xs btn-primary">Accept</button>
+        </div>
+      </div>
+    </div>
+    <ToastStack v-if="coreStore.hasNotification">
+      <ToastAcceptDeny />
+    </ToastStack>
     <!-- <NuxtRouteAnnouncer /> -->
     <NuxtPage />
   </div>
@@ -13,6 +36,9 @@ const route = useRoute()
 const coreStore = useCoreStore()
 const userStore = useUserStore()
 const forceUpdateFlag = ref(false)
+
+import ToastStack from './components/toast/ToastStack.vue'
+import ToastAcceptDeny from './components/toast/ToastAcceptDeny.vue'
 
 console.log(process.env.NODE_ENV)
 onMounted(async () => {

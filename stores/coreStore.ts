@@ -7,6 +7,9 @@ export const useCoreStore = defineStore({
   state: () => ({
     isLoading: true,
     loadingMessage: 'Chargement...',
+    hasNotification: false,
+    notifications: [] as any[],
+    showCookieBanner: false,
     theme: 'light',
     menus: [] as MenuInterface[]
   }),

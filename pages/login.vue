@@ -1,39 +1,33 @@
 <template>
   <NuxtLayout>
     <SectionFullScreen>
-      <div v-if="isLoading" class="flex flex-col justify-center items-center gap-4">
-        <span class="loading loading-ring loading-lg"></span>
-        <span class="text-2xl font-semibold">{{loadingMessage}}</span>
-      </div>
+      <LoginLoading v-if="isLoading" :message="loadingMessage" />
       <div v-else class="flex items-center flex-col gap-10">
         <div class="">
           <h1 class="text-4xl font-black select-none">Connexion</h1>
         </div>
         <div class="flex flex-col gap-8">
           <div class="flex flex-col gap-4">
-            <label :class="`input input-bordered flex items-center gap-2 ${!isUsernameValid ? 'input-error' : 'input-success'}`">
-              <UserIcon />
-              <input
-                v-model="username"
-                type="text"
-                :class="`grow`"
-                placeholder="Username"
-                autofocus
-                @keyup="validateUsername"
-                @change="validateUsername"
-              />
-            </label>
-            <label :class="`input input-bordered flex items-center gap-2 ${!isPasswordValid ? 'input-error' : 'input-success'}`">
-              <KeyIcon />
-              <input
-                v-model="password"
-                type="password"
-                class="grow"
-                placeholder="Mot de passe"
-                @keyup="validatePassword"
-                @change="validatePassword"
-              />
-            </label>
+            <DefaultLoginInput
+              v-model="username"
+              type="text"
+              :class="`grow`"
+              placeholder="Utilisateur"
+              :isInputValid="isUsernameValid"
+              :icon="UserIcon"
+              :onKeyUp="validateUsername"
+              :onChange="validateUsername"
+            />
+            <DefaultLoginInput
+              v-model="password"
+              type="password"
+              :class="`grow`"
+              placeholder="Mot de passe"
+              :isInputValid="isUsernameValid"
+              :icon="KeyIcon"
+              :onKeyUp="validatePassword"
+              :onChange="validatePassword"
+            />
           </div>
           <button
             class="btn btn-primary"
@@ -74,6 +68,11 @@ const userStore = useUserStore();
 // Icons
 import KeyIcon from "~/components/assets/icons/KeyIcon.vue";
 import UserIcon from "~/components/assets/icons/UserIcon.vue";
+
+// Components
+import SectionFullScreen from "~/components/section/SectionFullScreen.vue";
+import LoginLoading from "~/components/loading/LoginLoading.vue";
+import DefaultLoginInput from "~/components/input/DefaultLoginInput.vue";
 
 const login = async () => {
   isLoading.value = true;
