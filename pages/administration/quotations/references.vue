@@ -10,16 +10,19 @@
               <thead>
                 <tr>
                   <th></th>
-                  <th>Nom</th>
+                  <th>Libellé</th>
                   <th>Description</th>
-                  <th></th>
+                  <th>Service</th>
+                  <th>Lieu</th>
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="service, index in services">
+                <tr v-for="quotationReference, index in quotationReferences">
                   <th>{{index + 1}}</th>
-                  <td>{{service.name}}</td>
-                  <td>{{service.description}}</td>
+                  <td>{{quotationReference.label}}</td>
+                  <td>{{quotationReference.description}}</td>
+                  <td>{{quotationReference.service}}</td>
+                  <td>{{quotationReference.place}}</td>
                 </tr>
               </tbody>
             </table>
@@ -35,14 +38,14 @@ import { ref, onMounted } from 'vue';
 import _ from 'lodash';
 import pkg from "~/package.json";
 
-import type { ServiceInterface } from '~/interfaces/ServiceInterface';
-import { fetchServices } from '~/composables/api/useServices'
+import { fetchQuotationReferences } from '~/composables/api/useQuotations';
+import type { QuotationReferenceInterface } from '~/interfaces/QuotationInterface';
 
-const services = ref([] as ServiceInterface[]);
+const quotationReferences = ref([] as QuotationReferenceInterface[]);
 onMounted(async () => {
   document.title = `Administration services - ${_.capitalize(pkg.name)}`;
   const token = localStorage.getItem('token');
-  services.value = await fetchServices(token);
+  quotationReferences.value = await fetchQuotationReferences(token);
 });
 
 definePageMeta({

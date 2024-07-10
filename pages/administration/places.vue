@@ -3,7 +3,7 @@
     <SectionFullScreen>
       <CardSection>
         <div class="flex flex-col gap-4">
-          <h1 class="text-3xl font-black">Services</h1>
+          <h1 class="text-3xl font-black">Lieux</h1>
           <div class="overflow-x-auto">
             <table class="table table-zebra">
               <!-- head -->
@@ -36,13 +36,13 @@ import _ from 'lodash';
 import pkg from "~/package.json";
 
 import type { ServiceInterface } from '~/interfaces/ServiceInterface';
-import { fetchServices } from '~/composables/api/useServices'
+import { fetchPlaces } from '~/composables/api/usePlaces'
 
 const services = ref([] as ServiceInterface[]);
 onMounted(async () => {
-  document.title = `Administration services - ${_.capitalize(pkg.name)}`;
+  document.title = `Administration lieux - ${_.capitalize(pkg.name)}`;
   const token = localStorage.getItem('token');
-  services.value = await fetchServices(token);
+  services.value = await fetchPlaces(token);
 });
 
 definePageMeta({

@@ -29,12 +29,12 @@
                     <input type="checkbox" class="checkbox" />
                   </label>
                 </th>
-                <th>Utilisateur</th>
-                <th>Prénom</th>
-                <th>Nom</th>
-                <th>Groupe</th>
-                <th>Email</th>
-                <th>Est actif</th>
+                <TableTh label="Utilisateur" />
+                <TableTh label="Prénom" />
+                <TableTh label="Nom" />
+                <TableTh label="Groupe" />
+                <TableTh label="Email" />
+                <TableTh label="Est actif" />
                 <th></th>
               </tr>
             </thead>
@@ -64,12 +64,12 @@
                 <td>{{user.first_name}}</td>
                 <td>{{user.last_name}}</td>
                 <td>
-                  Snexi
+                  {{ _.capitalize(user.role.group.name) }}
                   <br />
-                  <span class="badge badge-ghost badge-sm">Admin</span>
+                  <span class="badge badge-ghost badge-sm">{{user.role.name}}</span>
                 </td>
                 <td>{{user.email}}</td>
-                <td>{{user.is_active}}</td>
+                <td>{{user.is_active ? 'Oui' : 'Non'}}</td>
                 <th>
                   <div class="flex gap-1">
                     <button class="btn btn-ghost btn-xs">Éditer</button>
@@ -107,8 +107,13 @@ import { fetchUsers } from '~/composables/api/useUsers';
 // Interfaces
 import type { UserInterface } from '../../interfaces/UserInterface';
 
+// Components
+import CardSection from '~/components/card/CardSection.vue';
+import TableTh from '~/components/table/TableTh.vue';
+
 // Icons
 import ChevronIcon from '~/components/assets/icons/ChevronIcon.vue';
+
 const users = ref([] as UserInterface[])
 
 onMounted(async () => {
@@ -125,5 +130,6 @@ const usersHeaders = computed(() => {
 definePageMeta({
   title: 'users',
   name: 'users',
+  middleware: 'auth'
 })
 </script>
