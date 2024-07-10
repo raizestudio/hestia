@@ -3,7 +3,7 @@
     <SectionFullScreen>
       <CardSection>
         <div class="flex flex-col gap-4">
-          <h1 class="text-3xl font-black">Services</h1>
+          <h1 class="text-3xl font-black">Références de devis</h1>
           <div class="overflow-x-auto">
             <table class="table table-zebra">
               <!-- head -->

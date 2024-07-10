@@ -3,7 +3,7 @@
     <SectionFullScreen>
       <CardSection>
         <div class="flex flex-col gap-4">
-          <h1 class="text-3xl font-black">Dashboard Admin</h1>
+          <h1 class="text-3xl font-black">Dashboard {{_.capitalize(userStore.user.role.code)}}</h1>
           <div class="flex flex-col gap-2">
             <div class="flex flex-col">
               <h3 class="text-lg font-semibold">Statistiques utilisateurs</h3>
@@ -24,6 +24,8 @@
 import { onMounted } from "vue";
 import pkg from "~/package.json";
 import _ from "lodash";
+
+const userStore = useUserStore();
 
 onMounted(() => {
   document.title = `${_.capitalize(pkg.name)} - Dashboard`;
