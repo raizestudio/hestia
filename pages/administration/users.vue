@@ -115,12 +115,18 @@ import TableTh from '~/components/table/TableTh.vue';
 import ChevronIcon from '~/components/assets/icons/ChevronIcon.vue';
 
 const users = ref([] as UserInterface[])
+const tableConfig = ref({
+  sort: {
+    field: 'username',
+    order: 'asc'
+  }
+})
 
 onMounted(async () => {
   document.title = `${_.capitalize(pkg.name)} - Users`
   const token = localStorage.getItem('token')
   const response: any = await fetchUsers(token)
-  users.value = response
+  users.value = response.results
 })
 
 const usersHeaders = computed(() => {
