@@ -1,29 +1,27 @@
-import path from 'path'
+import path from "path";
 
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: ['@pinia/nuxt', '@nuxtjs/tailwindcss'],
-  vite: {
-    resolve: {
-      alias: {
-        '@': path.resolve(__dirname, './'),
-      },
+  modules: ["@pinia/nuxt", "@nuxtjs/tailwindcss"],
+  nitro: {
+    experimental: {
+      websocket: true,
     },
-    tailwindcss: {
-      exposeConfig: true,
-      viewer: true,
-    }
   },
-  plugins: ['~/plugins/lodash.js'],
-  runtimeConfig: {
-    // The private keys which are only available server-side
-    apiSecret: '123',
-      // Keys within public are also exposed client-side
-    public: {
-      apiBase: '/api'
-    }
-  }
-  
+  // vite: {
+  //   resolve: {
+  //     alias: {
+  //       '@': path.resolve(__dirname, './'),
+  //     },
+  //   },
+  //   tailwindcss: {
+  //     exposeConfig: true,
+  //     viewer: true,
+  //   }
+  // },
+
+  plugins: ["~/plugins/lodash.js"],
+
   // build: {
   //   // Other build options...
   //   postcss: {
@@ -36,4 +34,14 @@ export default defineNuxtConfig({
   //     },
   //   },
   // },
-})
+  runtimeConfig: {
+    // The private keys which are only available server-side
+    apiSecret: "123",
+    // Keys within public are also exposed client-side
+    public: {
+      apiBase: "/api",
+    },
+  },
+
+  compatibilityDate: "2024-07-12",
+});

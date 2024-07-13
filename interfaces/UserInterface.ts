@@ -1,3 +1,18 @@
+export interface GroupInterface {
+    code: string;
+    name: string;
+    description: string;
+    color: string;
+    slug: string;
+}
+
+export interface RoleInterface {
+    code: string;
+    name: string;
+    description: string;
+    group: GroupInterface;
+}
+
 export interface UserInterface {
     id: number;
     username: string;
@@ -5,6 +20,7 @@ export interface UserInterface {
     first_name: string;
     last_name: string;
     avatar: string;
+    role: RoleInterface;
     password: string;
     is_active: boolean;
     date_joined: string;

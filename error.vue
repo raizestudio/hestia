@@ -1,5 +1,5 @@
 <template>
-  <NuxtLayout>
+  <NuxtLayout :name="layout">
     <div class="flex flex-col grow">
       <CardSection>
         <div class="flex flex-col justify-center items-center h-full gap-4">
@@ -15,8 +15,16 @@
 
 <script setup lang="ts">
 import type { NuxtError } from '#app'
+import { onMounted } from 'vue';
+
+const coreStore = useCoreStore()
+const layout = "nonav";
 
 const props = defineProps({
   error: Object as () => NuxtError
+})
+
+onMounted(() => {
+  coreStore.isLoading = false
 })
 </script>

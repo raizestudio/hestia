@@ -1,50 +1,45 @@
 <template>
   <NuxtLayout>
     <SectionFullScreen>
-      <div v-if="isLoading" class="flex flex-col justify-center items-center gap-4">
-        <span class="loading loading-ring loading-lg"></span>
-        <span class="text-2xl font-semibold">{{loadingMessage}}</span>
-      </div>
+      <LoginLoading v-if="isLoading" :message="loadingMessage" />
       <div v-else class="flex items-center flex-col gap-10">
         <div class="">
-          <h1 class="text-4xl font-black select-none">Connexion</h1>
+          <DefaultH1 :title="pageTitle" />
         </div>
         <div class="flex flex-col gap-8">
           <div class="flex flex-col gap-4">
-            <label :class="`input input-bordered flex items-center gap-2 ${!isUsernameValid ? 'input-error' : 'input-success'}`">
-              <UserIcon />
-              <input
-                v-model="username"
-                type="text"
-                :class="`grow`"
-                placeholder="Username"
-                autofocus
-                @keyup="validateUsername"
-                @change="validateUsername"
-              />
-            </label>
-            <label :class="`input input-bordered flex items-center gap-2 ${!isPasswordValid ? 'input-error' : 'input-success'}`">
-              <KeyIcon />
-              <input
-                v-model="password"
-                type="password"
-                class="grow"
-                placeholder="Mot de passe"
-                @keyup="validatePassword"
-                @change="validatePassword"
-              />
-            </label>
+            <DefaultLoginInput
+              v-model="username"
+              type="text"
+              :class="`grow`"
+              placeholder="Utilisateur"
+              :is-input-valid="isUsernameValid"
+              :icon="UserIcon"
+              :onKeyUp="validateUsername"
+              :onChange="validateUsername"
+            />
+            <DefaultLoginInput
+              v-model="password"
+              type="password"
+              :class="`grow`"
+              placeholder="Mot de passe"
+              :is-input-valid="isPasswordValid"
+              :icon="KeyIcon"
+              :onKeyUp="validatePassword"
+              :onChange="validatePassword"
+            />
           </div>
-          <button
-            class="btn btn-primary"
+          <DefaultButton
             :disabled="!isUsernameValid || !isPasswordValid ? true : false"
             @click="login"
           >
-            Connexion
-          </button>
+            <span>Connexion</span>
+          </DefaultButton>
         </div>
-        <div>
+        <div class="flex flex-col gap-2">
+          <span v-if="coreStore.settings.let_users_create_account" class="btn btn-sm btn-ghost">Je n'ai pas de compte</span>
           <span class="btn btn-sm btn-ghost">Je n'arrive pas a me connecter</span>
+          <span class="text-xs text-end">{{userStore.session.session}}</span>
         </div>
       </div>
     </SectionFullScreen>
@@ -70,10 +65,21 @@ const loadingMessage = ref("Chargement...");
 
 // Stores
 const userStore = useUserStore();
+const coreStore = useCoreStore();
+
+// Composables
+import { getSessionId } from "~/composables/api/useSession";
 
 // Icons
 import KeyIcon from "~/components/assets/icons/KeyIcon.vue";
 import UserIcon from "~/components/assets/icons/UserIcon.vue";
+
+// Components
+import SectionFullScreen from "~/components/section/SectionFullScreen.vue";
+import LoginLoading from "~/components/loading/LoginLoading.vue";
+import DefaultLoginInput from "~/components/input/DefaultLoginInput.vue";
+import DefaultButton from "~/components/button/DefaultButton.vue";
+import DefaultH1 from "~/components/title/DefaultH1.vue";
 
 const login = async () => {
   isLoading.value = true;
@@ -88,17 +94,25 @@ const login = async () => {
 };
 
 const validateUsername = () => {
-  isUsernameValid.value = username.value.length > 0;
+  const usernameRegex = /^(?![-_])[a-zA-Z0-9_-]{4,16}(?<![-_])$/;
+  if (usernameRegex.test(username.value)) {
+    isUsernameValid.value = true;
+  } else {
+    isUsernameValid.value = false;
+  }
 };
 
 const validatePassword = () => {
-  isPasswordValid.value = password.value.length > 0;
+  isPasswordValid.value = password.value.length > 3;
 };
 
-onMounted(() => {
+onMounted(async () => {
   document.title = `${_.capitalize(pkg.name)} - ${pageTitle.value}`;
   validateUsername();
   validatePassword();
+
+  const data = await getSessionId();
+  userStore.session.session = data.session;
 });
 
 definePageMeta({

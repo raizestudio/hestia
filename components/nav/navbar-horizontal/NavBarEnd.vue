@@ -28,7 +28,7 @@
     </button>
 
     <label class="swap swap-rotate">
-      <input type="checkbox" class="" value="dark" @click="coreStore.toggleTheme" />
+      <input type="checkbox" class="" value="light" @click="coreStore.toggleTheme" />
       <SunIcon />
       <MoonIcon />
     </label>
@@ -40,13 +40,13 @@
 </template>
 
 <script lang="ts" setup>
-import {computed} from "vue";
+import { computed } from "vue";
 
 const route = useRoute();
 
 //Stores
-const userStore = useUserStore()
-const coreStore = useCoreStore()
+const userStore = useUserStore();
+const coreStore = useCoreStore();
 
 // Icons
 import LoginRoundedIcon from "../../assets/icons/material-symbols/LoginRoundedIcon.vue";
@@ -69,9 +69,8 @@ const links = [
     label: "Bouton",
     icon: "i-heroicons-home",
     to: "/getting-started/installation",
-  }];
-
+  },
+];
 </script>
-
 
 <style></style>
