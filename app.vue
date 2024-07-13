@@ -30,6 +30,9 @@
 
 <script setup lang="ts">
 import { onMounted, watch, ref } from 'vue'
+import { useNuxtApp } from '#app';
+// const { $socket }: any = useNuxtApp();
+
 const router = useRouter()
 const route = useRoute()
 
@@ -40,15 +43,21 @@ const forceUpdateFlag = ref(false)
 import ToastStack from './components/toast/ToastStack.vue'
 import ToastAcceptDeny from './components/toast/ToastAcceptDeny.vue'
 
-console.log(process.env.NODE_ENV)
+const message = ref('')
+
+// console.log(process.env.NODE_ENV)
 onMounted(async () => {
   coreStore.isLoading = true
+  coreStore.initializeTheme()
+  await coreStore.fetchSettings();
   const token = localStorage.getItem('token')
   if (token) {
     await userStore.retrieveSessionFromToken();
     router.push(route.query.redirect as string || "/dashboard")
   }
-  coreStore.initializeTheme()
+  // $socket.on('message', (data: string) => {
+  //   message.value = data
+  // });
   coreStore.isLoading = false
 })
 
