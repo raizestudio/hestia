@@ -37,11 +37,21 @@
           </DefaultButton>
         </div>
         <div class="flex flex-col gap-2">
-          <span v-if="coreStore.settings.let_users_create_account" class="btn btn-sm btn-ghost">Je n'ai pas de compte</span>
-          <span class="btn btn-sm btn-ghost">Je n'arrive pas a me connecter</span>
-          <span class="text-xs text-end">{{userStore.session.session}}</span>
+          <button
+            v-if="coreStore.settings.let_users_create_account === '1'"
+            class="btn btn-sm btn-ghost"
+            onclick="responsive_modal.showModal()"
+            >Je n'ai pas de compte</button
+          >
+          <button class="btn btn-sm btn-ghost">
+            Je n'arrive pas a me connecter
+          </button>
+          <span class="text-xs text-end">{{ userStore.session.session }}</span>
         </div>
       </div>
+      <DefaultResponsiveModal>
+        <CreateFromEmail />
+      </DefaultResponsiveModal>
     </SectionFullScreen>
   </NuxtLayout>
 </template>
@@ -57,6 +67,7 @@ const route = useRoute();
 // State
 const username = ref("");
 const password = ref("");
+const creationEmail = ref("");
 const isUsernameValid = ref(false);
 const isPasswordValid = ref(false);
 const pageTitle = ref("Connexion");
@@ -80,12 +91,14 @@ import LoginLoading from "~/components/loading/LoginLoading.vue";
 import DefaultLoginInput from "~/components/input/DefaultLoginInput.vue";
 import DefaultButton from "~/components/button/DefaultButton.vue";
 import DefaultH1 from "~/components/title/DefaultH1.vue";
+import DefaultResponsiveModal from "~/components/modal/DefaultResponsiveModal.vue";
+import CreateFromEmail from "~/components/user/CreateFromEmail.vue";
 
 const login = async () => {
   isLoading.value = true;
   try {
     await userStore.authenticate(username.value, password.value);
-    router.push(route.query.redirect as string || "/dashboard");
+    router.push((route.query.redirect as string) || "/dashboard");
   } catch (error) {
     console.error(error);
   } finally {
@@ -105,6 +118,8 @@ const validateUsername = () => {
 const validatePassword = () => {
   isPasswordValid.value = password.value.length > 3;
 };
+
+
 
 onMounted(async () => {
   document.title = `${_.capitalize(pkg.name)} - ${pageTitle.value}`;

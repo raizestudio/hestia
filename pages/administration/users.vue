@@ -91,9 +91,11 @@
                 <td>{{ user.is_active ? "Oui" : "Non" }}</td>
                 <th>
                   <div class="flex gap-1">
-                    <button class="btn btn-ghost btn-xs">Éditer</button>
-                    <button class="btn btn-warning btn-xs">Désactiver</button>
-                    <button class="btn btn-error btn-xs">Supprimer</button>
+                    <button class="btn btn-accent btn-xs"><EyeIcon class="w-4 h-4 fill-base-100" /></button>
+                    <button class="btn btn-accent btn-xs"><EditIcon class="w-4 h-4 fill-base-100" /></button>
+                    <button class="btn btn-warning btn-xs"><CloseIcon class="w-4 h-4 fill-base-100" /></button>
+                    <button class="btn btn-error btn-xs"><DeleteIcon class="w-4 h-4 fill-base-100" /></button>
+                    <button class="btn btn-info btn-xs"><InfoIcon class="w-4 h-4 fill-base-100" /></button>
                   </div>
                 </th>
               </tr>
@@ -139,6 +141,12 @@ import TableTd from "~/components/table/TableTd.vue";
 
 // Icons
 import ChevronIcon from "~/components/assets/icons/ChevronIcon.vue";
+import DeleteIcon from "~/components/assets/icons/DeleteIcon.vue";
+import CloseIcon from "~/components/assets/icons/CloseIcon.vue";
+import EditIcon from "~/components/assets/icons/EditIcon.vue";
+import PreviewIcon from "~/components/assets/icons/PreviewIcon.vue";
+import EyeIcon from "~/components/assets/icons/EyeIcon.vue";
+import InfoIcon from "~/components/assets/icons/InfoIcon.vue";
 
 const users = ref([] as UserInterface[]);
 const selectedUsers = ref([] as number[]);
