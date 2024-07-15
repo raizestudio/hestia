@@ -22,7 +22,7 @@ const config: Config = {
         ...require("daisyui/src/theming/themes")["light"],
         primary: "#461694",
         secondary: "teal",
-        custom: "#ffc22d"
+        accent: "#6329c2"
       },
     }, "dark",
       "cupcake",
