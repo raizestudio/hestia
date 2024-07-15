@@ -67,9 +67,22 @@ export const useCoreStore = defineStore({
     },
 
     async fetchSettings() {
-      const token = localStorage.getItem('token')
-      const response: any = await $fetch('http://localhost:8000/api/settings');
-      this.settings = this.transformArrayToDict(response)
-    }
-  }
-})
+      const token = localStorage.getItem("token");
+      const response: any = await $fetch("http://localhost:8000/api/settings");
+      this.settings = this.transformArrayToDict(response);
+    },
+
+    async updateSetting(key: string, value: string | boolean) {
+      const token = localStorage.getItem("token");
+      const response: { key: "app_name" | "app_description"; value: string } =
+        await $fetch(`http://localhost:8000/api/settings/${key}/`, {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ key, value }),
+        });
+      this.settings[response.key] = response.value;
+    },
+  },
+});
