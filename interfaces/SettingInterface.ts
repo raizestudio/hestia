@@ -11,5 +11,4 @@ export interface SettingsInterface {
   let_users_reset_password: string;
 
   new_accounts_need_approval: string;
-
 }

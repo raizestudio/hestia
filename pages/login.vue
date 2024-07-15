@@ -52,7 +52,6 @@
       <DefaultResponsiveModal>
         <CreateFromEmail />
       </DefaultResponsiveModal>
-
     </SectionFullScreen>
   </NuxtLayout>
 </template>
@@ -69,7 +68,6 @@ const route = useRoute();
 const username = ref("");
 const password = ref("");
 const creationEmail = ref("");
-
 const isUsernameValid = ref(false);
 const isPasswordValid = ref(false);
 const pageTitle = ref("Connexion");
@@ -93,17 +91,14 @@ import LoginLoading from "~/components/loading/LoginLoading.vue";
 import DefaultLoginInput from "~/components/input/DefaultLoginInput.vue";
 import DefaultButton from "~/components/button/DefaultButton.vue";
 import DefaultH1 from "~/components/title/DefaultH1.vue";
-
 import DefaultResponsiveModal from "~/components/modal/DefaultResponsiveModal.vue";
 import CreateFromEmail from "~/components/user/CreateFromEmail.vue";
-
 
 const login = async () => {
   isLoading.value = true;
   try {
     await userStore.authenticate(username.value, password.value);
     router.push((route.query.redirect as string) || "/dashboard");
-    router.push(route.query.redirect as string || "/dashboard");
   } catch (error) {
     console.error(error);
   } finally {
@@ -123,6 +118,8 @@ const validateUsername = () => {
 const validatePassword = () => {
   isPasswordValid.value = password.value.length > 3;
 };
+
+
 
 onMounted(async () => {
   document.title = `${_.capitalize(pkg.name)} - ${pageTitle.value}`;

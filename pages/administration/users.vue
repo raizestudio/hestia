@@ -148,7 +148,6 @@ import PreviewIcon from "~/components/assets/icons/PreviewIcon.vue";
 import EyeIcon from "~/components/assets/icons/EyeIcon.vue";
 import InfoIcon from "~/components/assets/icons/InfoIcon.vue";
 
-
 const users = ref([] as UserInterface[]);
 const selectedUsers = ref([] as number[]);
 const userSearch = ref('');
