@@ -19,3 +19,23 @@ export const searchUsers = async (token: string | null, field: string,query: str
 
   return response.json()
 }
+
+export const createFromEMail = async (email: string) => {
+  const response: any = await fetch('http://localhost:8000/api/users/email/', {
+    method: 'post',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ email }),
+  });
+
+  return response.json()
+}
+
+export const confirmEmail = async (code: string) => {
+  const response: any = await fetch(`http://localhost:8000/api/users/email/activate/${code}`, {
+    method: 'get',
+  });
+
+  return response.json()
+}
