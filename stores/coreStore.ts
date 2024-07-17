@@ -17,7 +17,7 @@ export const useCoreStore = defineStore({
     } as ConnectionInterface,
     settings: {} as SettingsInterface,
     loadingMessage: "Chargement...",
-    hasNotification: false,
+    hasNotification: true,
     notifications: [] as any[],
     showCookieBanner: false,
     theme: "light",
@@ -67,8 +67,19 @@ export const useCoreStore = defineStore({
 
     async fetchSettings() {
       const token = localStorage.getItem("token");
-      const response: any = await $fetch("http://localhost:8000/api/settings");
-      this.settings = this.transformArrayToDict(response);
+      try {
+        const response: any = await $fetch(
+          "http://localhost:8000/api/settings"
+        );
+        this.settings = this.transformArrayToDict(response);
+      } catch (error) {
+        console.error(error);
+        throw createError({
+          status: 500,
+          statusText: "Une erreur s'est produit lors de l'initialization!",
+          fatal: true
+        });
+      }
     },
 
     async updateSetting(key: string, value: string | boolean) {

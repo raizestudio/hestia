@@ -29,7 +29,7 @@ export const createFromEMail = async (email: string) => {
     body: JSON.stringify({ email }),
   });
 
-  return response.json()
+  return response
 }
 
 export const confirmEmail = async (code: string) => {
@@ -37,5 +37,5 @@ export const confirmEmail = async (code: string) => {
     method: 'get',
   });
 
-  return response.json()
+  return response
 }
