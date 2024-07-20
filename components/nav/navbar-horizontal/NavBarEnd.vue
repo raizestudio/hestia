@@ -23,7 +23,7 @@
     <button v-if="userStore.isLogged" class="btn btn-xs btn-ghost btn-circle">
       <div class="indicator">
         <BellIcon />
-        <span class="badge badge-xs badge-primary indicator-item"></span>
+        <span v-if="coreStore.userNotifications.length > 0" class="badge badge-xs badge-primary indicator-item"></span>
       </div>
     </button>
 
@@ -58,7 +58,7 @@ import SupportAgentIcon from "~/components/assets/icons/SupportAgentIcon.vue";
 
 const linksAnonymousUser = [
   {
-    label: "Connexion",
+    label: "Mon espace",
     icon: LoginRoundedIcon,
     to: "/login",
   },

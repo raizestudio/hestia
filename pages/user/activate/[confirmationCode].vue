@@ -2,7 +2,10 @@
   <NuxtLayout>
     <SectionFullScreen>
       <CardSection>
-        <div class="flex justify-center">
+        <div v-if="isLoading">
+          <span>Chargement</span>
+        </div>
+        <div v-else class="flex justify-center">
           <DefaultH1 title="Félicitations, votre adresse email est validé" />
         </div>
         <div class="flex flex-col gap-2 w-1/3">
@@ -41,6 +44,14 @@
             <button class="btn btn-sm btn-primary">Créer mon compte</button>
           </div>
         </div>
+        <NuxtErrorBoundary>
+          <template #error="{ error, clearError }">
+            You can display the error locally here: {{ error }}
+            <button @click="clearError">
+              This will clear the error.
+            </button>
+          </template>
+        </NuxtErrorBoundary>
       </CardSection>
     </SectionFullScreen>
   </NuxtLayout>
@@ -61,10 +72,22 @@ const router = useRouter();
 const route = useRoute();
 
 const confirmationCode = route.params.confirmationCode.toString();
+const isLoading = ref(false);
+const hasError = ref(false);
 
-onMounted(() => {
+onMounted(async () => {
+  isLoading.value = true;
   console.log(confirmationCode);
-  const response: any = confirmEmail(confirmationCode);
+  try {
+    const response: any = confirmEmail(confirmationCode);
+
+    if (response.status !== 200) {
+      throw new Error("Erreur lors de la confirmation");
+    }
+  } catch (error) {
+    console.log(error);
+    hasError.value = true;
+  }
 });
 
 definePageMeta({

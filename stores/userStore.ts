@@ -1,48 +1,63 @@
-import { defineStore } from 'pinia'
-import type { UserInterface } from '~/interfaces/UserInterface'
-import type { SessionInterface } from '~/interfaces/SessionInterface'
+import { defineStore } from "pinia";
+import type { UserInterface } from "~/interfaces/UserInterface";
+import type { SessionInterface } from "~/interfaces/SessionInterface";
 
 export const useUserStore = defineStore({
-  id: 'userStore',
+  id: "userStore",
   state: () => ({
     isLogged: false,
     user: {} as UserInterface,
-    session: {} as SessionInterface
+    session: {} as SessionInterface,
   }),
   actions: {
     async authenticate(username: string, password: string) {
-      const response: any = await $fetch('http://localhost:8000/api/authentication/sessions/authenticate/', {
-        method: 'POST',
-        body: JSON.stringify({ username, password })
-      })
-      console.log(response)
-      localStorage.setItem('token', response.token)
-      localStorage.setItem('refresh', response.refresh)
-      this.user = response.user
-      this.session = response.session
-      this.isLogged = true
+      try {
+        const response: any = await $fetch(
+          "http://localhost:8000/api/authentication/sessions/authenticate/",
+          {
+            method: "POST",
+            body: JSON.stringify({ username, password }),
+          }
+        );
+        localStorage.setItem("token", response.token);
+        localStorage.setItem("refresh", response.refresh);
+        this.user = response.user;
+        this.session = response.session;
+        this.isLogged = true;
+
+        return response;
+      } catch (error: any) {
+        if (error.statusCode === 404) {
+          return { error: true, title: "Attention", message: "Nom d'utilisateur ou mot de passe invalide" };
+        } else {
+          return { error: true, title: "Erreur", message: "Une erreur s'est produit." };
+        }
+      }
     },
     async retrieveSessionFromToken() {
-      const token = localStorage.getItem('token')
+      const token = localStorage.getItem("token");
       try {
-        const response: any = await $fetch('http://localhost:8000/api/authentication/sessions/retrieve-from-token/', {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${token}`
+        const response: any = await $fetch(
+          "http://localhost:8000/api/authentication/sessions/retrieve-from-token/",
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           }
-        });
-        this.user = response.user
-        this.session = response.session
-        this.isLogged = true
+        );
+        this.user = response.user;
+        this.session = response.session;
+        this.isLogged = true;
       } catch (error) {
-        localStorage.removeItem('token')
-        localStorage.removeItem('refresh')
+        localStorage.removeItem("token");
+        localStorage.removeItem("refresh");
       }
     },
     async logout() {
-      localStorage.removeItem('token')
-      localStorage.removeItem('refresh')
-      this.isLogged = false
+      localStorage.removeItem("token");
+      localStorage.removeItem("refresh");
+      this.isLogged = false;
       // const token = localStorage.getItem('token')
       // const refresh = localStorage.getItem('refresh')
       // try {
@@ -58,6 +73,6 @@ export const useUserStore = defineStore({
       // } catch (error) {
       //   console.log(error)
       // }
-    }
-  }
-})
+    },
+  },
+});

@@ -2,7 +2,7 @@
   <div class="flex flex-col">
     <footer class="footer bg-base-200 text-base-content items-center p-2">
       <div class="grid-flow-col items-center">
-        <p class="text-xs">Hestia {{new Date().getFullYear()}} - {{pkg.author}}</p>
+        <p class="text-xs">{{ coreStore.settings.app_name || _.capitalize(pkg.name) }} {{new Date().getFullYear()}} - {{pkg.author}}</p>
       </div>
       <div class="grid-flow-col gap-4 md:place-self-center md:justify-self-end items-center">
         <span class="text-xs">Version {{pkg.version}}</span>
@@ -14,6 +14,7 @@
 
 <script lang="ts" setup>
 import { ref, computed } from 'vue'
+import _ from 'lodash'
 import pkg from '~/package.json'
 
 import type { ConnectionInterface } from '~/interfaces/ConnectionInterface';

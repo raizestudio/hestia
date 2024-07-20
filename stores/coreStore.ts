@@ -6,6 +6,7 @@ import type {
   SettingsInterface,
   SettingInterface,
 } from "~/interfaces/SettingInterface";
+import type { NotificationInterface } from "~/interfaces/NotificationInterface";
 
 export const useCoreStore = defineStore({
   id: "coreStore",
@@ -17,8 +18,11 @@ export const useCoreStore = defineStore({
     } as ConnectionInterface,
     settings: {} as SettingsInterface,
     loadingMessage: "Chargement...",
+    mainContainerWidth: 0,
+    mainContainerHeight: 0,
     hasNotification: false,
-    notifications: [] as any[],
+    notifications: [] as NotificationInterface[],
+    userNotifications: [] as NotificationInterface[],
     showCookieBanner: false,
     theme: "light",
     menus: [] as MenuInterface[],
@@ -67,8 +71,28 @@ export const useCoreStore = defineStore({
 
     async fetchSettings() {
       const token = localStorage.getItem("token");
-      const response: any = await $fetch("http://localhost:8000/api/settings");
-      this.settings = this.transformArrayToDict(response);
+      try {
+        const response: any = await $fetch(
+          "http://localhost:8000/api/settings"
+        );
+        this.settings = this.transformArrayToDict(response);
+      } catch (error) {
+        console.error(error);
+        this.hasNotification = true;
+        this.addNotification({
+          id: "0",
+          type: "error",
+          message: "Une erreur s'est produit lors de l'initialization!",
+          title: "Erreur",
+          isRead: false,
+          timestamp: new Date().toLocaleString(),
+        });
+        // throw createError({
+        //   status: 500,
+        //   statusText: "Une erreur s'est produit lors de l'initialization!",
+        //   fatal: true
+        // });
+      }
     },
 
     async updateSetting(key: string, value: string | boolean) {
@@ -83,5 +107,23 @@ export const useCoreStore = defineStore({
         });
       this.settings[response.key] = response.value;
     },
+
+    addNotification(notification: NotificationInterface) {
+      this.notifications.push(notification);
+      setTimeout(() => {
+        this.notifications = this.notifications.filter(
+          (n) => n.id !== notification.id
+        );
+      }, 5000);
+    },
+    toggleNotificationIsRead(id: string) {
+      console.log("toggleNotificationIsRead", id);
+      const notification = this.notifications.find(
+        (notification) => notification.id === id
+      );
+      if (notification) {
+        notification.isRead = !notification.isRead;
+      }
+    }
   },
 });
