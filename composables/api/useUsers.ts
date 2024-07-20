@@ -1,12 +1,46 @@
 export const fetchUsers = async (token: string | null) => {
-  const response: any = await fetch('http://localhost:8000/api/users/', {
-    method: 'get',
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  });
+  const coreStore = useCoreStore();
 
-  return response.json()
+  try {
+    const response: any = await fetch('http://localhost:8000/api/users/', {
+      method: 'get',
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    
+    if (response.status !== 200) {
+      coreStore.addNotification({
+        id: 'error',
+        title: 'Erreur',
+        message: 'Une erreur est survenue lors de la récupération des utilisateurs',
+        type: 'error',
+        isRead: false,
+        timestamp: new Date().toISOString(),
+      });
+    }
+    return response.json()
+  } catch (error) {
+    return error
+  }
+  
+}
+
+export const retrieveUser = async (token: string, username: string) => {
+  try {
+    const response: any = await $fetch(`http://localhost:8000/api/users/${username}`, {
+      method: 'get',
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+
+    return response
+  } catch (error) {
+    return error
+  
+  }
+
 }
 
 export const searchUsers = async (token: string | null, field: string,query: string) => {

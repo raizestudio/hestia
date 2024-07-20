@@ -40,17 +40,26 @@
           <button
             v-if="coreStore.settings.let_users_create_account === '1'"
             class="btn btn-sm btn-ghost"
-            onclick="responsive_modal.showModal()"
-            >Je n'ai pas de compte</button
+            onclick="create_from_email_modal.showModal()"
           >
-          <button class="btn btn-sm btn-ghost">
+            Je n'ai pas de compte
+          </button>
+          <button
+            class="btn btn-sm btn-ghost"
+            onclick="cannot_connect_modal.showModal()"
+          >
             Je n'arrive pas a me connecter
           </button>
-          <span class="text-xs text-end">{{ userStore.session.session }}</span>
+          <button class="text-xs text-end">
+            {{ userStore.session.session }}
+          </button>
         </div>
       </div>
-      <DefaultResponsiveModal>
+      <DefaultResponsiveModal id="create_from_email_modal" dialog-class="modal-bottom sm:modal-middle">
         <CreateFromEmail />
+      </DefaultResponsiveModal>
+      <DefaultResponsiveModal id="cannot_connect_modal" box-class="w-11/12 max-w-5xl">
+        <CannotConnect />
       </DefaultResponsiveModal>
     </SectionFullScreen>
   </NuxtLayout>
@@ -93,14 +102,31 @@ import DefaultButton from "~/components/button/DefaultButton.vue";
 import DefaultH1 from "~/components/title/DefaultH1.vue";
 import DefaultResponsiveModal from "~/components/modal/DefaultResponsiveModal.vue";
 import CreateFromEmail from "~/components/user/CreateFromEmail.vue";
+import CannotConnect from "~/components/user/CannotConnect.vue";
 
 const login = async () => {
   isLoading.value = true;
   try {
-    await userStore.authenticate(username.value, password.value);
+    const response: any = await userStore.authenticate(
+      username.value,
+      password.value
+    );
+    console.log("response before");
+    console.log(response);
+    console.log(response.error);
+    if (response.error) {
+      coreStore.addNotification({
+        id: coreStore.notifications.length.toString(),
+        type: "error",
+        title: response.title,
+        message: response.message,
+        isRead: false,
+        timestamp: new Date().toLocaleString(),
+      });
+    }
     router.push((route.query.redirect as string) || "/dashboard");
-  } catch (error) {
-    console.error(error);
+  } catch (error: any) {
+    // TODO: Handle error
   } finally {
     isLoading.value = false;
   }
@@ -118,8 +144,6 @@ const validateUsername = () => {
 const validatePassword = () => {
   isPasswordValid.value = password.value.length > 3;
 };
-
-
 
 onMounted(async () => {
   document.title = `${_.capitalize(pkg.name)} - ${pageTitle.value}`;

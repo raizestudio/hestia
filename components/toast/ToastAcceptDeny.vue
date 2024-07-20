@@ -7,18 +7,22 @@
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
-            class="stroke-error h-5 w-5 shrink-0">
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="size-6"
+          >
             <path
               stroke-linecap="round"
               stroke-linejoin="round"
-              stroke-width="2"
-              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"
+            />
           </svg>
-          <span class="text-md">Une erreur s'est produit.</span>
+
+          <span class="text-md">Notification qui demande notification.</span>
         </div>
         <div>
           <div>
-            <span class="text-sm">erreur</span>
+            <span class="text-sm">notification conf</span>
           </div>
         </div>
         <div class="flex justify-end items-center gap-1">
@@ -30,5 +34,4 @@
   </div>
 </template>
 
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>

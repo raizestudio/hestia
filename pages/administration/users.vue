@@ -1,7 +1,7 @@
 <template>
   <NuxtLayout>
     <CardSection>
-      <div class="flex flex-col h-full">
+      <div ref="containerRef" class="flex flex-col h-full">
         <div class="flex items-end">
           <div class="grow">
             <h2 class="text-2xl font-bold">Utilisateurs</h2>
@@ -10,8 +10,12 @@
             </p>
           </div>
           <div v-if="selectedUsers.length > 0" class="flex gap-2 mr-4">
-            <button class="btn btn-warning btn-xs">Désactiver {{selectedUsers.length}}</button>
-            <button class="btn btn-error btn-xs">Supprimer {{selectedUsers.length}}</button>
+            <button class="btn btn-warning btn-xs">
+              Désactiver {{ selectedUsers.length }}
+            </button>
+            <button class="btn btn-error btn-xs">
+              Supprimer {{ selectedUsers.length }}
+            </button>
           </div>
 
           <div class="flex gap-2">
@@ -34,32 +38,94 @@
             />
           </div>
         </div>
-        
-        <div class="overflow-x-auto grow">
+
+        <div
+          class="overflow-x-scroll grow"
+          :style="`width: ${coreStore.mainContainerWidth - 50}px; height: ${
+            coreStore.mainContainerHeight - 200
+          }px;`"
+        >
           <table class="table table-zebra">
             <!-- head -->
             <thead>
               <tr>
                 <th>
                   <label>
-                    <input type="checkbox" class="checkbox" @change="selectAll" :checked="selectedUsers.length === users.length" />
+                    <input
+                      type="checkbox"
+                      class="checkbox"
+                      @change="selectAll"
+                      :checked="selectedUsers.length === users.length"
+                    />
                   </label>
                 </th>
-                <TableTh label="Utilisateur" field="username" :sort="tableConfig.sort" :update-table-config="(field: string, sort: string) => updateTableConfigSort(field, sort)" />
-                <TableTh label="Prénom" field="first_name" :sort="tableConfig.sort" :update-table-config="(field: string, sort: string) => updateTableConfigSort(field, sort)" />
-                <TableTh label="Nom" field="last_name" :sort="tableConfig.sort" :update-table-config="(field: string, sort: string) => updateTableConfigSort(field, sort)" />
-                <TableTh label="Groupe" field="group" :sort="tableConfig.sort" :update-table-config="(field: string, sort: string) => updateTableConfigSort(field, sort)" />
-                <TableTh label="Email" field="email" :sort="tableConfig.sort" :update-table-config="(field: string, sort: string) => updateTableConfigSort(field, sort)" />
-                <TableTh label="Est actif" field="is_active" :sort="tableConfig.sort" :update-table-config="(field: string, sort: string) => updateTableConfigSort(field, sort)" />
+                <TableTh
+                  label="Utilisateur"
+                  field="username"
+                  :sort="tableConfig.sort"
+                  :update-table-config="(field: string, sort: string) => updateTableConfigSort(field, sort)"
+                />
+                <TableTh
+                  label="Prénom"
+                  field="first_name"
+                  :sort="tableConfig.sort"
+                  :update-table-config="(field: string, sort: string) => updateTableConfigSort(field, sort)"
+                />
+                <TableTh
+                  label="Nom"
+                  field="last_name"
+                  :sort="tableConfig.sort"
+                  :update-table-config="(field: string, sort: string) => updateTableConfigSort(field, sort)"
+                />
+                <TableTh
+                  label="Groupe"
+                  field="group"
+                  :sort="tableConfig.sort"
+                  :update-table-config="(field: string, sort: string) => updateTableConfigSort(field, sort)"
+                />
+                <TableTh
+                  label="Email"
+                  field="email"
+                  :sort="tableConfig.sort"
+                  :update-table-config="(field: string, sort: string) => updateTableConfigSort(field, sort)"
+                />
+                <TableTh
+                  label="Est actif"
+                  field="is_active"
+                  :sort="tableConfig.sort"
+                  :update-table-config="(field: string, sort: string) => updateTableConfigSort(field, sort)"
+                />
+                <TableTh
+                  label="Membre depuis"
+                  field="date_joined"
+                  :sort="tableConfig.sort"
+                  :update-table-config="(field: string, sort: string) => updateTableConfigSort(field, sort)"
+                />
+                <TableTh
+                  label="Dernière mise à jour"
+                  field="updated_at"
+                  :sort="tableConfig.sort"
+                  :update-table-config="(field: string, sort: string) => updateTableConfigSort(field, sort)"
+                />
                 <th></th>
               </tr>
             </thead>
             <tbody>
               <!-- row 1 -->
-              <tr v-for="user in users">
+              <tr
+                v-for="user in users"
+                class="hover:!bg-base-300 cursor-pointer"
+                
+              >
+              <!-- @click="() => router.push(`/user/${user.username}`)" -->
                 <th>
                   <label>
-                    <input type="checkbox" class="checkbox" @change="() => checkUser(user.id)" :checked="selectedUsers.includes(user.id)" />
+                    <input
+                      type="checkbox"
+                      class="checkbox"
+                      @change="() => checkUser(user.id)"
+                      :checked="selectedUsers.includes(user.id)"
+                    />
                   </label>
                 </th>
                 <td>
@@ -81,21 +147,39 @@
                 <TableTd :field="user.first_name" />
                 <TableTd :field="user.last_name" />
                 <TableTd :field="_.capitalize(user.role.group.name)">
-                  
                   <br />
-                  <span class="badge badge-ghost badge-sm">{{
+                  <span class="badge badge-ghost badge-sm text-nowrap">{{
                     user.role.name
                   }}</span>
                 </TableTd>
                 <td>{{ user.email }}</td>
                 <td>{{ user.is_active ? "Oui" : "Non" }}</td>
+                <TableTd
+                  :field="new Date(user.date_joined).toLocaleDateString()"
+                />
+                <TableTd
+                  :field="new Date(user.updated_at).toLocaleDateString()"
+                />
                 <th>
                   <div class="flex gap-1">
-                    <button class="btn btn-accent btn-xs"><EyeIcon class="w-4 h-4 fill-base-100" /></button>
-                    <button class="btn btn-accent btn-xs"><EditIcon class="w-4 h-4 fill-base-100" /></button>
-                    <button class="btn btn-warning btn-xs"><CloseIcon class="w-4 h-4 fill-base-100" /></button>
-                    <button class="btn btn-error btn-xs"><DeleteIcon class="w-4 h-4 fill-base-100" /></button>
-                    <button class="btn btn-info btn-xs"><InfoIcon class="w-4 h-4 fill-base-100" /></button>
+                    <button class="btn btn-accent btn-xs">
+                      <EyeIcon
+                        class="w-4 h-4 fill-base-100"
+                        @click="() => toggleModal(user.username)"
+                      />
+                    </button>
+                    <button class="btn btn-accent btn-xs">
+                      <EditIcon class="w-4 h-4 fill-base-100" @click="() => router.push(`/user/${user.username}`)" />
+                    </button>
+                    <button class="btn btn-warning btn-xs">
+                      <CloseIcon class="w-4 h-4 fill-base-100" />
+                    </button>
+                    <button class="btn btn-error btn-xs">
+                      <DeleteIcon class="w-4 h-4 fill-base-100" />
+                    </button>
+                    <button class="btn btn-info btn-xs">
+                      <InfoIcon class="w-4 h-4 fill-base-100" />
+                    </button>
                   </div>
                 </th>
               </tr>
@@ -111,7 +195,8 @@
           </div>
           <div class="flex gap-2">
             <span class="badge badge-ghost"
-              >Items par page: <span class="bg-base-100">{{users.length}}</span></span
+              >Items par page:
+              <span class="bg-base-100">{{ users.length }}</span></span
             >
             <span class="badge badge-ghost"
               >Page: <span class="bg-base-100">1</span></span
@@ -119,6 +204,13 @@
           </div>
         </div>
       </div>
+      <DefaultResponsiveModal
+        id="view_user"
+        box-class="max-w-none"
+        v-if="viewUser.length > 0"
+      >
+        <ViewUser :username="viewUser" />
+      </DefaultResponsiveModal>
     </CardSection>
   </NuxtLayout>
 </template>
@@ -127,6 +219,7 @@
 import { ref, onMounted, computed } from "vue";
 import pkg from "~/package.json";
 import _ from "lodash";
+
 
 // Composables
 import { fetchUsers, searchUsers } from "~/composables/api/useUsers";
@@ -138,6 +231,7 @@ import type { UserInterface } from "../../interfaces/UserInterface";
 import CardSection from "~/components/card/CardSection.vue";
 import TableTh from "~/components/table/TableTh.vue";
 import TableTd from "~/components/table/TableTd.vue";
+import ViewUser from "~/components/user/ViewUser.vue";
 
 // Icons
 import ChevronIcon from "~/components/assets/icons/ChevronIcon.vue";
@@ -147,14 +241,20 @@ import EditIcon from "~/components/assets/icons/EditIcon.vue";
 import PreviewIcon from "~/components/assets/icons/PreviewIcon.vue";
 import EyeIcon from "~/components/assets/icons/EyeIcon.vue";
 import InfoIcon from "~/components/assets/icons/InfoIcon.vue";
+import DefaultResponsiveModal from "~/components/modal/DefaultResponsiveModal.vue";
+
+const router = useRouter();
+
+const coreStore = useCoreStore();
 
 const users = ref([] as UserInterface[]);
+const viewUser = ref('');
 const selectedUsers = ref([] as number[]);
-const userSearch = ref('');
+const userSearch = ref("");
 const tableConfig = ref({
   sort: {
-    field: '',
-    order: '',
+    field: "",
+    order: "",
   },
 });
 
@@ -170,13 +270,13 @@ const usersHeaders = computed(() => {
 });
 
 const updateTableConfigSort = (field: string, order: string) => {
-  console.log(`DEBUG: ${field} - ${order}`)
+  console.log(`DEBUG: ${field} - ${order}`);
   tableConfig.value.sort.field = field;
   tableConfig.value.sort.order = order;
 
   // Sort users
   users.value = _.orderBy(users.value, [field], [order]);
-}
+};
 
 const checkUser = (id: number) => {
   if (selectedUsers.value.includes(id)) {
@@ -184,7 +284,7 @@ const checkUser = (id: number) => {
     return;
   }
   selectedUsers.value.push(id);
-}
+};
 
 const selectAll = () => {
   if (selectedUsers.value.length === users.value.length) {
@@ -192,7 +292,7 @@ const selectAll = () => {
     return;
   }
   selectedUsers.value = users.value.map((user) => user.id);
-}
+};
 
 const filterUsers = async () => {
   if (!userSearch.value) {
@@ -201,12 +301,19 @@ const filterUsers = async () => {
     users.value = response.results;
   }
 
-  const token = localStorage.getItem("token")
-  const response: any = await searchUsers(token, 'username', userSearch.value);
+  const token = localStorage.getItem("token");
+  const response: any = await searchUsers(token, "username", userSearch.value);
   users.value = response.results.filter((user: UserInterface) => {
     return user.username.toLowerCase().includes(userSearch.value.toLowerCase());
   });
-}
+};
+
+const toggleModal = (username: string) => {
+  viewUser.value = username;
+  const modal: any = document.getElementById('view_user')
+  modal?.showModal()
+};
+
 definePageMeta({
   title: "users",
   name: "users",
