@@ -3,4 +3,6 @@ export interface NotificationInterface {
   title: string
   message: string
   type: 'error' | 'message' | ''
+  isRead: boolean
+  timestamp: string
 }

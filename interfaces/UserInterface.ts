@@ -1,3 +1,5 @@
+import type { AddressInterface } from "./AddressInterface";
+
 export interface GroupInterface {
     code: string;
     name: string;
@@ -26,4 +28,5 @@ export interface UserInterface {
     date_joined: string;
     updated_at: string;
     last_login: string;
+    addresses: AddressInterface[];
 }

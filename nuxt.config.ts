@@ -2,7 +2,7 @@ import path from "path";
 
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: ["@pinia/nuxt", "@nuxtjs/tailwindcss"],
+  modules: ["@pinia/nuxt", "@nuxtjs/tailwindcss", "nuxt-echarts"],
   nitro: {
     experimental: {
       websocket: true,
@@ -34,6 +34,23 @@ export default defineNuxtConfig({
   //     },
   //   },
   // },
+  // echarts: {
+  //   renderer: ['svg', 'canvas'],
+  //   charts: ['BarChart', 'LineChart', 'PieChart'],
+  //   components: ['DatasetComponent', 'GridComponent', 'TooltipComponent'],
+  // },
+  echarts: {
+    // ssr: true,
+    renderer: ['canvas', 'svg'],
+    charts: ['BarChart', 'LineChart', 'PieChart'],
+    components: [
+      'DatasetComponent',
+      'GridComponent',
+      'TooltipComponent',
+      'ToolboxComponent',
+    ],
+    features: ['LabelLayout', 'UniversalTransition'],
+  },
   runtimeConfig: {
     // The private keys which are only available server-side
     apiSecret: "123",
