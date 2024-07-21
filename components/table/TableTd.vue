@@ -1,16 +1,11 @@
 <template>
-  <td>
-      {{ props.field }}
-      <slot />
-  </td>
+  {{ props.label }}
+  <slot />
 </template>
 
 <script setup lang="ts">
 
-const props = defineProps({
-  field: {
-    type: String,
-    required: true
-  },
-})
+const props = defineProps<{
+  label?: string;
+}>();
 </script>
