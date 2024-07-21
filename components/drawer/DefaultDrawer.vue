@@ -4,7 +4,7 @@
     <div class="drawer-content flex flex-col ">
       <slot />
     </div>
-    <div class="drawer-side">
+    <div class="drawer-side z-20">
       <label for="drawer-sidebar" aria-label="close sidebar" class="drawer-overlay"></label>
       <div class="flex flex-col min-h-full bg-base-200 ">
         <div class="flex items-center bg-base-100 h-12 p-2">

@@ -9,12 +9,12 @@
               Gestion des utilisateurs de l'application
             </p>
           </div>
-          <div v-if="selectedUsers.length > 0" class="flex gap-2 mr-4">
+          <div v-if="selectedUsers > 0" class="flex gap-2 mr-4">
             <button class="btn btn-warning btn-xs">
-              Désactiver {{ selectedUsers.length }}
+              Désactiver {{ selectedUsers }}
             </button>
             <button class="btn btn-error btn-xs">
-              Supprimer {{ selectedUsers.length }}
+              Supprimer {{ selectedUsers }}
             </button>
           </div>
 
@@ -38,176 +38,28 @@
             />
           </div>
         </div>
-
-        <div
-          class="overflow-x-scroll grow"
-          :style="`width: ${coreStore.mainContainerWidth - 50}px; height: ${
-            coreStore.mainContainerHeight - 200
-          }px;`"
-        >
-          <table class="table table-zebra">
-            <!-- head -->
-            <thead>
-              <tr>
-                <th>
-                  <label>
-                    <input
-                      type="checkbox"
-                      class="checkbox"
-                      @change="selectAll"
-                      :checked="selectedUsers.length === users.length"
-                    />
-                  </label>
-                </th>
-                <TableTh
-                  label="Utilisateur"
-                  field="username"
-                  :sort="tableConfig.sort"
-                  :update-table-config="(field: string, sort: string) => updateTableConfigSort(field, sort)"
-                />
-                <TableTh
-                  label="Prénom"
-                  field="first_name"
-                  :sort="tableConfig.sort"
-                  :update-table-config="(field: string, sort: string) => updateTableConfigSort(field, sort)"
-                />
-                <TableTh
-                  label="Nom"
-                  field="last_name"
-                  :sort="tableConfig.sort"
-                  :update-table-config="(field: string, sort: string) => updateTableConfigSort(field, sort)"
-                />
-                <TableTh
-                  label="Groupe"
-                  field="group"
-                  :sort="tableConfig.sort"
-                  :update-table-config="(field: string, sort: string) => updateTableConfigSort(field, sort)"
-                />
-                <TableTh
-                  label="Email"
-                  field="email"
-                  :sort="tableConfig.sort"
-                  :update-table-config="(field: string, sort: string) => updateTableConfigSort(field, sort)"
-                />
-                <TableTh
-                  label="Est actif"
-                  field="is_active"
-                  :sort="tableConfig.sort"
-                  :update-table-config="(field: string, sort: string) => updateTableConfigSort(field, sort)"
-                />
-                <TableTh
-                  label="Membre depuis"
-                  field="date_joined"
-                  :sort="tableConfig.sort"
-                  :update-table-config="(field: string, sort: string) => updateTableConfigSort(field, sort)"
-                />
-                <TableTh
-                  label="Dernière mise à jour"
-                  field="updated_at"
-                  :sort="tableConfig.sort"
-                  :update-table-config="(field: string, sort: string) => updateTableConfigSort(field, sort)"
-                />
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              <!-- row 1 -->
-              <tr
-                v-for="user in users"
-                class="hover:!bg-base-300 cursor-pointer"
-                
-              >
-              <!-- @click="() => router.push(`/user/${user.username}`)" -->
-                <th>
-                  <label>
-                    <input
-                      type="checkbox"
-                      class="checkbox"
-                      @change="() => checkUser(user.id)"
-                      :checked="selectedUsers.includes(user.id)"
-                    />
-                  </label>
-                </th>
-                <td>
-                  <div class="flex items-center gap-3">
-                    <div class="avatar">
-                      <div class="mask mask-squircle h-12 w-12">
-                        <img
-                          :src="user.avatar"
-                          :alt="`${user.username} avatar`"
-                        />
-                      </div>
-                    </div>
-                    <div>
-                      <div class="font-bold">{{ user.username }}</div>
-                      <div class="text-sm opacity-50">France</div>
-                    </div>
-                  </div>
-                </td>
-                <TableTd :field="user.first_name" />
-                <TableTd :field="user.last_name" />
-                <TableTd :field="_.capitalize(user.role.group.name)">
-                  <br />
-                  <span class="badge badge-ghost badge-sm text-nowrap">{{
-                    user.role.name
-                  }}</span>
-                </TableTd>
-                <td>{{ user.email }}</td>
-                <td>{{ user.is_active ? "Oui" : "Non" }}</td>
-                <TableTd
-                  :field="new Date(user.date_joined).toLocaleDateString()"
-                />
-                <TableTd
-                  :field="new Date(user.updated_at).toLocaleDateString()"
-                />
-                <th>
-                  <div class="flex gap-1">
-                    <button class="btn btn-accent btn-xs">
-                      <EyeIcon
-                        class="w-4 h-4 fill-base-100"
-                        @click="() => toggleModal(user.username)"
-                      />
-                    </button>
-                    <button class="btn btn-accent btn-xs">
-                      <EditIcon class="w-4 h-4 fill-base-100" @click="() => router.push(`/user/${user.username}`)" />
-                    </button>
-                    <button class="btn btn-warning btn-xs">
-                      <CloseIcon class="w-4 h-4 fill-base-100" />
-                    </button>
-                    <button class="btn btn-error btn-xs">
-                      <DeleteIcon class="w-4 h-4 fill-base-100" />
-                    </button>
-                    <button class="btn btn-info btn-xs">
-                      <InfoIcon class="w-4 h-4 fill-base-100" />
-                    </button>
-                  </div>
-                </th>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="flex px-1 py-0.5 items-center">
-          <div class="flex grow">
-            <button class="btn btn-sm btn-ghost"><ChevronIcon /></button>
-            <button class="btn btn-sm btn-ghost">
-              <ChevronIcon class="rotate-180" />
-            </button>
-          </div>
-          <div class="flex gap-2">
-            <span class="badge badge-ghost"
-              >Items par page:
-              <span class="bg-base-100">{{ users.length }}</span></span
-            >
-            <span class="badge badge-ghost"
-              >Page: <span class="bg-base-100">1</span></span
-            >
-          </div>
-        </div>
+        <DefaultTable
+          v-if="users.length > 0"
+          :options="users"
+          :headers="headers"
+          :columns="columns"
+          :has-next="hasNext"
+          :has-prev="hasPrev"
+          :count="totalUsers"
+          :current-page="currentPage"
+          optionKey="username"
+          url="/user/"
+          :toggle-modal="(username) => toggleModal(username)"
+          :is-active-action="(username, is_active) => toggleIsActive(username, is_active)"
+          :go-next="goNext"
+          :go-prev="goPrev"
+          table-class="table-zebra table-pin-cols table-pin-rows"
+        />
       </div>
       <DefaultResponsiveModal
         id="view_user"
         box-class="max-w-none"
-        v-if="viewUser.length > 0"
+        v-if="viewUser.length > 0 && viewUser !== undefined"
       >
         <ViewUser :username="viewUser" />
       </DefaultResponsiveModal>
@@ -218,29 +70,25 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from "vue";
 import pkg from "~/package.json";
-import _ from "lodash";
-
+import _, { has } from "lodash";
 
 // Composables
-import { fetchUsers, searchUsers } from "~/composables/api/useUsers";
+import { fetchUsers, searchUsers, partialUpdateUser } from "~/composables/api/useUsers";
 
 // Interfaces
 import type { UserInterface } from "../../interfaces/UserInterface";
+import type {
+  TableHeaderInterface,
+  TableColumnInterface,
+} from "~/interfaces/TableInterface";
 
 // Components
 import CardSection from "~/components/card/CardSection.vue";
-import TableTh from "~/components/table/TableTh.vue";
-import TableTd from "~/components/table/TableTd.vue";
 import ViewUser from "~/components/user/ViewUser.vue";
+import DefaultTable from "~/components/table/DefaultTable.vue";
 
 // Icons
 import ChevronIcon from "~/components/assets/icons/ChevronIcon.vue";
-import DeleteIcon from "~/components/assets/icons/DeleteIcon.vue";
-import CloseIcon from "~/components/assets/icons/CloseIcon.vue";
-import EditIcon from "~/components/assets/icons/EditIcon.vue";
-import PreviewIcon from "~/components/assets/icons/PreviewIcon.vue";
-import EyeIcon from "~/components/assets/icons/EyeIcon.vue";
-import InfoIcon from "~/components/assets/icons/InfoIcon.vue";
 import DefaultResponsiveModal from "~/components/modal/DefaultResponsiveModal.vue";
 
 const router = useRouter();
@@ -248,75 +96,168 @@ const router = useRouter();
 const coreStore = useCoreStore();
 
 const users = ref([] as UserInterface[]);
-const viewUser = ref('');
-const selectedUsers = ref([] as number[]);
+const selectedUsers = ref(0);
+const hasPrev = ref(false);
+const hasNext = ref(false);
+const totalUsers = ref(0);
+const currentPage = ref(1);
+const itemsPerPage = ref(10);
+const viewUser = ref("");
 const userSearch = ref("");
-const tableConfig = ref({
-  sort: {
-    field: "",
-    order: "",
+
+const headers: TableHeaderInterface[] = [
+  { label: "Actions", field: "actions" },
+  { label: "Utilisateur", field: "username" },
+  { label: "Prénom", field: "first_name" },
+  { label: "Nom", field: "last_name" },
+  { label: "Groupe", field: "role.group.name" },
+  { label: "Role", field: "role.name" },
+  { label: "Email", field: "email" },
+  { label: "Actif", field: "is_active" },
+  { label: "Membre depuis le", field: "date_joined" },
+  { label: "Modifié le", field: "updated_at" },
+  { label: "Dernière connexion", field: "last_login" },
+  { label: "Numéro de telephones", field: "phone_numbers  " },
+  { label: "Adresses", field: "addresses  " },
+  { label: "Préfèrences", field: "user_preferences  " },
+  { label: "Sécurité", field: "user_security  " },
+];
+
+const columns: TableColumnInterface[] = [
+  {
+    labelKey: "actions",
+    type: "actions",
   },
-});
+  {
+    avatarKey: "avatar",
+    labelKey: "username",
+    type: "avatar",
+  },
+  {
+    labelKey: "first_name",
+    type: "text",
+  },
+  {
+    labelKey: "last_name",
+    type: "text",
+  },
+  {
+    labelKey: "role",
+    type: "group",
+  },
+  {
+    labelKey: "role",
+    type: "role",
+  },
+  {
+    labelKey: "email",
+    type: "email",
+  },
+  {
+    labelKey: "is_active",
+    type: "boolean",
+  },
+  {
+    labelKey: "date_joined",
+    type: "date",
+  },
+  {
+    labelKey: "updated_at",
+    type: "date",
+  },
+  {
+    labelKey: "last_login",
+    type: "date",
+  },
+  {
+    labelKey: "phone_numbers",
+    type: "phone_number",
+  },
+  {
+    labelKey: "addresses",
+    type: "address",
+  },
+  {
+    labelKey: "user_preferences",
+    type: "user_preference",
+  },
+  {
+    labelKey: "user_security",
+    type: "user_security",
+  },
+];
 
 onMounted(async () => {
-  document.title = `${_.capitalize(pkg.name)} - Utilisateurs`;
   const token = localStorage.getItem("token");
   const response: any = await fetchUsers(token);
   users.value = response.results;
+  hasPrev.value = response.previous !== null;
+  hasNext.value = response.next !== null;
+  totalUsers.value = response.count;
 });
-
-const usersHeaders = computed(() => {
-  return Object.keys(users.value[0]);
-});
-
-const updateTableConfigSort = (field: string, order: string) => {
-  console.log(`DEBUG: ${field} - ${order}`);
-  tableConfig.value.sort.field = field;
-  tableConfig.value.sort.order = order;
-
-  // Sort users
-  users.value = _.orderBy(users.value, [field], [order]);
-};
-
-const checkUser = (id: number) => {
-  if (selectedUsers.value.includes(id)) {
-    selectedUsers.value = selectedUsers.value.filter((user) => user !== id);
-    return;
-  }
-  selectedUsers.value.push(id);
-};
-
-const selectAll = () => {
-  if (selectedUsers.value.length === users.value.length) {
-    selectedUsers.value = [];
-    return;
-  }
-  selectedUsers.value = users.value.map((user) => user.id);
-};
 
 const filterUsers = async () => {
-  if (!userSearch.value) {
+  if (userSearch.value === '') {
     const token = localStorage.getItem("token");
-    const response: any = fetchUsers(token);
+    const response: any = await fetchUsers(token);
     users.value = response.results;
+    return;
   }
 
   const token = localStorage.getItem("token");
   const response: any = await searchUsers(token, "username", userSearch.value);
-  users.value = response.results.filter((user: UserInterface) => {
-    return user.username.toLowerCase().includes(userSearch.value.toLowerCase());
-  });
+  // users.value = response.results.filter((user: UserInterface) => {
+  //   return user.username.toLowerCase().includes(userSearch.value.toLowerCase());
+  // });
+  users.value = response;
+};
+
+const goNext = async () => {
+  const token = localStorage.getItem("token");
+  const response: any = await fetchUsers(token, currentPage.value + 1);
+  users.value = response.results;
+  hasPrev.value = response.previous !== null;
+  hasNext.value = response.next !== null;
+  currentPage.value += 1;
+};
+
+const goPrev = async () => {
+  const token = localStorage.getItem("token");
+  const response: any = await fetchUsers(token, currentPage.value - 1);
+  users.value = response.results;
+  hasPrev.value = response.previous !== null;
+  hasNext.value = response.next !== null;
+  currentPage.value -= 1;
 };
 
 const toggleModal = (username: string) => {
   viewUser.value = username;
-  const modal: any = document.getElementById('view_user')
-  modal?.showModal()
+  const modal: any = document.getElementById("view_user");
+  modal?.showModal();
+};
+
+const toggleIsActive = (username: string, is_active: boolean) => {
+  console.log("Toggle is active");
+  const token = localStorage.getItem("token");
+  if (!token) return;
+  const response: any = partialUpdateUser(token, username, {"is_active": is_active});
+  users.value = users.value.map((user: UserInterface) => {
+    if (user.username === username) {
+      user.is_active = is_active;
+    }
+    return user;
+  });
+
 };
 
 definePageMeta({
   title: "users",
   name: "users",
   middleware: "auth",
+});
+
+useSeoMeta({
+  title: "Administration - Utilisateurs",
+  description: "Gestion des utilisateurs de l'application",
 });
 </script>
