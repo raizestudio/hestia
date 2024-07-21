@@ -1,15 +1,17 @@
-export const fetchUsers = async (token: string | null) => {
+export const fetchUsers = async (token: string | null, page : number = 1, itemsPerPage: number = 20) => {
   const coreStore = useCoreStore();
 
   try {
-    const response: any = await fetch('http://localhost:8000/api/users/', {
+    const response: any = await $fetch(`http://localhost:8000/api/users/?page=${page}&page_size=${itemsPerPage}`, {
       method: 'get',
       headers: {
         Authorization: `Bearer ${token}`
       }
     });
     
-    if (response.status !== 200) {
+    
+    return response
+  } catch (error) {
       coreStore.addNotification({
         id: 'error',
         title: 'Erreur',
@@ -18,9 +20,6 @@ export const fetchUsers = async (token: string | null) => {
         isRead: false,
         timestamp: new Date().toISOString(),
       });
-    }
-    return response.json()
-  } catch (error) {
     return error
   }
   
@@ -43,15 +42,30 @@ export const retrieveUser = async (token: string, username: string) => {
 
 }
 
+export const partialUpdateUser = async (token: string, username: string, data: any) => {
+  try {
+    const response: any = await $fetch(`http://localhost:8000/api/users/${username}/`, {
+      method: 'patch',
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify(data)
+    });
+
+    return response
+  } catch (error) {
+    return error
+  }
+}
 export const searchUsers = async (token: string | null, field: string,query: string) => {
-  const response: any = await fetch(`http://localhost:8000/api/users/?field=${field}&term=${query}`, {
+  const response: any = await $fetch(`http://localhost:8000/api/users/search?field=${field}&term=${query}`, {
     method: 'get',
     headers: {
       Authorization: `Bearer ${token}`
     }
   });
 
-  return response.json()
+  return response
 }
 
 export const createFromEMail = async (email: string) => {

@@ -1,30 +1,39 @@
-import type { Config } from 'tailwindcss';
-import daisyui from 'daisyui';
+import type { Config } from "tailwindcss";
+import daisyui from "daisyui";
 
 const config: Config = {
   content: [
-    './components/**/*.{vue,js,ts}',
-    './layouts/**/*.{vue,js,ts}',
-    './pages/**/*.{vue,js,ts}',
-    './plugins/**/*.{js,ts}',
-    './nuxt.config.{js,ts}',
-    '.error.vue'
+    "./components/**/*.{vue,js,ts}",
+    "./layouts/**/*.{vue,js,ts}",
+    "./pages/**/*.{vue,js,ts}",
+    "./plugins/**/*.{js,ts}",
+    "./nuxt.config.{js,ts}",
+    ".error.vue",
   ],
   theme: {
-    extend: {},
+    extend: {
+
+    },
   },
-  plugins: [
-    daisyui,
-  ],
+  plugins: [daisyui],
   daisyui: {
-    themes: [{
-      light: {
-        ...require("daisyui/src/theming/themes")["light"],
-        primary: "#461694",
-        secondary: "teal",
-        accent: "#6329c2"
+    themes: [
+      {
+        light: {
+          ...require("daisyui/src/theming/themes")["light"],
+          primary: "#461694",
+          secondary: "teal",
+          accent: "#6329c2",
+        },
       },
-    }, "dark",
+      {
+        dark: {
+          ...require("daisyui/src/theming/themes")["dark"],
+          primary: "#461694",
+          secondary: "teal",
+          accent: "#6329c2",
+        },
+      },
       "cupcake",
       "bumblebee",
       "emerald",
@@ -54,11 +63,12 @@ const config: Config = {
       "winter",
       "dim",
       "nord",
-      "sunset"],
+      "sunset",
+    ],
     darkTheme: "dark",
-    base: true, 
-    styled: true, 
-    utils: true, 
+    base: true,
+    styled: true,
+    utils: true,
     prefix: "",
     logs: true,
     themeRoot: ":root",
