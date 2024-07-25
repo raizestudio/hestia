@@ -5,7 +5,7 @@
       :label="props.label || ''"
       :user-first-name="userFirstName"
       :user-last-name="userLastName"
-      :mask-class="maskClass || 'h-12 w-12'"
+      :mask-class="`${maskClass || ''} ${tableSize === 'xs' ? 'h-10 w-10' : 'h-12 w-12'}`"
     />
     <div>
       <div class="font-bold">{{ label }}</div>
@@ -26,5 +26,6 @@ const props = defineProps<{
   userFirstName?: string;
   userLastName?: string;
   maskClass?: string;
+  tableSize?: string;
 }>();
 </script>

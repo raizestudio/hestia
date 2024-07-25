@@ -1,5 +1,5 @@
 <template>
-  <div :class="`avatar ${avatarClass}`">
+  <div :class="`avatar ${avatarClass || ''}`">
     <div :class="`mask mask-squircle ${maskClass}`">
       <img
         v-if="props.avatar.length > 0"
@@ -12,7 +12,7 @@
         v-else
         :class="`flex items-center justify-center h-full w-full bg-accent-content`"
       >
-        <span class="font-semibold">
+        <span class="font-semibold text-base-100">
           {{
             props.userFirstName ? props.userFirstName.charAt(0).toUpperCase() : ""
           }}

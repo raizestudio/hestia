@@ -20,7 +20,7 @@ export const useCoreStore = defineStore({
     loadingMessage: "Chargement...",
     mainContainerWidth: 0,
     mainContainerHeight: 0,
-    hasNotification: false,
+    hasNotification: true,
     notifications: [] as NotificationInterface[],
     userNotifications: [] as NotificationInterface[],
     showCookieBanner: false,

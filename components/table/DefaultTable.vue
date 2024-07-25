@@ -2,10 +2,11 @@
   <div
     class="overflow-x-scroll grow"
     :style="`width: ${coreStore.mainContainerWidth - 50}px; height: ${
-      coreStore.mainContainerHeight - 200
+      coreStore.mainContainerHeight - 250
     }px;`"
   >
-    <table :class="`table ${tableClass}`">
+    <div :class="`w-full h-0.5 animate-pulse ${props.shouldDisable ? 'bg-primary' : ''}`"></div>
+    <table :class="`table ${tableClass} ${tableSizeClass}`">
       <!-- head -->
       <thead>
         <tr>
@@ -60,15 +61,14 @@
               :label="option[column.labelKey]"
               :user-first-name="option['first_name']"
               :user-last-name="option['last_name']"
+              :table-size="props.tableSize"
+              @click="() => router.push(`${url}${option[column.labelKey].username}`)"
             />
-            <TableTdText
-              v-if="column.type === 'text'"
-            >
-              <span v-if="option[column.labelKey]" :class="column.textClass">{{ option[column.labelKey] }}</span>
-              <ExclamationCircle
-                  v-else
-                  class="stroke-warning"
-                />
+            <TableTdText v-if="column.type === 'text'">
+              <span v-if="option[column.labelKey]" :class="column.textClass">{{
+                option[column.labelKey]
+              }}</span>
+              <ExclamationCircle v-else class="stroke-warning" />
             </TableTdText>
             <TableTdTags
               v-if="column.type === 'tags'"
@@ -78,25 +78,37 @@
               v-if="column.type === 'description'"
               :description="option[column.labelKey]"
             />
-            <TableTdDuration v-if="column.type === 'duration'"
+            <TableTdDuration
+              v-if="column.type === 'duration'"
               :duration="option[column.labelKey]"
+            />
+            <TableTdPrice
+              v-if="column.type === 'price'"
+              :amount="option[column.labelKey]"
+              :currency="option[column.currencyKey]"
             />
             <TableTd
               v-if="column.type === 'email'"
               :label="option[column.labelKey]"
             />
-            <TableTd v-if="column.type === 'boolean'">
-              <CircleCheckIcon
-                v-if="option[column.labelKey]"
-                class="stroke-success"
-              />
-              <XCircle v-else class="stroke-error" />
-            </TableTd>
-            <TableTd
-              v-if="column.type === 'date'"
-            >
-              <span v-if="option[column.labelKey] && column.dateType === 'full'">{{`${new Date(option[column.labelKey]).toLocaleDateString('fr-FR')} à ${new Date(option[column.labelKey]).toLocaleTimeString('fr-FR')}`}}</span>
-              <span v-else-if="option[column.labelKey]">{{new Date(option[column.labelKey]).toLocaleDateString()}}</span>
+            <TableTdBoolean
+              v-if="column.type === 'boolean'"
+              :option="option[column.labelKey]"
+            />
+            <TableTd v-if="column.type === 'date'">
+              <span
+                v-if="option[column.labelKey] && column.dateType === 'full'"
+                >{{
+                  `${new Date(option[column.labelKey]).toLocaleDateString(
+                    "fr-FR"
+                  )} à ${new Date(option[column.labelKey]).toLocaleTimeString(
+                    "fr-FR"
+                  )}`
+                }}</span
+              >
+              <span v-else-if="option[column.labelKey]">{{
+                new Date(option[column.labelKey]).toLocaleDateString()
+              }}</span>
               <div class="flex justify-center">
                 <ExclamationCircle
                   v-if="!option[column.labelKey]"
@@ -105,18 +117,17 @@
               </div>
             </TableTd>
             <TableTdAvatar
-              v-if="column.type === 'user'"
-              :avatar="option[column.avatarKey]"
+              v-if="column.type === 'user' && option[column.labelKey]"
+              :avatar="option[column.labelKey][column.avatarKey]"
               :user-first-name="option[column.labelKey].first_name"
               :user-last-name="option[column.labelKey].last_name"
               :label="option[column.labelKey].username"
               mask-class="h-8 w-8"
+              :table-size="props.tableSize"
+              @click="() => router.push(`/user/${option[column.labelKey].username}`)"
             >
               <div class="flex justify-center">
-                <XCircle
-                  v-if="!option[column.labelKey]"
-                  class="stroke-error"
-                />
+                <XCircle v-if="!option[column.labelKey]" class="stroke-error" />
               </div>
             </TableTdAvatar>
             <TableTd v-if="column.type === 'group'">
@@ -139,12 +150,17 @@
               <span
                 v-if="option[column.labelKey]"
                 :class="`px-1 py-0.5 rounded-lg text-sm text-nowrap text-base-100 bg-warning`"
-                >
-                  Contraint
-                  <span v-if="option[column.labelKey].city.length > 0">- Ville</span>
-                </span
               >
-              <span v-else :class="`px-1 py-0.5 rounded-lg text-sm text-nowrap text-accent-content bg-primary`">Universel</span>
+                Contraint
+                <span v-if="option[column.labelKey].city.length > 0"
+                  >- Ville</span
+                >
+              </span>
+              <span
+                v-else
+                :class="`px-1 py-0.5 rounded-lg text-sm text-nowrap text-accent-content bg-primary`"
+                >Universel</span
+              >
             </TableTd>
             <TableTd v-if="column.type === 'label'">
               <span
@@ -153,8 +169,7 @@
                 >{{ _.capitalize(option[column.labelKey].name) }}</span
               >
             </TableTd>
-            
-              
+
             <TableTd v-if="column.type === 'address'">
               <div class="flex justify-center">
                 <ExclamationCircle
@@ -177,77 +192,39 @@
                 </div>
               </div>
             </TableTd>
-            <TableTd v-if="column.type === 'actions'">
-              <div class="flex gap-1">
-                <button
-                  class="btn btn-accent btn-xs"
-                  @click="() => toggleModal(option[optionKey])"
-                >
-                  <EyeIcon class="w-4 h-4 fill-base-100" />
-                </button>
-                <button
-                  class="btn btn-accent btn-xs"
-                  @click="() => router.push(`${url}${option[optionKey]}`)"
-                >
-                  <EditIcon class="w-4 h-4 fill-base-100" />
-                </button>
-                <button
-                  class="btn btn-warning btn-xs"
-                  @click="
-                    () => isActiveAction(option[optionKey], !option.is_active)
-                  "
-                >
-                  <CloseIcon class="w-4 h-4 fill-base-100" />
-                </button>
-                <button class="btn btn-error btn-xs">
-                  <ArchiveIcon class="w-4 h-4 stroke-base-100" />
-                </button>
-                <button class="btn btn-error btn-xs">
-                  <DeleteIcon class="w-4 h-4 stroke-base-100" />
-                </button>
-                <button class="btn btn-info btn-xs">
-                  <InfoIcon class="w-4 h-4 fill-base-100" />
-                </button>
-              </div>
-            </TableTd>
+            <TableTdActions
+              v-if="column.type === 'actions'"
+              :delete-action="(key: any) => props.deleteAction(key)"
+              :is-active-action="(key: any, isActive: boolean) => props.isActiveAction(key, isActive)"
+              :option="option"
+              :option-key="props.optionKey"
+              :restore-action="(key: any) => props.restoreAction(key)"
+              :toggle-modal="(key: any) => props.toggleModal(key)"
+              :url="props.url"
+            />
           </td>
         </tr>
       </tbody>
     </table>
   </div>
-  <div class="flex px-1 py-0.5 items-center mt-2">
-    <div class="flex grow gap-2">
-      <button
-        :class="`btn btn-sm ${hasPrev ? 'btn-ghost' : 'btn-disabled'}`"
-        @click="goPrev"
-      >
-        <ChevronIcon />
-      </button>
-      <button
-        :class="`btn btn-sm ${hasNext ? 'btn-ghost' : 'btn-disabled'}`"
-        @click="goNext"
-      >
-        <ChevronIcon class="rotate-180" />
-      </button>
-    </div>
-    <div class="flex gap-2">
-      <span class="bg-base-200 px-2 py-1 shadow rounded-sm"
-        >Items total: <span class="">{{ count }}</span></span
-      >
-      <span class="bg-base-200 px-2 py-1 shadow rounded-sm"
-        >Items par page: <span class="">{{ localOptions.length }}</span></span
-      >
-      <span class="bg-base-200 px-2 py-1 shadow rounded-sm"
-        >Page: <span class="">{{ currentPage }}</span></span
-      >
-    </div>
-  </div>
+  <TableFooter
+    :count="count"
+    :currentPage="currentPage"
+    :options-count="localOptions.length"
+    :go-next="props.goNext"
+    :go-prev="props.goPrev"
+    :has-next="props.hasNext"
+    :has-prev="props.hasPrev"
+    :update-items-per-page="(itemsPerPage: number) => props.updateItemsPerPage(itemsPerPage)"
+    :go-to-page="(page: number) => props.goToPage(page)"
+    :should-disable="props.shouldDisable"
+  />
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted, computed } from "vue";
 import pkg from "~/package.json";
-import _, { update } from "lodash";
+import _ from "lodash";
 
 const router = useRouter();
 
@@ -257,24 +234,20 @@ const coreStore = useCoreStore();
 // Components
 import TableTh from "~/components/table/TableTh.vue";
 import TableTd from "~/components/table/TableTd.vue";
-import ViewUser from "~/components/user/ViewUser.vue";
 import TableTdAvatar from "~/components/table/TableTdAvatar.vue";
 import TableTdText from "~/components/table/TableTdText.vue";
 import TableTdTags from "~/components/table/TableTdTags.vue";
 import TableTdDescription from "~/components/table/TableTdDescription.vue";
+import TableTdDuration from "~/components/table/TableTdDuration.vue";
+import TableTdBoolean from "~/components/table/TableTdBoolean.vue";
+import TableTdPrice from "~/components/table/TableTdPrice.vue";
+import TableTdActions from "~/components/table/TableTdActions.vue";
+import TableFooter from "~/components/footer/TableFooter.vue";
 
 // Icons
-import DeleteIcon from "~/components/assets/icons/DeleteIcon.vue";
-import CloseIcon from "~/components/assets/icons/CloseIcon.vue";
-import EditIcon from "~/components/assets/icons/EditIcon.vue";
-import EyeIcon from "~/components/assets/icons/EyeIcon.vue";
-import InfoIcon from "~/components/assets/icons/InfoIcon.vue";
-import DocumentCheckIcon from "~/components/assets/icons/DocumentCheckIcon.vue";
-import CircleCheckIcon from "../assets/icons/CircleCheckIcon.vue";
 import XCircle from "../assets/icons/XCircleIcon.vue";
 import ExclamationCircle from "../assets/icons/ExclamationCircle.vue";
 import ChevronIcon from "../assets/icons/ChevronIcon.vue";
-import ArchiveIcon from "../assets/icons/ArchiveIcon.vue";
 
 // Data
 const selectedRows = ref([] as number[]);
@@ -299,21 +272,31 @@ const props = defineProps<{
   hasPrev?: boolean;
   count?: number;
   currentPage?: number;
-  toggleModal: (username: string) => void;
-  isActiveAction: (option: any, is_active: boolean) => void;
+  toggleModal: (key: any) => void;
+  isActiveAction: (key: any, is_active: boolean) => void;
+  deleteAction: (key: any) => void;
+  restoreAction: (key: any) => void;
+  infoAction?: (key: any) => void;
   goNext?: () => void;
   goPrev?: () => void;
   updateSelectedRows?: (selectedRows: any[]) => void;
+  updateItemsPerPage: (itemsPerPage: number) => void;
+  goToPage: (page: number) => void;
   url: string;
   optionKey: string;
   tableClass?: string;
+  tableSize?: "xs" | "sm" | "md" | "lg" | "xl";
+  shouldDisable?: boolean;
 }>();
-const localOptions = ref([...props.options]);
+const localOptions = ref([...props.options] as any[]);
 
 onMounted(() => {
   localOptions.value = props.options;
 });
 
+const tableSizeClass = computed(() => {
+  return props.tableSize ? `table-${props.tableSize}` : "";
+});
 /*
  * Select all rows
  */
@@ -356,10 +339,6 @@ const checkUser = (id: number) => {
     props.updateSelectedRows(selectedRows.value);
   }
 };
-
-
-
-
 
 watch(
   () => props.options,

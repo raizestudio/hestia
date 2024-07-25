@@ -69,7 +69,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, defineProps, watch } from "vue";
+import { ref, onMounted, watch } from "vue";
 import { VChart } from "#components";
 
 // Interface
@@ -99,7 +99,6 @@ const dateToLocaleString = (date: string) => {
 
 
 onMounted(async () => {
-  console.log("mounted");
   console.log(route.params.username)
 
   if (userStore.user.username === props.username) {

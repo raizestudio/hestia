@@ -29,4 +29,5 @@ export interface UserInterface {
     updated_at: string;
     last_login: string;
     addresses: AddressInterface[];
+    deleted_at: Date | null;
 }

@@ -9,4 +9,5 @@ export interface TableColumnInterface {
   type: string;
   textClass?: string;
   dateType?: string;
+  currencyKey?: string;
 }

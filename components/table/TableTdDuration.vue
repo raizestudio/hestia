@@ -1,13 +1,15 @@
 <template>
-  <span v-if="duration" class="text-nowrap">{{ formatDuration(duration) }} </span>
-  <ExclamationCircle
-    v-else
-    class="stroke-warning"
-  />
+  <span v-if="duration" class="text-nowrap"
+    >{{ formatDuration(duration) }}
+  </span>
+  <div v-else title="Durée non renseignée">
+    <ExclamationCircle class="stroke-warning w-6 h-6" />
+  </div>
 </template>
 
 <script setup lang="ts">
-
+// Icons
+import ExclamationCircle from "~/components/assets/icons/ExclamationCircle.vue";
 const props = defineProps<{
   duration: string;
 }>();
@@ -18,7 +20,6 @@ interface Duration {
   minutes: number;
   seconds: number;
 }
-
 
 const formatDuration = (duration: string): string => {
   const { hours, minutes, seconds } = duration.split(":").reduce(
@@ -35,11 +36,17 @@ const formatDuration = (duration: string): string => {
     { hours: 0, minutes: 0, seconds: 0 }
   );
   if (hours > 0) {
-    return hours + " h " + minutes + " m " + (seconds > 0 ? "et " + seconds + " s" : "");
+    return (
+      hours +
+      " h " +
+      minutes +
+      " m " +
+      (seconds > 0 ? "et " + seconds + " s" : "")
+    );
   } else if (minutes > 0) {
     return minutes + " m " + (seconds > 0 ? "et " + seconds + " s" : "");
   } else {
     return `${seconds} s`;
   }
-}
+};
 </script>

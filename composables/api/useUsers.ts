@@ -1,8 +1,8 @@
-export const fetchUsers = async (token: string | null, page : number = 1, itemsPerPage: number = 20) => {
+export const fetchUsers = async (token: string | null, page : number = 1, itemsPerPage: number = 20, objects: string = '', expand: string = 'author,updated_by,tags,categories') => {
   const coreStore = useCoreStore();
 
   try {
-    const response: any = await $fetch(`http://localhost:8000/api/users/?page=${page}&page_size=${itemsPerPage}`, {
+    const response: any = await $fetch(`http://localhost:8000/api/users/?page=${page}&page_size=${itemsPerPage}&expand=${expand}&objects=${objects}`, {
       method: 'get',
       headers: {
         Authorization: `Bearer ${token}`
@@ -39,7 +39,6 @@ export const retrieveUser = async (token: string, username: string) => {
     return error
   
   }
-
 }
 
 export const partialUpdateUser = async (token: string, username: string, data: any) => {
@@ -86,4 +85,19 @@ export const confirmEmail = async (code: string) => {
   });
 
   return response
+}
+
+export const deleteUser = async (token: string, username: string) => {
+  try {
+    const response: any = await $fetch(`http://localhost:8000/api/users/${username}/`, {
+      method: 'delete',
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
+    });
+
+    return response
+  } catch (error) {
+    return error
+  }
 }

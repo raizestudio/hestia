@@ -3,17 +3,17 @@ import type { TagInterface } from "./TagInterface";
 import type { CategoryInterface } from './CategoryInterface';
 
 export interface ServiceInterface {
-  id: number;
+  id: number | null;
   name: string;
   description: string;
   is_active: boolean;
-  slug: string;
-  tags: TagInterface[];
-  categories: CategoryInterface[];
-  created_at: Date;
-  updated_at: Date;
-  created_by: UserInterface;
-  updated_by: UserInterface;
-  deleted_at: Date;
-  restored_at: Date;
+  slug: string | null;
+  tags: TagInterface[] | null;
+  categories: CategoryInterface[] | null;
+  created_at: Date | null;
+  updated_at: Date | null;
+  author: UserInterface | null;
+  updated_by: UserInterface | null;
+  deleted_at: Date | null;
+  restored_at: Date | null;
 }

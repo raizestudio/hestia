@@ -2,7 +2,7 @@ export interface NotificationInterface {
   id: string
   title: string
   message: string
-  type: 'error' | 'message' | ''
+  type: 'error' | 'success' | 'warning' | 'info' | ''
   isRead: boolean
   timestamp: string
 }

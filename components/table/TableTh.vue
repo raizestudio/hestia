@@ -1,5 +1,5 @@
 <template>
-  <th :class="`${sort.field === field ? 'bg-base-300' : ''} hover:bg-base-300 cursor-pointer`" @click="toggleSort">
+  <th :class="`${sort.field === field ? 'bg-base-300' : ''} hover:bg-base-300 cursor-pointer tracking-wider`" @click="toggleSort">
     <div class="flex justify-between ">
       <span class="select-none">{{label}}</span>
       <div v-if="sort.field === field">

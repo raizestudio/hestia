@@ -1,45 +1,53 @@
 <template>
-  <div>
-    <div
-      v-if="coreStore.showCookieBanner"
-      class="toast toast-top toast-center mt-10"
-    >
-      <div role="alert" class="alert px-4 py-2">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          class="stroke-info h-4 w-4 shrink-0"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-          ></path>
-        </svg>
-        <span class="text-sm"
-          >Ce site utilise des cookies. En continuant la navigation on considère
-          que vous donnez votre accord.</span
-        >
-        <div>
-          <!-- <button class="btn btn-sm">Deny</button> -->
-          <button class="btn btn-xs btn-primary">Accept</button>
+  <div class="flex justify-center">
+    <div class="w-full" style="max-width: 2500px">
+      <div
+        v-if="coreStore.showCookieBanner"
+        class="toast toast-top toast-center mt-10"
+      >
+        <div role="alert" class="alert px-4 py-2">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            class="stroke-info h-4 w-4 shrink-0"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            ></path>
+          </svg>
+          <span class="text-sm"
+            >Ce site utilise des cookies. En continuant la navigation on
+            considère que vous donnez votre accord.</span
+          >
+          <div>
+            <!-- <button class="btn btn-sm">Deny</button> -->
+            <button class="btn btn-xs btn-primary">Accept</button>
+          </div>
         </div>
       </div>
+      <ToastStack v-if="coreStore.hasNotification" class="z-50">
+        <div
+          v-for="notification in _.reverse(unreadNotifications)"
+          :key="notification.id"
+          class="toast mb-6 w-80"
+        >
+          <!-- <ToastAcceptDeny /> -->
+          <ToastError
+            :id="notification.id"
+            :title="notification.title"
+            :message="notification.message"
+            :timestamp="notification.timestamp"
+            :type="notification.type"
+          />
+        </div>
+      </ToastStack>
+      <!-- <NuxtRouteAnnouncer /> -->
+      <NuxtPage />
     </div>
-    <ToastStack v-if="coreStore.hasNotification">
-      <div
-        v-for="notification in _.reverse(unreadNotifications)"
-        :key="notification.id"
-        class="toast mb-6 w-80"
-      >
-        <!-- <ToastAcceptDeny /> -->
-        <ToastError v-if="notification.type === 'error'" :id="notification.id" :title="notification.title" :message="notification.message" :timestamp="notification.timestamp" />
-      </div>
-    </ToastStack>
-    <!-- <NuxtRouteAnnouncer /> -->
-    <NuxtPage />
   </div>
 </template>
 

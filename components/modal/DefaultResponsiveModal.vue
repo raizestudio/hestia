@@ -1,6 +1,6 @@
 <template>
   <dialog :id="props.id" :class="`modal ${dialogClass}`">
-    <div :class="`modal-box w-11/12 ${boxClass}`">
+    <div :class="`modal-box ${boxClass}`">
       <slot />
     </div>
     <form method="dialog" class="modal-backdrop">
