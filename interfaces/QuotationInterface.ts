@@ -24,4 +24,8 @@ export interface QuotationInterface {
   label : string,
   description: string,
   quotation_references: QuotationReferenceInterface[],
+  author: UserInterface | null;
+  updated_by: UserInterface | null;
+  deleted_at: Date | null;
+  restored_at: Date | null;
 }

@@ -19,7 +19,12 @@ export default defineNuxtConfig({
   //     viewer: true,
   //   }
   // },
-
+  // app: {
+  //   pageTransition: {
+  //     name: 'fade',
+  //     mode: 'out-in' // default
+  //   },
+  // },
   plugins: ["~/plugins/lodash.js"],
 
   // build: {

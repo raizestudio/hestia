@@ -3,7 +3,7 @@
     <div class="label">
       <span class="label-text">{{ props.label }}</span>
     </div>
-    <input v-model="props.modelValue" type="text" :name="props.name" :placeholder="props.placeholder" class="input input-sm input-bordered w-full max-w-md" />
+    <input v-model="props.modelValue" type="password" :name="props.name" :placeholder="props.placeholder" class="input input-sm input-bordered w-full max-w-md" />
   </label>
 </template>
 

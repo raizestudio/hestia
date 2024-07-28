@@ -16,11 +16,19 @@
           ></path>
         </svg>
       </div>
-      <div class="stat-title">Nouveaux utilisateurs</div>
-      <div class="stat-value">{{newUsers}}</div>
+      <div class="stat-title">Utilisateurs inscrits</div>
+      <div class="stat-value">{{ newUsers }}</div>
       <div class="flex justify-between">
-        <div class="stat-desc">{{ dateMinusSevenDays }} - {{currentDate}}</div>
-        <div class="stat-desc text-error">↘︎ 2 (1,2%)</div>
+        <div class="stat-desc">
+          {{ dateMinusSevenDays }} - {{ currentDate }}
+        </div>
+        <div :class="`stat-desc ${calculatePctTextColor}`">
+          <span v-if="Number(props.newUsersWeekPct) > 0">↗︎</span>
+          <span v-else>↘︎</span>
+           {{ newUsersWeek }} ({{
+            Number(newUsersWeekPct).toFixed(2)
+          }}%)
+        </div>
       </div>
     </div>
 
@@ -40,10 +48,12 @@
           ></path>
         </svg>
       </div>
-      <div class="stat-title">Nouvelles agences</div>
-      <div class="stat-value">{{newEnterprises}}</div>
+      <div class="stat-title">Agences inscrites</div>
+      <div class="stat-value">{{ newEnterprises }}</div>
       <div class="flex justify-between">
-        <div class="stat-desc">{{ dateMinusSevenDays }} - {{currentDate}}</div>
+        <div class="stat-desc">
+          {{ dateMinusSevenDays }} - {{ currentDate }}
+        </div>
         <div class="stat-desc text-success">↗︎ 6 (5,4%)</div>
       </div>
     </div>
@@ -64,10 +74,12 @@
           ></path>
         </svg>
       </div>
-      <div class="stat-title">Nouveaux pros</div>
-      <div class="stat-value">{{newPros}}</div>
+      <div class="stat-title">Indépendants inscrits</div>
+      <div class="stat-value">{{ newPros }}</div>
       <div class="flex justify-between">
-        <div class="stat-desc">{{ dateMinusSevenDays }} - {{ currentDate}}</div>
+        <div class="stat-desc">
+          {{ dateMinusSevenDays }} - {{ currentDate }}
+        </div>
         <div class="stat-desc text-error">↘︎ 13 (14%)</div>
       </div>
     </div>
@@ -75,13 +87,27 @@
 </template>
 
 <script setup lang="ts">
+import { ref, computed } from "vue";
 
-const dateMinusSevenDays = ref(new Date(new Date().setDate(new Date().getDate() - 7)).toLocaleDateString('fr-FR', { month: 'long', day: 'numeric' }));
-const currentDate = ref(new Date().toLocaleDateString('fr-FR', { month: 'long', day: 'numeric' }));
+const dateMinusSevenDays = ref(
+  new Date(new Date().setDate(new Date().getDate() - 7)).toLocaleDateString(
+    "fr-FR",
+    { month: "long", day: "numeric" }
+  )
+);
+const currentDate = ref(
+  new Date().toLocaleDateString("fr-FR", { month: "long", day: "numeric" })
+);
 
 const props = defineProps<{
-  newUsers: string
-  newEnterprises: string
-  newPros: string
+  newUsers: string;
+  newEnterprises: string;
+  newPros: string;
+  newUsersWeek: string;
+  newUsersWeekPct: string;
 }>();
+
+const calculatePctTextColor = computed(() => {
+  return Number(props.newUsersWeekPct) > 0 ? "text-success" : "text-error";
+});
 </script>

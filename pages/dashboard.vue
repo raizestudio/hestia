@@ -13,6 +13,8 @@
                 :new-users="dashboard.new_users"
                 :new-enterprises="dashboard.new_enterprises"
                 :new-pros="dashboard.new_pros"
+                :new-users-week="dashboard.new_users_week"
+                :new-users-week-pct="dashboard.new_users_week_pct"
               />
             </div>
             <div class="flex flex-col">

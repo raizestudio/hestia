@@ -55,8 +55,8 @@
           </button>
         </div>
       </div>
-      <DefaultResponsiveModal id="create_from_email_modal" dialog-class="modal-bottom sm:modal-middle">
-        <CreateFromEmail />
+      <DefaultResponsiveModal ref="CreateFromMailRef" id="create_from_email_modal" dialog-class="modal-bottom sm:modal-middle">
+        <CreateFromEmail  />
       </DefaultResponsiveModal>
       <DefaultResponsiveModal id="cannot_connect_modal" box-class="w-11/12 max-w-5xl">
         <CannotConnect />

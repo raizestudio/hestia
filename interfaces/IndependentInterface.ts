@@ -1,5 +1,6 @@
 import type { UserInterface } from '~/interfaces/UserInterface';
-export interface AgencyInterface {
+
+export interface IndependentInterface {
   id: number;
   name: string;
   legal_status: string;
@@ -17,6 +18,5 @@ export interface AgencyInterface {
 
   phone_numbers: any;
   emails: any;
-  group_pro: string;
   members: any;
 }

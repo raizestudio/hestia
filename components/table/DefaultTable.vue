@@ -62,10 +62,10 @@
               :user-first-name="option['first_name']"
               :user-last-name="option['last_name']"
               :table-size="props.tableSize"
-              @click="() => router.push(`${url}${option[column.labelKey].username}`)"
+              @click="() => router.push(`${url}${option[props.optionKey]}`)"
             />
             <TableTdText v-if="column.type === 'text'">
-              <span v-if="option[column.labelKey]" :class="column.textClass">{{
+              <span v-if="option[column.labelKey]" :class="`${column.textClass} text-nowrap`">{{
                 option[column.labelKey]
               }}</span>
               <ExclamationCircle v-else class="stroke-warning" />
@@ -86,6 +86,15 @@
               v-if="column.type === 'price'"
               :amount="option[column.labelKey]"
               :currency="option[column.currencyKey]"
+            />
+            <TableTdRelation
+              v-if="column.type === 'relation'"
+              :arr="option[column.labelKey]"
+              :field="column.fieldKey"
+            />
+            <TableTdState
+              v-if="column.type === 'state'"
+              :state="option[column.labelKey]"
             />
             <TableTd
               v-if="column.type === 'email'"
@@ -239,9 +248,11 @@ import TableTdText from "~/components/table/TableTdText.vue";
 import TableTdTags from "~/components/table/TableTdTags.vue";
 import TableTdDescription from "~/components/table/TableTdDescription.vue";
 import TableTdDuration from "~/components/table/TableTdDuration.vue";
+import TableTdState from "~/components/table/TableTdState.vue";
 import TableTdBoolean from "~/components/table/TableTdBoolean.vue";
 import TableTdPrice from "~/components/table/TableTdPrice.vue";
 import TableTdActions from "~/components/table/TableTdActions.vue";
+import TableTdRelation from "~/components/table/TableTdRelation.vue";
 import TableFooter from "~/components/footer/TableFooter.vue";
 
 // Icons
