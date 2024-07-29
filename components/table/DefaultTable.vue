@@ -138,14 +138,14 @@
               <div class="flex justify-center">
                 <XCircle v-if="!option[column.labelKey]" class="stroke-error" />
               </div>
-            </TableTdAvatar>
+            </TableTdAvatar> 
             <TableTd v-if="column.type === 'group'">
               <span
                 :class="`px-1.5 py-0.5 rounded-lg text-base-100`"
                 :style="`background-color: ${
-                  option[column.labelKey].group.color
+                  option[column.labelKey]?.group?.color
                 }`"
-                >{{ _.capitalize(option[column.labelKey].group.name) }}</span
+                >{{ _.capitalize(option[column.labelKey]?.group?.name) }}</span
               >
             </TableTd>
             <TableTd v-if="column.type === 'role'">
@@ -154,7 +154,7 @@
                 :class="`px-1 py-0.5 rounded-lg text-sm text-nowrap bg-base-300`"
                 >{{ _.capitalize(option[column.labelKey].name) }}</span
               >
-            </TableTd>
+            </TableTd> 
             <TableTd v-if="column.type === 'scope'">
               <span
                 v-if="option[column.labelKey]"
@@ -177,7 +177,7 @@
                 :class="`px-2 py-1 rounded-lg text-sm text-nowrap bg-base-300`"
                 >{{ _.capitalize(option[column.labelKey].name) }}</span
               >
-            </TableTd>
+            </TableTd> 
 
             <TableTd v-if="column.type === 'address'">
               <div class="flex justify-center">

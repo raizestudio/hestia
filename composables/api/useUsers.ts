@@ -1,3 +1,15 @@
+/*
+ *
+ * Method to fetch users from the API
+ * 
+ * @param {string} token - The token to authenticate the request
+ * @param {number} page - The page number to fetch
+ * @param {number} itemsPerPage - The number of items to fetch per page
+ * @param {string} objects - The objects to fetch 'deleted' or 'all'
+ * @param {string} expand - The fields to expand
+ * 
+ * @returns {Promise} - The response from the API 
+ */
 export const fetchUsers = async (
   token: string | null,
   page: number = 1,
@@ -33,6 +45,17 @@ export const fetchUsers = async (
   }
 };
 
+/*
+ *
+ * Method to retrieve a user
+ * 
+ * @param {string} token - The token to authenticate the request
+ * @param {username} username - The username of the user to retrieve
+ * @param {string} objects - The objects to fetch 'deleted' or 'all'
+ * @param {string} expand - The fields to expand
+ * 
+ * @returns {Promise} - The response from the API 
+ */
 export const retrieveUser = async (
   token: string,
   username: string,
@@ -56,19 +79,31 @@ export const retrieveUser = async (
   }
 };
 
+/*
+ *
+ * Method to partially update a user
+ * 
+ * @param {string} token - The token to authenticate the request
+ * @param {username} username - The username of the user to update
+ * @param {object} data - The data to update
+ * 
+ * @returns {Promise} - The response from the API
+ */
 export const partialUpdateUser = async (
-  token: string,
   username: string,
-  data: any
+  data: any,
+  objects: string = "all",
+  token?: string,
 ) => {
   try {
+    const token = localStorage.getItem("token");
+    const headers = token ? { Authorization: `Bearer ${String(token)}` } : {} as any;
+    
     const response: any = await $fetch(
-      `http://localhost:8000/api/users/${username}/`,
+      `http://localhost:8000/api/users/${username}/?objects=${objects}`,
       {
         method: "patch",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers,
         body: JSON.stringify(data),
       }
     );

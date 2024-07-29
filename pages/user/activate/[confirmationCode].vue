@@ -23,6 +23,7 @@
                 délai vous devez recommencer l'inscription.
               </p>
               <p class="py-4">Veuillez réessayer ou contacter le support.</p>
+              <button class="btn btn-sm btn-content" @click="() => router.push('/')">Revenir à l'accueil</button>
             </div>
           </div>
           <div v-else class="flex flex-col h-full gap-8">
@@ -58,7 +59,7 @@
                 v-if="userType !== '' && currentStep === 1"
                 class="flex grow"
               >
-                pro
+                <ProfessionalInformation />
               </div>
 
               <div
@@ -105,6 +106,13 @@
                 >
                   Avancer
                 </button>
+                <button
+                  class="btn btn-sm btn-primary"
+                  v-if="currentStep === steps.length - 1"
+                  @click="confirmUserActivation"
+                >
+                  Confirmer
+                </button>
               </div>
             </div>
             <DefaultStepper
@@ -122,10 +130,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted, computed, watch } from "vue";
 
 // Composables
-import { confirmEmail } from "~/composables/api/useUsers";
+import { confirmEmail, partialUpdateUser } from "~/composables/api/useUsers";
 
 // Components
 import SectionFullScreen from "~/components/section/SectionFullScreen.vue";
@@ -134,11 +142,13 @@ import DefaultH1 from "~/components/title/DefaultH1.vue";
 import TiredPerson404Illustration from "~/components/assets/illustrations/TiredPerson404Illustration.vue";
 import DefaultStepper from "~/components/step/DefaultStepper.vue";
 import SelectInput from "~/components/input/SelectInput.vue";
+import PersonalInformation from "~/components/user/register/PersonalInformation.vue";
+import TypesOfUsers from "~/components/user/register/TypesOfUsers.vue";
+import ProfessionalInformation from "~/components/user/register/ProfessionalInformation.vue";
 
 // Interfaces
 import type { UserInterface } from "~/interfaces/UserInterface";
-import PersonalInformation from "~/components/user/register/PersonalInformation.vue";
-import TypesOfUsers from "~/components/user/register/TypesOfUsers.vue";
+
 
 const router = useRouter();
 const route = useRoute();
@@ -221,7 +231,36 @@ const validateStep = () => {
   });
 };
 
+/*
+ * Update the user type
+ *
+ * @param {string} value
+ *
+ * @return {void}
+ */
 const updateUserType = (value: string) => {
+  if (value === userType.value) {
+    return;
+  }
+
+  if (value === "user") {
+    const response: any = partialUpdateUser(user.value.username, {
+      role: "RO-USR",
+    })
+    steps.value = steps.value.map((step) => {
+      if (step.id === 1) {
+        return { ...step, disabled: true };
+      }
+      return step;
+    });
+  } else {
+    steps.value = steps.value.map((step) => {
+      if (step.id === 1) {
+        return { ...step, disabled: false };
+      }
+      return step;
+    });
+  }
   userType.value = value;
 };
 
@@ -297,6 +336,12 @@ const updateCurrentStep = (stepIndex: number) => {
   });
 };
 
+
+/*
+ * Calculate the time left before the confirmation code expires
+ *
+ * @return {void}
+ */
 const calculateTimeLeft = () => {
   const expiresAtString =
     user.value.user_security?.email_validation_code_expires_at;
@@ -316,6 +361,14 @@ const calculateTimeLeft = () => {
   const secondsLeft = totalSecondsLeft % 60;
 
   timeLeft.value = `Le lien est valide pendant ${hoursLeft} heures et ${minutesLeft} minutes et ${secondsLeft} secondes`;
+};
+
+
+const confirmUserActivation = async () => {
+  const data = {
+    is_active: true,
+  }
+  const response = await partialUpdateUser(user.value.username, data);
 };
 
 definePageMeta({

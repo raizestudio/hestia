@@ -10,7 +10,7 @@
       />
       <div
         v-else
-        :class="`flex items-center justify-center h-full w-full bg-accent-content`"
+        :class="`flex items-center justify-center h-full w-full ${!props.userFirstName && !props.userLastName ? 'bg-info opacity-40' : 'bg-accent-content'} ${altClass}`"
       >
         <span class="font-semibold text-base-100">
           {{
@@ -19,6 +19,7 @@
           {{
             props.userLastName ? props.userLastName.charAt(0).toUpperCase() : ""
           }}
+          {{ !props.userFirstName && !props.userLastName ? props.label.charAt(0).toUpperCase() : "" }}
         </span>
       </div>
     </div>

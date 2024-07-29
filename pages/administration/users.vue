@@ -19,6 +19,11 @@
                 : 'Gestion des utilisateurs de l\'application'
             "
           />
+          <div class="flex flex-col justify-start h-full mr-10">
+            <button class="btn btn-primary btn-xs" @click="() => updateUsersSfScope('new')">
+              <span class="text-content font-semibold">Nouveaux comptes</span>
+            </button>
+          </div>
           <TableActions
             :current-sf-scope="usersSfScope"
             create-action="create_service.showModal()"

@@ -75,7 +75,8 @@ export const useCoreStore = defineStore({
         const response: any = await $fetch(
           "http://localhost:8000/api/settings"
         );
-        this.settings = this.transformArrayToDict(response);
+        // this.settings = this.transformArrayToDict(response);
+        this.settings = response;
       } catch (error) {
         console.error(error);
         this.hasNotification = true;
