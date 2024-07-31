@@ -39,7 +39,7 @@
           v-for="notification in unreadNotifications"
           :key="notification.id"
           class="toast mb-6 w-80"
-        ></div>
+        >
           <!-- <ToastAcceptDeny /> -->
           <ToastError
             :id="notification.id"
