@@ -26,6 +26,6 @@ jobs:
           yarn cache clean --all
           
       - name: Install dependencies
-        run: yarn
+        run: yarn build
  
 
