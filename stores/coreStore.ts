@@ -7,6 +7,7 @@ import type {
   SettingInterface,
 } from "~/interfaces/SettingInterface";
 import type { NotificationInterface } from "~/interfaces/NotificationInterface";
+import { useRuntimeConfig } from "#imports"
 
 export const useCoreStore = defineStore({
   id: "coreStore",
@@ -26,6 +27,7 @@ export const useCoreStore = defineStore({
     showCookieBanner: false,
     theme: "light",
     menus: [] as MenuInterface[],
+    runtimeConfig : useRuntimeConfig()
   }),
   actions: {
     setTheme(theme: string) {
@@ -49,9 +51,11 @@ export const useCoreStore = defineStore({
     },
 
     async fetchMenus() {
+      const url = `${this.runtimeConfig.public.apiProtocol}://${this.runtimeConfig.public.apiBase}:${this.runtimeConfig.public.apiPort}/api/settings`;
+
       const token = localStorage.getItem("token");
       const response: any = await $fetch(
-        "http://localhost:8000/api/menus/user-menu",
+        `${url}/menus/user-menus/`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -70,10 +74,11 @@ export const useCoreStore = defineStore({
     },
 
     async fetchSettings() {
+      const url = `${this.runtimeConfig.public.apiProtocol}://${this.runtimeConfig.public.apiBase}:${this.runtimeConfig.public.apiPort}/api/settings/`;
       const token = localStorage.getItem("token");
       try {
         const response: any = await $fetch(
-          "http://localhost:8000/api/settings"
+          `${url}`,
         );
         // this.settings = this.transformArrayToDict(response);
         this.settings = response;
@@ -97,9 +102,10 @@ export const useCoreStore = defineStore({
     },
 
     async updateSetting(key: string, value: string | boolean) {
+      const url = `${this.runtimeConfig.public.apiProtocol}://${this.runtimeConfig.public.apiBase}:${this.runtimeConfig.public.apiPort}/api/settings/${key}/`;
       const token = localStorage.getItem("token");
       const response: { key: "app_name" | "app_description"; value: string } =
-        await $fetch(`http://localhost:8000/api/settings/${key}/`, {
+        await $fetch(url, {
           method: "PUT",
           headers: {
             Authorization: `Bearer ${token}`,

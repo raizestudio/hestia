@@ -61,7 +61,10 @@ export default defineNuxtConfig({
     apiSecret: "123",
     // Keys within public are also exposed client-side
     public: {
-      apiBase: "/api",
+      apiProtocol: "http",
+      apiBase: "localhost",
+      apiPort: "8080",
+      apiBaseUrl: "api"
     },
   },
 

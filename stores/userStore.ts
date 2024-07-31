@@ -1,19 +1,21 @@
 import { defineStore } from "pinia";
 import type { UserInterface } from "~/interfaces/UserInterface";
 import type { SessionInterface } from "~/interfaces/SessionInterface";
-
+import { useRuntimeConfig } from "#imports"
 export const useUserStore = defineStore({
   id: "userStore",
   state: () => ({
     isLogged: false,
     user: {} as UserInterface,
     session: {} as SessionInterface,
+    runtimeConfig : useRuntimeConfig()
   }),
   actions: {
     async authenticate(username: string, password: string) {
+      const url = `${this.runtimeConfig.public.apiProtocol}://${this.runtimeConfig.public.apiBase}:${this.runtimeConfig.public.apiPort}/api/authentication`;
       try {
         const response: any = await $fetch(
-          "http://localhost:8000/api/authentication/sessions/authenticate/",
+          url,
           {
             method: "POST",
             body: JSON.stringify({ username, password }),
@@ -35,10 +37,11 @@ export const useUserStore = defineStore({
       }
     },
     async retrieveSessionFromToken() {
+      const url = `${this.runtimeConfig.public.apiProtocol}://${this.runtimeConfig.public.apiBase}:${this.runtimeConfig.public.apiPort}/api/authentication/sessions/retrieve-from-token/`;
       const token = localStorage.getItem("token");
       try {
         const response: any = await $fetch(
-          "http://localhost:8000/api/authentication/sessions/retrieve-from-token/",
+          url,
           {
             method: "POST",
             headers: {

@@ -1,9 +1,20 @@
+const runtimeConfig = useRuntimeConfig();
+
+/*
+ *
+ * Method to fetch the dashboard data
+ *
+ * @param {string} token - The token to authenticate the request
+ *
+ * @returns {Promise} - The response from the API
+ */
 export const fetchDashboard = async (token: string | null) => {
-  const response: any = await $fetch('http://localhost:8000/api/users/retrieve-dashboard', {
-    method: 'get',
+  const url = `${runtimeConfig.public.apiProtocol}://${runtimeConfig.public.apiBase}:${runtimeConfig.public.apiPort}/api/users/retrieve-dashboard`;
+  const response: any = await $fetch(url, {
+    method: "get",
     headers: {
-      Authorization: `Bearer ${token}`
-    }
+      Authorization: `Bearer ${token}`,
+    },
   });
-  return response
-}
+  return response;
+};

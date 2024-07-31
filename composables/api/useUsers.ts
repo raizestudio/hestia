@@ -1,14 +1,16 @@
+const runtimeConfig = useRuntimeConfig();
+
 /*
  *
  * Method to fetch users from the API
- * 
+ *
  * @param {string} token - The token to authenticate the request
  * @param {number} page - The page number to fetch
  * @param {number} itemsPerPage - The number of items to fetch per page
  * @param {string} objects - The objects to fetch 'deleted' or 'all'
  * @param {string} expand - The fields to expand
- * 
- * @returns {Promise} - The response from the API 
+ *
+ * @returns {Promise} - The response from the API
  */
 export const fetchUsers = async (
   token: string | null,
@@ -18,17 +20,14 @@ export const fetchUsers = async (
   expand: string = "role.group,addresses,phone_numbers,user_preferences,user_security"
 ) => {
   const coreStore = useCoreStore();
-
+  const url = `http://localhost:8000/api/users/?page=${page}&page_size=${itemsPerPage}&expand=${expand}&objects=${objects}`;
   try {
-    const response: any = await $fetch(
-      `http://localhost:8000/api/users/?page=${page}&page_size=${itemsPerPage}&expand=${expand}&objects=${objects}`,
-      {
-        method: "get",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response: any = await $fetch(url, {
+      method: "get",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     return response;
   } catch (error) {
@@ -48,13 +47,13 @@ export const fetchUsers = async (
 /*
  *
  * Method to retrieve a user
- * 
+ *
  * @param {string} token - The token to authenticate the request
  * @param {username} username - The username of the user to retrieve
  * @param {string} objects - The objects to fetch 'deleted' or 'all'
  * @param {string} expand - The fields to expand
- * 
- * @returns {Promise} - The response from the API 
+ *
+ * @returns {Promise} - The response from the API
  */
 export const retrieveUser = async (
   token: string,
@@ -62,16 +61,14 @@ export const retrieveUser = async (
   objects: string = "",
   expand: string = "role.group,addresses,phone_numbers,user_preferences,user_security"
 ) => {
+  const url = `http://localhost:8000/api/users/${username}/?expand=${expand}&objects=${objects}`;
   try {
-    const response: any = await $fetch(
-      `http://localhost:8000/api/users/${username}/?expand=${expand}&objects=${objects}`,
-      {
-        method: "get",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response: any = await $fetch(url, {
+      method: "get",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     return response;
   } catch (error) {
@@ -82,57 +79,75 @@ export const retrieveUser = async (
 /*
  *
  * Method to partially update a user
- * 
+ *
  * @param {string} token - The token to authenticate the request
  * @param {username} username - The username of the user to update
  * @param {object} data - The data to update
- * 
+ *
  * @returns {Promise} - The response from the API
  */
 export const partialUpdateUser = async (
   username: string,
   data: any,
   objects: string = "all",
-  token?: string,
+  token?: string
 ) => {
+  const url = `http://localhost:8000/api/users/${username}/?objects=${objects}`;
   try {
     const token = localStorage.getItem("token");
-    const headers = token ? { Authorization: `Bearer ${String(token)}` } : {} as any;
-    
-    const response: any = await $fetch(
-      `http://localhost:8000/api/users/${username}/?objects=${objects}`,
-      {
-        method: "patch",
-        headers,
-        body: JSON.stringify(data),
-      }
-    );
+    const headers = token
+      ? { Authorization: `Bearer ${String(token)}` }
+      : ({} as any);
+
+    const response: any = await $fetch(url, {
+      method: "patch",
+      headers,
+      body: JSON.stringify(data),
+    });
 
     return response;
   } catch (error) {
     return error;
   }
 };
+
+/*
+ *
+ * Method to search users
+ * TODO: this method is probably redundant with the usage of django-filter and filter backends
+ *
+ * @param {string} token - The token to authenticate the request
+ * @param {string} field - The field to search
+ * @param {string} query - The query to search
+ *
+ */
 export const searchUsers = async (
   token: string | null,
   field: string,
   query: string
 ) => {
-  const response: any = await $fetch(
-    `http://localhost:8000/api/users/search?field=${field}&term=${query}`,
-    {
-      method: "get",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
+  const url = `http://localhost:8000/api/users/search?field=${field}&term=${query}`;
+  const response: any = await $fetch(url, {
+    method: "get",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 
   return response;
 };
 
+/*
+ *
+ * Method to create a user starting from an email
+ *
+ * @param {string} email - The email to create the user from
+ *
+ * @returns {Promise} - The response from the API
+ */
 export const createFromEMail = async (email: string) => {
-  const response: any = await fetch("http://localhost:8000/api/users/email/", {
+  const url = `http://localhost:8000/api/users/email/`;
+  const response: any = await fetch(url, {
     method: "post",
     headers: {
       "Content-Type": "application/json",
@@ -143,31 +158,44 @@ export const createFromEMail = async (email: string) => {
   return response;
 };
 
+/*
+ *
+ * Method to confirm an email
+ *
+ * @param {string} code - The code to confirm the email
+ *
+ * @returns {Promise} - The response from the API
+ */
 export const confirmEmail = async (code: string) => {
+  const url = `http://localhost:8000/api/users/email/activate/${code}`;
   try {
-    const response: any = await $fetch(
-      `http://localhost:8000/api/users/email/activate/${code}`,
-      {
-        method: "get",
-      }
-    );
+    const response: any = await $fetch(url, {
+      method: "get",
+    });
     return response;
   } catch (error) {
     return error;
   }
 };
 
+/*
+ *
+ * Method to delete a user
+ * 
+ * @param {string} token - The token to authenticate the request
+ * @param {string} username - The username of the user to delete
+ * 
+ * @returns {Promise} - The response from the API
+ */
 export const deleteUser = async (token: string, username: string) => {
+  const url = `http://localhost:8000/api/users/${username}/`;
   try {
-    const response: any = await $fetch(
-      `http://localhost:8000/api/users/${username}/`,
-      {
-        method: "delete",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response: any = await $fetch(url, {
+      method: "delete",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     return response;
   } catch (error) {

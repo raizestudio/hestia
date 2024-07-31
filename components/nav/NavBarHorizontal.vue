@@ -7,10 +7,12 @@
     </div>
     <NavBarStart />
     <NavBarEnd />
+    <!-- {{ process.env. }} -->
   </div>
 </template>
 
 <script setup lang="ts">
+import { onMounted } from 'vue';
 
 // Stores
 const userStore = useUserStore();
@@ -20,4 +22,10 @@ import NavBarStart from './navbar-horizontal/NavBarStart.vue';
 import NavBarEnd from './navbar-horizontal/NavBarEnd.vue';
 
 import HamburgerMenuIcon from '~/components/assets/icons/HamburgerMenuIcon.vue';
+
+const config = useRuntimeConfig();
+
+onMounted(() => {
+  console.log(config.public.apiProtocol);
+});
 </script>
