@@ -1,5 +1,3 @@
-const runtimeConfig = useRuntimeConfig();
-
 /*
  *
  * Method to fetch the services
@@ -19,6 +17,7 @@ export const fetchServices = async (
   objects: string = "",
   expand: string = "author,updated_by,tags,categories"
 ) => {
+  const runtimeConfig = useRuntimeConfig();
   const url = `${runtimeConfig.public.apiProtocol}://${runtimeConfig.public.apiBase}:${runtimeConfig.public.apiPort}/api/services?page=${page}&page_size=${itemsPerPage}&expand=${expand}&objects=${objects}`;
   const response: any = await $fetch(url, {
     method: "get",
@@ -40,6 +39,7 @@ export const fetchServices = async (
  */
 export const createService = async (token: string, data: any) => {
   const coreStore = useCoreStore();
+  const runtimeConfig = useRuntimeConfig();
   const url = `${runtimeConfig.public.apiProtocol}://${runtimeConfig.public.apiBase}:${runtimeConfig.public.apiPort}/api/services/`;
   try {
     const response: any = await $fetch(url, {
@@ -74,6 +74,7 @@ export const createService = async (token: string, data: any) => {
  * @returns {Promise} - The response from the API
  */
 export const retrieveService = async (token: string, id: string | number) => {
+  const runtimeConfig = useRuntimeConfig();
   const url = `${runtimeConfig.public.apiProtocol}://${runtimeConfig.public.apiBase}:${runtimeConfig.public.apiPort}/api/services/${id}`;
   try {
     const response: any = await $fetch(url, {
@@ -104,6 +105,7 @@ export const partialUpdateService = async (
   id: number,
   data: any
 ) => {
+  const runtimeConfig = useRuntimeConfig();
   const url = `${runtimeConfig.public.apiProtocol}://${runtimeConfig.public.apiBase}:${runtimeConfig.public.apiPort}/api/services/${id}/`;
   try {
     const response: any = await $fetch(url, {
@@ -130,6 +132,7 @@ export const partialUpdateService = async (
  * @returns {Promise} - The response from the API
  */
 export const deleteService = async (token: string, id: number) => {
+  const runtimeConfig = useRuntimeConfig();
   const url = `${runtimeConfig.public.apiProtocol}://${runtimeConfig.public.apiBase}:${runtimeConfig.public.apiPort}/api/services/${id}/`;
   try {
     const response: any = await $fetch(url, {

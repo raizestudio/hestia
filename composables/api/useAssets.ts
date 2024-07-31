@@ -1,4 +1,3 @@
-const runtimeConfig = useRuntimeConfig();
 
 /*
  * Fetch assets
@@ -18,6 +17,7 @@ export const fetchAssets = async (
   objects: string = "",
   expand: string = "author,updated_by,tags,categories"
 ) => {
+  const runtimeConfig = useRuntimeConfig();
   const url = `${runtimeConfig.public.apiProtocol}://${runtimeConfig.public.apiBase}:${runtimeConfig.public.apiPort}/api/assets?page=${page}&page_size=${itemsPerPage}&expand=${expand}&objects=${objects}`;
   const response: any = await $fetch(url, {
     method: "get",
@@ -39,6 +39,7 @@ export const fetchAssets = async (
  */
 export const createAsset = async (token: string, data: any) => {
   const coreStore = useCoreStore();
+  const runtimeConfig = useRuntimeConfig();
   const url = `${runtimeConfig.public.apiProtocol}://${runtimeConfig.public.apiBase}:${runtimeConfig.public.apiPort}/api/assets/`;
   try {
     const response: any = await $fetch(url, {
@@ -73,6 +74,7 @@ export const createAsset = async (token: string, data: any) => {
  * @returns {Promise} - The response from the API
  */
 export const retrieveAsset = async (token: string, id: string | number) => {
+  const runtimeConfig = useRuntimeConfig();
   const url = `${runtimeConfig.public.apiProtocol}://${runtimeConfig.public.apiBase}:${runtimeConfig.public.apiPort}/api/assets/${id}`;
   try {
     const response: any = await $fetch(url, {
@@ -105,6 +107,7 @@ export const partialUpdateAsset = async (
   data: any,
   restore?: boolean
 ) => {
+  const runtimeConfig = useRuntimeConfig();
   const url = `${runtimeConfig.public.apiProtocol}://${runtimeConfig.public.apiBase}:${runtimeConfig.public.apiPort}/api/assets/${id}/?restore=${restore}`;
   try {
     const response: any = await $fetch(url, {
@@ -131,6 +134,7 @@ export const partialUpdateAsset = async (
  * @returns {Promise} - The response from the API
  */
 export const deleteAsset = async (token: string, id: number) => {
+  const runtimeConfig = useRuntimeConfig();
   const url = `${runtimeConfig.public.apiProtocol}://${runtimeConfig.public.apiBase}:${runtimeConfig.public.apiPort}/api/assets/${id}/`;
   try {
     const response: any = await $fetch(url, {

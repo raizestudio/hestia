@@ -1,5 +1,3 @@
-const runtimeConfig = useRuntimeConfig();
-
 /*
  *
  * Method to fetch the independents data
@@ -19,6 +17,7 @@ export const fetchIndependents = async (
   objects: string = "",
   expand: string = "author,updated_by,tags,categories"
 ) => {
+  const runtimeConfig = useRuntimeConfig();
   const url = `${runtimeConfig.public.apiProtocol}://${runtimeConfig.public.apiBase}:${runtimeConfig.public.apiPort}/api/pros/self-employed?page=${page}&page_size=${itemsPerPage}&expand=${expand}&objects=${objects}`;
   const response: any = await $fetch(url, {
     method: "get",
@@ -40,6 +39,7 @@ export const fetchIndependents = async (
  */
 export const createIndependent = async (token: string, data: any) => {
   const coreStore = useCoreStore();
+  const runtimeConfig = useRuntimeConfig();
   const url = `${runtimeConfig.public.apiProtocol}://${runtimeConfig.public.apiBase}:${runtimeConfig.public.apiPort}/api/pros/self-employed/`;
   try {
     const response: any = await $fetch(url, {
@@ -77,6 +77,7 @@ export const retrieveIndependent = async (
   token: string,
   id: string | number
 ) => {
+  const runtimeConfig = useRuntimeConfig();
   const url = `${runtimeConfig.public.apiProtocol}://${runtimeConfig.public.apiBase}:${runtimeConfig.public.apiPort}/api/pros/self-employed/${id}`;
   try {
     const response: any = await $fetch(url, {
@@ -107,6 +108,7 @@ export const partialUpdateIndependent = async (
   id: number,
   data: any
 ) => {
+  const runtimeConfig = useRuntimeConfig();
   const url = `${runtimeConfig.public.apiProtocol}://${runtimeConfig.public.apiBase}:${runtimeConfig.public.apiPort}/api/pros/self-employed/${id}/`;
   try {
     const response: any = await $fetch(url, {
@@ -133,6 +135,7 @@ export const partialUpdateIndependent = async (
  * @returns {Promise} - The response from the API
  */
 export const deleteIndependent = async (token: string, id: number) => {
+  const runtimeConfig = useRuntimeConfig();
   const url = `${runtimeConfig.public.apiProtocol}://${runtimeConfig.public.apiBase}:${runtimeConfig.public.apiPort}/api/pros/self-employed/${id}/`;
   try {
     const response: any = await $fetch(url, {

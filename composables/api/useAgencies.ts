@@ -1,5 +1,3 @@
-const runtimeConfig = useRuntimeConfig();
-
 /*
  *
  * Method of fetching agencies
@@ -19,6 +17,7 @@ export const fetchAgencies = async (
   objects: string = "",
   expand: string = "author,updated_by,group_pro"
 ) => {
+  const runtimeConfig = useRuntimeConfig();
   const url = `${runtimeConfig.public.apiProtocol}://${runtimeConfig.public.apiBase}:${runtimeConfig.public.apiPort}/api/pros/enterprises?page=${page}&page_size=${itemsPerPage}&expand=${expand}&objects=${objects}`;
   const response: any = await $fetch(url, {
     method: "get",
@@ -41,6 +40,7 @@ export const fetchAgencies = async (
  */
 export const createAgency = async (token: string, data: any) => {
   const coreStore = useCoreStore();
+  const runtimeConfig = useRuntimeConfig();
   const url = `${runtimeConfig.public.apiProtocol}://${runtimeConfig.public.apiBase}:${runtimeConfig.public.apiPort}/api/pros/enterprises/`;
   try {
     const response: any = await $fetch(url, {
@@ -75,6 +75,7 @@ export const createAgency = async (token: string, data: any) => {
  * @returns {Promise} - The response from the API
  */
 export const retrieveAgency = async (token: string, id: string | number) => {
+  const runtimeConfig = useRuntimeConfig();
   const url = `${runtimeConfig.public.apiProtocol}://${runtimeConfig.public.apiBase}:${runtimeConfig.public.apiPort}/api/pros/enterprises/${id}`;
   try {
     const response: any = await $fetch(url, {
@@ -103,6 +104,7 @@ export const partialUpdateAgency = async (
   id: number,
   data: any
 ) => {
+  const runtimeConfig = useRuntimeConfig();
   const url = `${runtimeConfig.public.apiProtocol}://${runtimeConfig.public.apiBase}:${runtimeConfig.public.apiPort}/api/pros/enterprises/${id}/`;
   try {
     const response: any = await $fetch(url, {
@@ -129,6 +131,7 @@ export const partialUpdateAgency = async (
  * @returns {Promise} - The response from the API
  */
 export const deleteAgency = async (token: string, id: number) => {
+  const runtimeConfig = useRuntimeConfig();
   const url = `${runtimeConfig.public.apiProtocol}://${runtimeConfig.public.apiBase}:${runtimeConfig.public.apiPort}/api/pros/enterprises/${id}/`;
   try {
     const response: any = await $fetch(url, {

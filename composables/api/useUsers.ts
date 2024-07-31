@@ -1,5 +1,3 @@
-const runtimeConfig = useRuntimeConfig();
-
 /*
  *
  * Method to fetch users from the API
@@ -19,6 +17,7 @@ export const fetchUsers = async (
   objects: string = "",
   expand: string = "role.group,addresses,phone_numbers,user_preferences,user_security"
 ) => {
+  const runtimeConfig = useRuntimeConfig();
   const coreStore = useCoreStore();
   const url = `http://localhost:8000/api/users/?page=${page}&page_size=${itemsPerPage}&expand=${expand}&objects=${objects}`;
   try {
@@ -61,6 +60,7 @@ export const retrieveUser = async (
   objects: string = "",
   expand: string = "role.group,addresses,phone_numbers,user_preferences,user_security"
 ) => {
+  const runtimeConfig = useRuntimeConfig();
   const url = `http://localhost:8000/api/users/${username}/?expand=${expand}&objects=${objects}`;
   try {
     const response: any = await $fetch(url, {
@@ -92,6 +92,7 @@ export const partialUpdateUser = async (
   objects: string = "all",
   token?: string
 ) => {
+  const runtimeConfig = useRuntimeConfig();
   const url = `http://localhost:8000/api/users/${username}/?objects=${objects}`;
   try {
     const token = localStorage.getItem("token");
@@ -126,6 +127,7 @@ export const searchUsers = async (
   field: string,
   query: string
 ) => {
+  const runtimeConfig = useRuntimeConfig();
   const url = `http://localhost:8000/api/users/search?field=${field}&term=${query}`;
   const response: any = await $fetch(url, {
     method: "get",
@@ -146,6 +148,7 @@ export const searchUsers = async (
  * @returns {Promise} - The response from the API
  */
 export const createFromEMail = async (email: string) => {
+  const runtimeConfig = useRuntimeConfig();
   const url = `http://localhost:8000/api/users/email/`;
   const response: any = await fetch(url, {
     method: "post",
@@ -167,6 +170,7 @@ export const createFromEMail = async (email: string) => {
  * @returns {Promise} - The response from the API
  */
 export const confirmEmail = async (code: string) => {
+  const runtimeConfig = useRuntimeConfig();
   const url = `http://localhost:8000/api/users/email/activate/${code}`;
   try {
     const response: any = await $fetch(url, {
@@ -188,6 +192,7 @@ export const confirmEmail = async (code: string) => {
  * @returns {Promise} - The response from the API
  */
 export const deleteUser = async (token: string, username: string) => {
+  const runtimeConfig = useRuntimeConfig();
   const url = `http://localhost:8000/api/users/${username}/`;
   try {
     const response: any = await $fetch(url, {

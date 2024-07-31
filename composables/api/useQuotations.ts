@@ -1,5 +1,3 @@
-const runtimeConfig = useRuntimeConfig();
-
 /*
  *
  * Method to fetch the quotation references
@@ -19,6 +17,7 @@ export const fetchQuotationReferences = async (
   objects: string = "",
   expand: string = "author,updated_by,quotation_reference_scope,service,asset,currency"
 ) => {
+  const runtimeConfig = useRuntimeConfig();
   const url = `${runtimeConfig.public.apiProtocol}://${runtimeConfig.public.apiBase}:${runtimeConfig.public.apiPort}/api/quotations/references?page=${page}&page_size=${itemsPerPage}&expand=${expand}&objects=${objects}`;
   const response: any = await $fetch(url, {
     method: "get",
@@ -40,6 +39,7 @@ export const fetchQuotationReferences = async (
  */
 export const createQuotationReference = async (token: string, data: any) => {
   const coreStore = useCoreStore();
+  const runtimeConfig = useRuntimeConfig();
   const url = `${runtimeConfig.public.apiProtocol}://${runtimeConfig.public.apiBase}:${runtimeConfig.public.apiPort}/api/quotations/references/`;
   try {
     const response: any = await $fetch(url, {
@@ -77,6 +77,7 @@ export const retrieveQuotationReference = async (
   token: string,
   id: string | number
 ) => {
+  const runtimeConfig = useRuntimeConfig();
   const url = `${runtimeConfig.public.apiProtocol}://${runtimeConfig.public.apiBase}:${runtimeConfig.public.apiPort}/api/quotations/references/${id}`;
   try {
     const response: any = await $fetch(url, {
@@ -107,6 +108,7 @@ export const partialUpdateQuotationReference = async (
   id: number,
   data: any
 ) => {
+  const runtimeConfig = useRuntimeConfig();
   const url = `${runtimeConfig.public.apiProtocol}://${runtimeConfig.public.apiBase}:${runtimeConfig.public.apiPort}/api/quotations/references/${id}/`;
   try {
     const response: any = await $fetch(url, {
@@ -133,6 +135,7 @@ export const partialUpdateQuotationReference = async (
  * @returns {Promise} - The response from the API
  */
 export const deleteQuotationReference = async (token: string, id: number) => {
+  const runtimeConfig = useRuntimeConfig();
   const url = `${runtimeConfig.public.apiProtocol}://${runtimeConfig.public.apiBase}:${runtimeConfig.public.apiPort}/api/quotations/references/${id}/`;
   try {
     const response: any = await $fetch(url, {
@@ -167,6 +170,7 @@ export const fetchQuotations = async (
   objects: string = "",
   expand: string = "author,updated_by,quotation_references"
 ) => {
+  const runtimeConfig = useRuntimeConfig();
   const url = `${runtimeConfig.public.apiProtocol}://${runtimeConfig.public.apiBase}:${runtimeConfig.public.apiPort}/api/quotations?page=${page}&page_size=${itemsPerPage}&expand=${expand}&objects=${objects}`;
   const response: any = await $fetch(url, {
     method: "get",
@@ -188,6 +192,7 @@ export const fetchQuotations = async (
  */
 export const createQuotation = async (token: string, data: any) => {
   const coreStore = useCoreStore();
+  const runtimeConfig = useRuntimeConfig();
   const url = `${runtimeConfig.public.apiProtocol}://${runtimeConfig.public.apiBase}:${runtimeConfig.public.apiPort}/api/quotations/`;
   try {
     const response: any = await $fetch(url, {
@@ -222,6 +227,7 @@ export const createQuotation = async (token: string, data: any) => {
  * @returns {Promise} - The response from the API
  */
 export const retrieveQuotation = async (token: string, id: string | number) => {
+  const runtimeConfig = useRuntimeConfig();
   const url = `${runtimeConfig.public.apiProtocol}://${runtimeConfig.public.apiBase}:${runtimeConfig.public.apiPort}/api/quotations/${id}`;
   try {
     const response: any = await $fetch(url, {
@@ -252,6 +258,7 @@ export const partialUpdateQuotation = async (
   id: number,
   data: any
 ) => {
+  const runtimeConfig = useRuntimeConfig();
   const url = `${runtimeConfig.public.apiProtocol}://${runtimeConfig.public.apiBase}:${runtimeConfig.public.apiPort}/api/quotations/${id}/`;
   try {
     const response: any = await $fetch(url, {
@@ -278,6 +285,7 @@ export const partialUpdateQuotation = async (
  * @returns {Promise} - The response from the API
  */
 export const deleteQuotation = async (token: string, id: number) => {
+  const runtimeConfig = useRuntimeConfig();
   const url = `${runtimeConfig.public.apiProtocol}://${runtimeConfig.public.apiBase}:${runtimeConfig.public.apiPort}/api/quotations/${id}/`;
   try {
     const response: any = await $fetch(url, {
