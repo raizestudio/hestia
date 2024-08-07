@@ -54,7 +54,7 @@
       <DefaultDropdown>
         <template #trigger>
           <button class="btn btn-sm btn-content" :disabled="props.shouldDisable">
-            <span>Items par page: {{ props.optionsCount }}</span>
+            <span>Items par page: {{ props.optionsCount }} / {{props.itemsPerPage}}</span>
           </button>
         </template>
         <template #content>
@@ -91,6 +91,7 @@ const props = defineProps<{
   hasPrev?: boolean;
   hasNext?: boolean;
   shouldDisable?: boolean;
+  itemsPerPage?: number;
 }>();
 
 const pagesCount = computed(() => {

@@ -19,7 +19,7 @@ export const fetchUsers = async (
 ) => {
   const runtimeConfig = useRuntimeConfig();
   const coreStore = useCoreStore();
-  const url = `http://localhost:8000/api/users/?page=${page}&page_size=${itemsPerPage}&expand=${expand}&objects=${objects}`;
+  const url = `${runtimeConfig.public.apiProtocol}://${runtimeConfig.public.apiBase}:${runtimeConfig.public.apiPort}/${runtimeConfig.public.apiBaseUrl}/users/?page=${page}&page_size=${itemsPerPage}&expand=${expand}&objects=${objects}`;
   try {
     const response: any = await $fetch(url, {
       method: "get",
@@ -61,7 +61,7 @@ export const retrieveUser = async (
   expand: string = "role.group,addresses,phone_numbers,user_preferences,user_security"
 ) => {
   const runtimeConfig = useRuntimeConfig();
-  const url = `http://localhost:8000/api/users/${username}/?expand=${expand}&objects=${objects}`;
+  const url = `${runtimeConfig.public.apiProtocol}}://${runtimeConfig.public.apiBase}:${runtimeConfig.public.apiPort}/${runtimeConfig.public.apiBaseUrl}/users/${username}/?expand=${expand}&objects=${objects}`;
   try {
     const response: any = await $fetch(url, {
       method: "get",
@@ -93,7 +93,7 @@ export const partialUpdateUser = async (
   token?: string
 ) => {
   const runtimeConfig = useRuntimeConfig();
-  const url = `http://localhost:8000/api/users/${username}/?objects=${objects}`;
+  const url = `${runtimeConfig.public.apiProtocol}://${runtimeConfig.public.apiBase}:${runtimeConfig.public.apiPort}/${runtimeConfig.public.apiBaseUrl}/users/${username}/?objects=${objects}`;
   try {
     const token = localStorage.getItem("token");
     const headers = token
@@ -128,7 +128,7 @@ export const searchUsers = async (
   query: string
 ) => {
   const runtimeConfig = useRuntimeConfig();
-  const url = `http://localhost:8000/api/users/search?field=${field}&term=${query}`;
+  const url = `${runtimeConfig.public.apiProtocol}://${runtimeConfig.public.apiBase}:${runtimeConfig.public.apiPort}/${runtimeConfig.public.apiBaseUrl}/users/search?field=${field}&term=${query}`;
   const response: any = await $fetch(url, {
     method: "get",
     headers: {
@@ -149,7 +149,7 @@ export const searchUsers = async (
  */
 export const createFromEMail = async (email: string) => {
   const runtimeConfig = useRuntimeConfig();
-  const url = `http://localhost:8000/api/users/email/`;
+  const url = `${runtimeConfig.public.apiProtocol}://${runtimeConfig.public.apiBase}:${runtimeConfig.public.apiPort}/${runtimeConfig.public.apiBaseUrl}/users/email/`;
   const response: any = await fetch(url, {
     method: "post",
     headers: {
@@ -171,7 +171,7 @@ export const createFromEMail = async (email: string) => {
  */
 export const confirmEmail = async (code: string) => {
   const runtimeConfig = useRuntimeConfig();
-  const url = `http://localhost:8000/api/users/email/activate/${code}`;
+  const url = `${runtimeConfig.public.apiProtocol}://${runtimeConfig.public.apiBase}:${runtimeConfig.public.apiPort}/${runtimeConfig.public.apiBaseUrl}/users/email/activate/${code}`;
   try {
     const response: any = await $fetch(url, {
       method: "get",
@@ -193,7 +193,7 @@ export const confirmEmail = async (code: string) => {
  */
 export const deleteUser = async (token: string, username: string) => {
   const runtimeConfig = useRuntimeConfig();
-  const url = `http://localhost:8000/api/users/${username}/`;
+  const url = `${runtimeConfig.public.apiProtocol}://${runtimeConfig.public.apiBase}:${runtimeConfig.public.apiPort}/${runtimeConfig.public.apiBaseUrl}/users/${username}/`;
   try {
     const response: any = await $fetch(url, {
       method: "delete",

@@ -224,6 +224,7 @@
     :go-prev="props.goPrev"
     :has-next="props.hasNext"
     :has-prev="props.hasPrev"
+    :items-per-page="props.itemsPerPage"
     :update-items-per-page="(itemsPerPage: number) => props.updateItemsPerPage(itemsPerPage)"
     :go-to-page="(page: number) => props.goToPage(page)"
     :should-disable="props.shouldDisable"
@@ -283,6 +284,7 @@ const props = defineProps<{
   hasPrev?: boolean;
   count?: number;
   currentPage?: number;
+  itemsPerPage?: number;
   toggleModal: (key: any) => void;
   isActiveAction: (key: any, is_active: boolean) => void;
   deleteAction: (key: any) => void;

@@ -12,7 +12,7 @@ export const useUserStore = defineStore({
   }),
   actions: {
     async authenticate(username: string, password: string) {
-      const url = `${this.runtimeConfig.public.apiProtocol}://${this.runtimeConfig.public.apiBase}:${this.runtimeConfig.public.apiPort}/api/authentication`;
+      const url = `${this.runtimeConfig.public.apiProtocol}://${this.runtimeConfig.public.apiBase}:${this.runtimeConfig.public.apiPort}/api/authentication/sessions/authenticate/`;
       try {
         const response: any = await $fetch(
           url,

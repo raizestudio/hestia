@@ -44,6 +44,7 @@
             :has-prev="hasPrev"
             :count="totalUsers"
             :current-page="currentPage"
+            :items-per-page="itemsPerPage"
             option-key="username"
             url="/user/"
             :toggle-modal="(serviceId) => toggleModal(serviceId)"
@@ -218,7 +219,7 @@ const restoreUser = async (username: string) => {
   shouldDisable.value = true;
   const token = localStorage.getItem('token');
   if (!token) return;
-  const response: any = await partialUpdateUser(token, username, { deleted_at: null });
+  const response: any = await partialUpdateUser(username, { deleted_at: null }, '',token);
   users.value = users.value.map((user: UserInterface) => {
     if (user.username === username) {
       user.deleted_at = null;
@@ -322,9 +323,9 @@ const toggleIsActive = (username: string, is_active: boolean) => {
   console.log("Toggle is active");
   const token = localStorage.getItem("token");
   if (!token) return;
-  const response: any = partialUpdateUser(token, username, {
+  const response: any = partialUpdateUser(username, {
     is_active: is_active,
-  });
+  }, '', token);
   users.value = users.value.map((user: UserInterface) => {
     if (user.username === username) {
       user.is_active = is_active;

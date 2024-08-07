@@ -51,11 +51,11 @@ export const useCoreStore = defineStore({
     },
 
     async fetchMenus() {
-      const url = `${this.runtimeConfig.public.apiProtocol}://${this.runtimeConfig.public.apiBase}:${this.runtimeConfig.public.apiPort}/api/settings`;
+      const url = `${this.runtimeConfig.public.apiProtocol}://${this.runtimeConfig.public.apiBase}:${this.runtimeConfig.public.apiPort}/api/menus/user-menu`;
 
       const token = localStorage.getItem("token");
       const response: any = await $fetch(
-        `${url}/menus/user-menus/`,
+        `${url}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

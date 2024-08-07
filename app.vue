@@ -30,14 +30,9 @@
         </div>
       </div>
       <ToastStack v-if="coreStore.hasNotification" class="z-50">
-        <!-- <div
-          v-for="notification in _.reverse(unreadNotifications)"
-          :key="notification.id"
-          class="toast mb-6 w-80"
-        > -->
         <div
-          v-for="notification in unreadNotifications"
-          :key="notification.id"
+          v-for="notification in _.reverse(unreadNotifications)"
+          :key="notification.id"yar
           class="toast mb-6 w-80"
         >
           <!-- <ToastAcceptDeny /> -->

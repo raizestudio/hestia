@@ -9,7 +9,9 @@
         <TextInput
           v-model="service.name"
           label="Comment voulez vous l'appeler?"
+          name="name"
           placeholder="Monter un meuble ..."
+          :change-action="(fieldName, field) => console.log(fieldName, field)"
         />
         <span>{{ service.name }}</span>
         <TextArea
@@ -20,12 +22,16 @@
         <TextInput
           v-model="service.name"
           label="Tags"
+          name="tags"
           placeholder="meuble, ikea, assemblage, ..."
+          :change-action="(fieldName, field) => console.log(fieldName, field)"
         />
         <TextInput
           v-model="service.name"
           label="Catégories"
+          name="categories"
           placeholder="coaching, bricolage, ..."
+          :change-action="(fieldName, field) => console.log(fieldName, field)"
         />
       </div>
       <div class="flex flex-col gap-1"></div>
