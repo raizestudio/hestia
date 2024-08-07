@@ -31,7 +31,7 @@
       </div>
       <ToastStack v-if="coreStore.hasNotification" class="z-50">
         <div
-          v-for="notification in _.reverse(unreadNotifications)"
+          v-for="notification in reversedNotifications"
           :key="notification.id"yar
           class="toast mb-6 w-80"
         >
@@ -52,7 +52,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, watch, ref } from "vue";
+import { onMounted, watch, ref, computed } from "vue";
 import _ from "lodash";
 import { useNuxtApp } from "#app";
 // const { $socket }: any = useNuxtApp();
@@ -90,6 +90,11 @@ onMounted(async () => {
 const unreadNotifications = computed(() => {
   return coreStore.notifications.filter((n) => !n.isRead);
 });
+
+const reversedNotifications = computed(() => {
+  return _.reverse(coreStore.notifications);
+});
+
 watch(
   () => coreStore.theme,
   (newTheme) => {
