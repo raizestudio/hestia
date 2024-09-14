@@ -29,7 +29,7 @@
 <!-- TODO -->
 
 ### Built With
-* [![Vue][Vue.js]][Vue-url]
+[![Nuxt][Nuxt.js]][Nuxt-url]
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
@@ -44,3 +44,5 @@
 [issues-url]: https://github.com/raizestudio/hestia/issues
 [Vue.js]: https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D
 [Vue-url]: https://vuejs.org/
+[Nuxt.js]: https://img.shields.io/badge/Nuxt.js-002E3B?logo=nuxtdotjs&logoColor=#00DC82
+[Nuxt-url]: https://nuxtjs.com/
