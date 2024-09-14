@@ -30,6 +30,7 @@
 
 ### Built With
 [![Nuxt][Nuxt.js]][Nuxt-url]
+[![Tailwindcss][Tailwindcss]][Tailwindcss-url]
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
@@ -46,3 +47,5 @@
 [Vue-url]: https://vuejs.org/
 [Nuxt.js]: https://img.shields.io/badge/Nuxt.js-002E3B?logo=nuxtdotjs&logoColor=#00DC82
 [Nuxt-url]: https://nuxtjs.com/
+[Tailwindcss]: https://img.shields.io/badge/Tailwind%20CSS-%2338B2AC.svg?logo=tailwind-css&logoColor=white
+[Tailwindcss-url]: https://tailwindcss.com/
