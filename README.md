@@ -29,4 +29,4 @@
 <!-- TODO -->
 
 ### Built With
-[![Vue][Vue.js]][Vue-url]
+* [![Vue][Vue.js]][Vue-url]
