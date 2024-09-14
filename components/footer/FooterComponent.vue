@@ -39,8 +39,8 @@
     </div>
     <div class="flex items-center gap-2">
       <div class="flex items-center gap-2">
-        <BadgeComponent :text="`${packageJson.version}`"/>
-        <!-- <BadgeComponent :text="`#someinfo`"/> -->
+        <BadgeComponent :text="`${ userStore.sessionId || 'ID session'}`" spanClasses="text-xs-50" :isCopyable="true" />
+        <BadgeComponent :text="`${packageJson.version}`" spanClasses="text-xs-50" :isTextSelectable="false" />
       </div>
       <div>
         <CircleComponent widthClass="w-2.5" heightClass="h-2.5" />
@@ -54,6 +54,7 @@ import packageJson from "@/package.json";
 
 // Stores
 const themeStore = useThemeStore();
+const userStore = useUserStore();
 
 // Helpers
 import { capitalize } from "~/helpers/textHelper";

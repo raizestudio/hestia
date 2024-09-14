@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="flex flex-col gap-0.5">
     <label
       v-if="props.label"
       :for="props.name"

@@ -1,8 +1,8 @@
 <template>
   <NuxtLayout>
-    <div class="flex justify-center items-center  h-full">
+    <div class="flex justify-center items-center h-full">
       <div
-        :class="`px-6 py-10 rounded shadow-sm ${
+        :class="`px-6 py-4 rounded ${
           themeStore.current === 'light' ? 'bg-light-200' : 'bg-dark-200'
         }`"
       >
@@ -23,8 +23,8 @@
             modelValue=""
             type="email"
             placeholder="Entrez votre email"
-            labelClasses="text-md"
-            inputClasses="px-2 py-2"
+            labelClasses="text-sm"
+            inputClasses="px-2.5 py-1.5"
           />
           <InputComponent
             label="Password"
@@ -32,12 +32,30 @@
             modelValue=""
             type="password"
             placeholder="Entrez votre email"
-            labelClasses="text-md"
-            inputClasses="px-2 py-2"
+            labelClasses="text-sm"
+            inputClasses="px-2.5 py-1.5"
           />
           <ButtonComponent extraClasses="mt-4" @click="mockAuth">
             Connexion
           </ButtonComponent>
+        </div>
+        <div class="flex flex-col items-center gap-1 mt-4">
+          <span
+            :class="`text-sm ${
+              themeStore.current === 'light'
+                ? 'text-dark-100'
+                : 'text-light-100'
+            }`"
+            ><nuxt-link to="/auth/register">Inscrivez-vous</nuxt-link></span
+          >
+          <span
+            :class="`text-sm ${
+              themeStore.current === 'light'
+                ? 'text-dark-100'
+                : 'text-light-100'
+            }`"
+            >J'ai besoin d'assistance</span
+          >
         </div>
       </div>
     </div>
@@ -45,6 +63,7 @@
 </template>
 
 <script setup lang="ts">
+import packageJson from "@/package.json";
 
 // Stores
 const themeStore = useThemeStore();
@@ -54,18 +73,21 @@ const userStore = useUserStore();
 import InputComponent from "~/components/input/InputComponent.vue";
 import ButtonComponent from "~/components/button/ButtonComponent.vue";
 
+// Helpers
+import { capitalize } from "~/helpers/textHelper";
+
 const router = useRouter();
 
 const mockAuth = () => {
   userStore.isAuthenticated = true;
-  router.push('/dashboard');
-}
+  router.push("/dashboard");
+};
 
 // definePageMeta({
 // })
 
 useSeoMeta({
-  title: "Home",
+  title: `${capitalize(packageJson.name)} - Connexion`,
   description: "This is the home page",
 });
 </script>

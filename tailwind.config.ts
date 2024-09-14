@@ -49,6 +49,20 @@ const config: Config = {
         },
         
       },
+      fontSize: {
+        'xs-50': '0.625rem',
+        'xxs': '0.5rem',
+      },
+      boxShadow: {
+        soft: "2px 2px 4px rgba(0, 0, 0, 0.5)",
+        softLight: "2px 2px 4px rgba(0, 0, 0, 0.25)",
+        hard: "1px 1px 1px rgba(0, 0, 0, 0.5)",
+        hardLight: "1px 1px 1px rgba(0, 0, 0, 0.25)",
+      },
+      dropShadow: {
+        hard: '1px 1px 1px rgba(0, 0, 0, 0.5)',
+        hardLight: '1px 1px 1px rgba(0, 0, 0, 0.25)',
+      },
     },
   },
 };

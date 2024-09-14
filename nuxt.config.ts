@@ -9,4 +9,13 @@ export default defineNuxtConfig({
       viewport: "width=device-width, initial-scale=1",
     },
   },
+  runtimeConfig: {
+    // mySecret: process.env.MY_SECRET,
+    public: {
+      apiProtocol: process.env.API_PROTOCOL,
+      apiHost: process.env.API_HOST,
+      apiPort: process.env.API_PORT,
+      apiBasePath: process.env.API_BASE_PATH,
+    }
+  },
 });
