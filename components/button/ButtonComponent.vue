@@ -2,7 +2,7 @@
   <button
     :class="`px-4 py-1 rounded-md transition-colors duration-500 ease-in-out ${
       themeStore.current === 'light' ? 'text-dark-200 bg-light-100 hover:bg-light-300' : 'text-light-200 bg-dark-100 hover:bg-dark-300'
-    }`"
+    } ${props.extraClasses}`"
   >
     <slot />
   </button>
@@ -12,4 +12,8 @@
 
 // Stores
 const themeStore = useThemeStore();
+
+const props = defineProps<{
+  extraClasses?: string;
+}>();
 </script>

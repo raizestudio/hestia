@@ -1,6 +1,6 @@
 <template>
   <footer
-    :class="`flex justify-between px-10 py-0.5 ${
+    :class="`flex flex-col-reverse sm:flex-row justify-between items-center sm:items-start gap-2 sm:gap-0 px-2 md:px-10 py-2 sm:py-0.5 ${
       themeStore.current === 'light' ? 'bg-light-200' : 'bg-dark-200'
     }`"
   >

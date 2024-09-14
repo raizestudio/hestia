@@ -1,6 +1,6 @@
 <template>
   <nav
-    :class="`flex items-center justify-between px-10 h-12 transition-colors duration-500 ease-in-out ${
+    :class="`flex items-center justify-between px-2 md:px-10 h-12 transition-colors duration-500 ease-in-out ${
       themeStore.current === 'light' ? 'bg-light-200' : 'bg-dark-200'
     }`"
   >
