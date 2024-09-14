@@ -30,3 +30,17 @@
 
 ### Built With
 * [![Vue][Vue.js]][Vue-url]
+
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[contributors-shield]: https://img.shields.io/github/contributors/raizestudio/hestia.svg?style=for-the-badge
+[contributors-url]: https://github.com/raizestudio/hestia/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/raizestudio/hestia.svg?style=for-the-badge
+[forks-url]: https://github.com/raizestudio/hestia/network/members
+[stars-shield]: https://img.shields.io/github/stars/raizestudio/hestia.svg?style=for-the-badge
+[stars-url]: https://github.com/raizestudio/hestia/stargazers
+[issues-shield]: https://img.shields.io/github/issues/raizestudio/hestia.svg?style=for-the-badge
+[issues-url]: https://github.com/raizestudio/hestia/issues
+[Vue.js]: https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D
+[Vue-url]: https://vuejs.org/
