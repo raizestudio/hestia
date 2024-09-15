@@ -17,6 +17,10 @@
   },
   "dependencies": {
     "@pinia/nuxt": "^0.5.4",
+    "@vueuse/components": "^11.0.3",
+    "@vueuse/core": "^11.0.3",
+    "@vueuse/nuxt": "^11.0.3",
+    "clsx": "^2.1.1",
     "nuxt": "^3.13.0",
     "vue": "latest",
     "vue-router": "latest"

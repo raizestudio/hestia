@@ -88,15 +88,15 @@ const userStore = useUserStore();
 const coreStore = useCoreStore();
 
 // Helpers
-import { capitalize } from "~/helpers/textHelper";
+import { capitalize } from "@/helpers/textHelper";
 
 // Components
-import BadgeComponent from "~/components/badge/BadgeComponent.vue";
-import CircleComponent from "~/components/shape/CircleComponent.vue";
-import TooltipComponent from "~/components/tooltip/TooltipComponent.vue";
+import BadgeComponent from "@/components/badge/BadgeComponent.vue";
+import CircleComponent from "@/components/shape/CircleComponent.vue";
+import TooltipComponent from "@/components/tooltip/TooltipComponent.vue";
 
 // Icons
-import HeartIcon from "~/components/icons/HeartIcon.vue";
+import HeartIcon from "@/components/icons/HeartIcon.vue";
 
 const showTooltipSessionId = ref(false);
 const showTooltipLatency = ref(false);

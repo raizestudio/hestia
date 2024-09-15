@@ -4,13 +4,7 @@
       themeStore.current === 'light' ? 'bg-light-100' : 'bg-dark-100'
     }`"
   >
-    <div class="w-full">
-      <div class="h-1.5 w-full bg-primary-300 overflow-hidden">
-        <div
-          class="animate-progress w-full h-full bg-primary-100 left-right rounded-full"
-        ></div>
-      </div>
-    </div>
+    <ProgressBar />
     <div class="flex flex-col justify-center items-center gap-10 grow">
       <div class="flex items-center gap-1.5">
         <HestiaLogoIcon class="w-12 fill-primary-100" />
@@ -34,7 +28,7 @@
 
 <script setup lang="ts">
 // Icons
-import HestiaLogoIcon from "~/components/icons/HestiaLogoIcon.vue";
+import HestiaLogoIcon from "@/components/icons/HestiaLogoIcon.vue";
 
 // Stores
 const themeStore = useThemeStore();

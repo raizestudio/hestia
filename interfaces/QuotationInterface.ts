@@ -1,6 +1,6 @@
-import type { TagInterface } from "~/interfaces/TagInterface";
-import type { CategoryInterface } from '~/interfaces/CategoryInterface';
-import type { UserInterface } from '~/interfaces/UserInterface';
+import type { TagInterface } from "@/interfaces/TagInterface";
+import type { CategoryInterface } from '@/interfaces/CategoryInterface';
+import type { UserInterface } from '@/interfaces/UserInterface';
 
 export interface QuotationReferenceInterface {
   id: number,

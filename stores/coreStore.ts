@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-import { healthCheck } from "~/composables/api/useCore";
+import { healthCheck } from "@/composables/api/useCore";
 interface ApiHealthInterface {
   isUp: boolean;
   latency: number;

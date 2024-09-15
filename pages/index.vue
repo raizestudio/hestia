@@ -10,7 +10,7 @@
 import packageJson from '@/package.json';
 
 // Helpers
-import { capitalize } from '~/helpers/textHelper';
+import { capitalize } from '@/helpers/textHelper';
 
 // Stores
 const themeStore = useThemeStore();

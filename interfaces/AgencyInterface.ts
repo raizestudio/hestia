@@ -1,4 +1,4 @@
-import type { UserInterface } from '~/interfaces/UserInterface';
+import type { UserInterface } from '@/interfaces/UserInterface';
 export interface AgencyInterface {
   id: number;
   name: string;

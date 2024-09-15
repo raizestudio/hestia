@@ -35,7 +35,7 @@ import { computed } from 'vue';
 const themeStore = useThemeStore();
 
 // Components
-import SpinnerComponent from '~/components/loading/SpinnerComponent.vue';
+import SpinnerComponent from '@/components/loading/SpinnerComponent.vue';
 
 const hasCopiedToClipboard = ref(false);
 

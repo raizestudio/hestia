@@ -10,7 +10,7 @@
 <script setup lang="ts">
 
 // Components
-import NavBar from '~/components/navbar/NavBar.vue';
+import NavBar from '@/components/navbar/NavBar.vue';
 
 // Stores
 const themeStore = useThemeStore()

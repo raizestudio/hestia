@@ -9,15 +9,22 @@
 import { onMounted } from "vue";
 
 // Composables
-import { getSessionId } from "~/composables/api/useSession";
+import { getSessionId } from "@/composables/api/useSession";
 
 // Stores
 const userStore = useUserStore();
 const coreStore = useCoreStore();
 
+const router = useRouter();
+const route = useRoute();
+
 onMounted(async () => {
-  const sessionId = await getSessionId();
-  userStore.setSessionId(sessionId);
+  const token = localStorage.getItem("token");
+  if (token) {
+    await userStore.validateCurrentSession();
+    router.push((route.query.redirect as string) || "/dashboard");
+  }
+
   coreStore.isLoadingGlobal = false;
   coreStore.updateHealthCheck();
   setInterval(async () => {

@@ -1,4 +1,4 @@
-import type { CountryInterface } from "~/interfaces/GeoInterfaces";
+import type { CountryInterface } from "@/interfaces/GeoInterfaces";
 
 export interface PhoneNumberTypeInterface {
   id: number;
