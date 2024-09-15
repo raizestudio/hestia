@@ -26,8 +26,8 @@
           <span class="text-sm">Mon compte</span>
         </ButtonComponent>
       </div>
-      <UserComponent />
-      <NotificationDropdown />
+      <UserComponent v-if="userStore.isAuthenticated" />
+      <NotificationDropdown v-if="userStore.isAuthenticated" />
       <ThemeToggle />
       <SupportChatDropdown />
     </div>
