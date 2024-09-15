@@ -37,13 +37,43 @@
         </div>
       </div>
     </div>
-    <div class="flex items-center gap-2">
+    <div class="flex items-center h-full gap-2">
       <div class="flex items-center gap-2">
-        <BadgeComponent :text="`${ userStore.sessionId || 'ID session'}`" spanClasses="text-xs-50" :isCopyable="true" />
-        <BadgeComponent :text="`${packageJson.version}`" spanClasses="text-xs-50" :isTextSelectable="false" />
+        <TooltipComponent
+          text="Ceci est votre identifiant de session"
+          :show="showTooltipSessionId"
+          width-class="w-48"
+          @mouseover="() => setTooltipSessionId(true)"
+          @mouseleave="() => setTooltipSessionId(false)"
+        >
+          <BadgeComponent
+            :text="`${userStore.sessionId}`"
+            spanClasses="text-xs-50"
+            :isCopyable="true"
+            text-copied-success-message="ID session copié avec succès"
+          />
+        </TooltipComponent>
+        <BadgeComponent
+          :text="`${packageJson.version}`"
+          spanClasses="text-xs-50"
+          :isTextSelectable="true"
+        />
       </div>
       <div>
-        <CircleComponent widthClass="w-2.5" heightClass="h-2.5" />
+        <TooltipComponent
+          :text="String(coreStore.apiHealth.latency)"
+          :show="showTooltipLatency"
+          width-class="w-14"
+          tooltip-offset-class="-top-12"
+          @mouseover="() => setTooltipLatency(true)"
+          @mouseleave="() => setTooltipLatency(false)"
+        >
+          <CircleComponent
+            widthClass="w-2.5"
+            heightClass="h-2.5"
+            :color="circleColor"
+          />
+        </TooltipComponent>
       </div>
     </div>
   </footer>
@@ -55,6 +85,7 @@ import packageJson from "@/package.json";
 // Stores
 const themeStore = useThemeStore();
 const userStore = useUserStore();
+const coreStore = useCoreStore();
 
 // Helpers
 import { capitalize } from "~/helpers/textHelper";
@@ -62,7 +93,40 @@ import { capitalize } from "~/helpers/textHelper";
 // Components
 import BadgeComponent from "~/components/badge/BadgeComponent.vue";
 import CircleComponent from "~/components/shape/CircleComponent.vue";
+import TooltipComponent from "~/components/tooltip/TooltipComponent.vue";
 
 // Icons
 import HeartIcon from "~/components/icons/HeartIcon.vue";
+
+const showTooltipSessionId = ref(false);
+const showTooltipLatency = ref(false);
+
+const circleColor = computed(() => {
+  let latencyColor = "";
+  if (coreStore.apiHealth.latency >= 0 && coreStore.apiHealth.latency <= 25) {
+    latencyColor = "bg-success-100";
+  } else if (
+    coreStore.apiHealth.latency > 25 &&
+    coreStore.apiHealth.latency <= 50
+  ) {
+    latencyColor = "bg-warning-100";
+  } else if (
+    coreStore.apiHealth.latency > 50 &&
+    coreStore.apiHealth.latency <= 100
+  ) {
+    latencyColor = "bg-danger-100";
+  } else {
+    latencyColor = "bg-danger-100";
+  }
+
+  return coreStore.apiHealth.isUp ? latencyColor : "bg-danger-100";
+});
+
+const setTooltipSessionId = (value: boolean) => {
+  showTooltipSessionId.value = value;
+};
+
+const setTooltipLatency = (value: boolean) => {
+  showTooltipLatency.value = value;
+};
 </script>

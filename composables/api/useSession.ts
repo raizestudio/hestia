@@ -6,7 +6,9 @@ interface SessionResponse {
 
 export const getSessionId = async () => {
   const runtimeConfig = useRuntimeConfig();
+
   const response: SessionResponse = await $fetch<SessionResponse>(`${constructedBaseUrl()}/authentication/sessions/session-id`);
 
+  console.log(`Session ID: ${response.session}`);
   return response.session;
 }

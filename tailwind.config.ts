@@ -13,9 +13,9 @@ const config: Config = {
     extend: {
       colors: {
         primary: {
-          "100": "#1e2749",
-          "200": "#1e2749",
-          "300": "#1e2749",
+          "100": "#355bf5",
+          "200": "#9aadfa",
+          "300": "#aebdfb",
         },
         light: {
           "100": "#f2f2f2",
@@ -63,6 +63,19 @@ const config: Config = {
         hard: '1px 1px 1px rgba(0, 0, 0, 0.5)',
         hardLight: '1px 1px 1px rgba(0, 0, 0, 0.25)',
       },
+      animation: {
+        "progress": "progress 2s infinite linear",
+      },
+      keyframes: {
+        progress: {
+          '0%': { transform: ' translateX(-100%) scaleX(0)' },
+          '40%': { transform: 'translateX(0) scaleX(0.2)' },
+          '100%': { transform: 'translateX(100%) scaleX(0.8)' },
+        },
+      },
+      transformOrigin: {
+        'left-right': '0% 50%',
+      }
     },
   },
 };
