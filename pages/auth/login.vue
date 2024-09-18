@@ -1,6 +1,6 @@
 <template>
   <NuxtLayout>
-    <div class="flex justify-center items-center h-full">
+    <div class="flex justify-center items-center grow">
       <div
         :class="`flex flex-col justify-center items-center px-6 py-4 rounded ${
           themeStore.current === 'light' ? 'bg-light-200' : 'bg-dark-200'
@@ -73,6 +73,7 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted } from "vue";
 import packageJson from "@/package.json";
 
 // Components
@@ -83,7 +84,7 @@ import ButtonComponent from "@/components/button/ButtonComponent.vue";
 import LoginIcon from "@/components/icons/LoginIcon.vue";
 
 // Helpers
-import { capitalize } from "@/helpers/textHelper";
+import { capitalize } from "~/utils/textHelper";
 
 // Stores
 const themeStore = useThemeStore();
@@ -95,6 +96,11 @@ const router = useRouter();
 const inputUsername = ref("");
 const inputPassword = ref("");
 
+onMounted(() => {
+  if (coreStore.isLoadingGlobal) {
+    coreStore.isLoadingGlobal = false;
+  }
+})
 const handleInputUsername = (event: InputEvent) => {
   inputUsername.value = (event.target as HTMLInputElement).value;
 };

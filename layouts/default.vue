@@ -9,7 +9,8 @@
     >
       <AlertComponent />
       <NavBar />
-      <div class="grow">
+      <div class="relative flex grow">
+        <SideBar v-if="userStore.isAuthenticated" />
         <slot />
       </div>
       <FooterComponent />
@@ -23,10 +24,12 @@ import NavBar from "@/components/navbar/NavBar.vue";
 import FooterComponent from "@/components/footer/FooterComponent.vue";
 import LoadingFull from "@/components/loading/LoadingFull.vue";
 import AlertComponent from "@/components/alert/AlertComponent.vue";
+import SideBar from "@/components/sidebar/SideBar.vue";
 
 // Stores
 const themeStore = useThemeStore();
 const coreStore = useCoreStore();
+const userStore = useUserStore();
 </script>
 
 <style scoped>

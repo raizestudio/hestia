@@ -21,6 +21,12 @@ export const useCoreStore = defineStore({
     } as ApiHealthInterface,
   }),
   actions: {
+    initHealthCheck() {
+      this.updateHealthCheck();
+      setInterval(() => {
+        this.updateHealthCheck();
+      }, 1000 * 5);
+    },
     setGlobalLoading(isLoading: boolean) {
       this.isLoadingGlobal = isLoading;
     },

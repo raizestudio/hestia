@@ -1,4 +1,4 @@
-import { constructedBaseUrl } from "@/helpers/fetchHelper";
+import { constructedBaseUrl } from "~/utils/fetchHelper";
 
 // Types and interfaces
 import type { AuthenticateResponse } from "@/interfaces/api/AuthenticationInterface";

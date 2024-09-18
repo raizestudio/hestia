@@ -1,7 +1,7 @@
 <template>
   <div
     :class="`flex flex-col w-screen h-screen ${
-      themeStore.current === 'light' ? 'bg-light-100' : 'bg-dark-100'
+      theme === 'light' ? 'bg-light-100' : 'bg-dark-100'
     }`"
   >
     <ProgressBar />
@@ -10,7 +10,7 @@
         <HestiaLogoIcon class="w-12 fill-primary-100" />
         <h1
           :class="`flex items-end h-full text-4xl font-black ${
-            themeStore.current === 'light' ? 'text-dark-100' : 'text-light-100'
+            theme === 'light' ? 'text-dark-100' : 'text-light-100'
           }`"
         >
           Hestia
@@ -18,7 +18,7 @@
       </div>
       <span
         :class="`text-lg font-semibold ${
-          themeStore.current === 'light' ? 'text-dark-200' : 'text-light-200'
+          theme === 'light' ? 'text-dark-200' : 'text-light-200'
         }`"
         >Veuillez patienter pendant le chargement.</span
       >
@@ -27,9 +27,16 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from "vue";
+import clsx from "clsx";
+
 // Icons
 import HestiaLogoIcon from "@/components/icons/HestiaLogoIcon.vue";
 
 // Stores
 const themeStore = useThemeStore();
+
+const themeCookie = useCookie("theme");
+
+const theme = computed(() => themeCookie.value || themeStore.current || "light");
 </script>

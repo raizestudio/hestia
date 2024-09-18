@@ -13,7 +13,7 @@
                 ? 'text-dark-100'
                 : 'text-light-100'
             }`"
-            >{{ capitalize(packageJson.name) }}</span
+            ></span
           >
           <span
             :class="`text-xs ${
@@ -21,7 +21,7 @@
                 ? 'text-dark-200'
                 : 'text-light-200'
             }`"
-            >développé avec
+            >Développé avec
           </span>
         </div>
         <HeartIcon class="w-4 fill-rose-500" />
@@ -88,7 +88,7 @@ const userStore = useUserStore();
 const coreStore = useCoreStore();
 
 // Helpers
-import { capitalize } from "@/helpers/textHelper";
+import { capitalize } from "~/utils/textHelper";
 
 // Components
 import BadgeComponent from "@/components/badge/BadgeComponent.vue";

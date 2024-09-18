@@ -1,4 +1,4 @@
-import { constructedBaseUrl } from "@/helpers/fetchHelper";
+import { constructedBaseUrl } from "~/utils/fetchHelper";
 
 interface HealthCheckResponse {
   status: string;
@@ -14,8 +14,6 @@ const CORE_URL = 'app';
 export const healthCheck = async () => {
   const runtimeConfig = useRuntimeConfig();
 
-  const response: HealthCheckResponse = await $fetch<HealthCheckResponse>(`${constructedBaseUrl()}/${CORE_URL}/health-check`);
-
-  // console.log(`Health Check: ${response.status}`);
+  const response: any = await useFetch(`${constructedBaseUrl()}/${CORE_URL}/health-check`);
   return response.status;
 }

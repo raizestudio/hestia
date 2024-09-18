@@ -1,4 +1,4 @@
-import { constructedBaseUrl } from "@/helpers/fetchHelper";
+import { constructedBaseUrl } from "~/utils/fetchHelper";
 
 /*
  * @interface SessionResponse
