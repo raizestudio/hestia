@@ -14,6 +14,6 @@ const CORE_URL = 'app';
 export const healthCheck = async () => {
   const runtimeConfig = useRuntimeConfig();
 
-  const response: any = await useFetch(`${constructedBaseUrl()}/${CORE_URL}/health-check`);
+  const response: any = await $fetch(`${constructedBaseUrl(CORE_URL)}health-check`);
   return response.status;
 }

@@ -58,4 +58,5 @@ const coreStore = useCoreStore();
 const userStore = useUserStore();
 
 const router = useRouter();
+
 </script>

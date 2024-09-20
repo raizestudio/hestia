@@ -9,7 +9,7 @@
     >
       <div :class="clsx('flex flex-col grow rounded', themeStore.current === 'light' ? 'bg-light-200' : 'bg-dark-200')">
         <div>
-          <span :class="clsx('', themeStore.current === 'light' ? 'text-dark-100' : 'text-light-100')">Dashboard</span>
+          <span :class="clsx('', themeStore.current === 'light' ? 'text-dark-100' : 'text-light-100')">Dashboard de {{userStore.user.first_name}}</span>
         </div>
         <div>
           <span :class="clsx('', themeStore.current === 'light' ? 'text-dark-100' : 'text-light-100')">Welcome to the dashboard</span>
@@ -27,6 +27,7 @@ import packageJson from "@/package.json";
 import { capitalize } from "~/utils/textHelper";
 
 // Stores
+const userStore = useUserStore();
 const themeStore = useThemeStore();
 
 definePageMeta({

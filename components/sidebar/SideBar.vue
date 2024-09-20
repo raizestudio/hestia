@@ -2,7 +2,7 @@
   <div
     :class="
       clsx(
-        'w-[200px]',
+        'flex flex-col w-[250px]',
         themeStore.current === 'light' ? 'bg-light-300' : 'bg-dark-300'
       )
     "
@@ -20,18 +20,28 @@
         ><CloseIcon :class="clsx('w-5 rotate-180', themeStore.current === 'light' ? 'fill-dark-200' : 'fill-light-200')"
       /></ButtonComponent>
     </div>
+    <SideBarMenu />
   </div>
 </template>
 
 <script setup lang="ts">
+import { onMounted } from "vue";
 import clsx from "clsx";
 
 // Components
 import ButtonComponent from "@/components/button/ButtonComponent.vue";
 import SideBarCollapsed from "./SideBarCollapsed.vue";
+import SideBarMenu from "./SideBarMenu.vue";
+
 
 // Icons
 import CloseIcon from "@/components/icons/CloseIcon.vue";
 
+// Stores
 const themeStore = useThemeStore();
+const menuStore = useMenuStore();
+
+onMounted(() => {
+  menuStore.getMenus();
+});
 </script>

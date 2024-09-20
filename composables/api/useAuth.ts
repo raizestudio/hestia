@@ -3,7 +3,7 @@ import { constructedBaseUrl } from "~/utils/fetchHelper";
 // Types and interfaces
 import type { AuthenticateResponse } from "@/interfaces/api/AuthenticationInterface";
 
-const APP_NAME = 'authentication';
+const AUTH_URL = 'auth';
 const SESSION_URL = 'sessions';
 
 /*
@@ -15,7 +15,7 @@ export const authenticate = async (username: string, password: string) => {
   const runtimeConfig = useRuntimeConfig();
 
   try {
-    const response: AuthenticateResponse = await $fetch<AuthenticateResponse>(`${constructedBaseUrl()}/${APP_NAME}/${SESSION_URL}/authenticate/`, {
+    const response: AuthenticateResponse = await $fetch<AuthenticateResponse>(`${constructedBaseUrl(AUTH_URL)}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
