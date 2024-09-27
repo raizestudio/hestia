@@ -60,15 +60,15 @@ const props = defineProps({
   error: Object as () => ExtendedNuxtError,
 });
 
-onMounted(async () => {
-  const sessionId = await getSessionId();
-  userStore.setSessionId(sessionId);
-  coreStore.isLoadingGlobal = false;
-  coreStore.updateHealthCheck();
-  setInterval(async () => {
-    coreStore.updateHealthCheck();
-  }, 1000 * 5);
-});
+// onMounted(async () => {
+//   const sessionId = await getSessionId();
+//   userStore.setSessionId(sessionId);
+//   coreStore.isLoadingGlobal = false;
+//   coreStore.updateHealthCheck();
+//   setInterval(async () => {
+//     coreStore.updateHealthCheck();
+//   }, 1000 * 5);
+// });
 
 useSeoMeta({
   title: "Erreur",

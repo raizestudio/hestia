@@ -5,7 +5,11 @@
     }`"
   >
     <div>
-      <div class="flex items-center gap-1 select-none">
+      <div
+        class="flex items-center gap-1 select-none"
+        @mouseenter="() => (isSloganHovered = true)"
+        @mouseleave="() => (isSloganHovered = false)"
+      >
         <div class="flex items-center gap-1">
           <span
             :class="`font-semibold ${
@@ -13,8 +17,7 @@
                 ? 'text-dark-100'
                 : 'text-light-100'
             }`"
-            ></span
-          >
+          ></span>
           <span
             :class="`text-xs ${
               themeStore.current === 'light'
@@ -24,7 +27,11 @@
             >Développé avec
           </span>
         </div>
-        <HeartIcon class="w-4 fill-rose-500" />
+        <HeartIcon
+          :class="
+            clsx('w-4 transition-colors duration-300 ease-in-out', isSloganHovered ? 'fill-red-500' : themeStore.current === 'light' ? 'fill-light-300' : 'fill-dark-300')
+          "
+        />
         <div class="flex items-center">
           <span
             :class="`text-xs ${
@@ -32,7 +39,10 @@
                 ? 'text-dark-200'
                 : 'text-light-200'
             }`"
-            >par {{ capitalize(packageJson.author.name) }}</span
+            >par
+            <span class="font-semibold text-xs text-blue-800">{{
+              capitalize(packageJson.author.name)
+            }}</span></span
           >
         </div>
       </div>
@@ -97,6 +107,7 @@ import TooltipComponent from "@/components/tooltip/TooltipComponent.vue";
 
 // Icons
 import HeartIcon from "@/components/icons/HeartIcon.vue";
+import clsx from "clsx";
 
 const showTooltipSessionId = ref(false);
 const showTooltipLatency = ref(false);
@@ -129,4 +140,6 @@ const setTooltipSessionId = (value: boolean) => {
 const setTooltipLatency = (value: boolean) => {
   showTooltipLatency.value = value;
 };
+
+const isSloganHovered = ref(false);
 </script>

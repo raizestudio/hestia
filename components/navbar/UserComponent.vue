@@ -1,5 +1,8 @@
 <template>
-  <DropdownComponent margin-top="mt-3" v-on-click-outside="() => showUserDropdown = false">
+  <DropdownComponent
+    margin-top="mt-3"
+    v-on-click-outside="() => (showUserDropdown = false)"
+  >
     <template v-slot:trigger>
       <div
         :class="
@@ -11,18 +14,14 @@
         @click="showUserDropdown = !showUserDropdown"
       >
         <AvatarComponent
-          src="https://thispersonnotexist.org/downloadimage/Ac3RhdGljL21hbi9zZWVkNDk0NDIuanBlZw=="
+          :src="userStore.user.avatar"
           alt="user avatar"
+          :first-name="userStore.user.first_name"
+          :last-name="userStore.user.last_name"
           width-class="w-8"
           height-class="h-8"
-          :class="
-            clsx(
-              'absolute -top-1 -left-4 inset-2 border-2',
-              themeStore.current === 'light'
-                ? 'border-success-200'
-                : 'border-success-200'
-            )
-          "
+          :class="clsx('absolute -top-1 -left-4 inset-2 border-2')"
+          :style="`border-color: ${userStore.user.role.color}`"
         />
         <span
           :class="
@@ -39,12 +38,12 @@
     </template>
     <template v-slot:content>
       <DropdownMenu v-if="showUserDropdown">
-        <DropdownMenuItem text="Voir profil" url="/dashboard">
+        <DropdownMenuItem text="Voir profil" url="/profile">
           <template v-slot:icon>
             <ProfileIcon class="w-5 fill-primary-100" />
           </template>
         </DropdownMenuItem>
-        <DropdownMenuItem text="Paramètres">
+        <DropdownMenuItem text="Paramètres" url="/settings/user">
           <template v-slot:icon>
             <SettingsMinimalIcon class="w-5 fill-primary-100" />
           </template>
@@ -83,7 +82,7 @@
 
 <script setup lang="ts">
 import clsx from "clsx";
-import { vOnClickOutside } from '@vueuse/components'
+import { vOnClickOutside } from "@vueuse/components";
 
 // Components
 import DropdownComponent from "@/components/dropdown/DropdownComponent.vue";

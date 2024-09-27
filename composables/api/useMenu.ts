@@ -8,6 +8,12 @@ const MENU_URL = 'app';
  * @returns {Promise<array>} - The menu items
  */
 export const fetchMenus = async () => {
-  const response: any = await $fetch(`${constructedBaseUrl(MENU_URL)}menus`);
+  const token = localStorage.getItem('token');
+  const response: any = await $fetch(`${constructedBaseUrl()}menus/user-menu`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    }
+  });
   return response;
 }

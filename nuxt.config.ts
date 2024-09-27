@@ -15,6 +15,18 @@ export default defineNuxtConfig({
       viewport: "width=device-width, initial-scale=1",
     },
   },
+  echarts: {
+    // ssr: true,
+    renderer: ['canvas', 'svg'],
+    charts: ['BarChart', 'LineChart', 'PieChart'],
+    components: [
+      'DatasetComponent',
+      'GridComponent',
+      'TooltipComponent',
+      'ToolboxComponent',
+    ],
+    features: ['LabelLayout', 'UniversalTransition'],
+  },
   runtimeConfig: {
     // mySecret: process.env.MY_SECRET,
     public: {

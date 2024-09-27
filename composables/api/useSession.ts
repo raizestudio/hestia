@@ -1,6 +1,6 @@
 import { constructedBaseUrl } from "~/utils/fetchHelper";
 
-const BASE_URL = 'sessions';
+const BASE_URL = 'authentication';
 
 /*
  * @interface SessionResponse
@@ -8,7 +8,7 @@ const BASE_URL = 'sessions';
  * @param {string} session The session ID
  */
 interface SessionResponse {
-  id: string;
+  session: string;
 }
 
 /*
@@ -19,10 +19,9 @@ interface SessionResponse {
 export const getSessionId = async () => {
   const runtimeConfig = useRuntimeConfig();
 
-  const response: SessionResponse = await $fetch<SessionResponse>(`${constructedBaseUrl(BASE_URL)}session-id`);
+  const response: SessionResponse = await $fetch<SessionResponse>(`${constructedBaseUrl(BASE_URL)}sessions/session-id`);
 
-  console.log(`Session ID: ${response.id}`);
-  return response.id;
+  return response.session;
 }
 
 export const retrieveSessionFromToken = async () => {

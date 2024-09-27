@@ -124,7 +124,7 @@ const handleAuth = async () => {
 };
 
 definePageMeta({
-  middleware: "auth",
+  // middleware: "auth",
 })
 
 useSeoMeta({

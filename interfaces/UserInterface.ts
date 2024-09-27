@@ -10,10 +10,12 @@ export interface GroupInterface {
 }
 
 export interface RoleInterface {
+    id: number;
     code: string;
-    name: string;
+    label: string;
     description: string;
-    group: GroupInterface;
+    color: string;
+    // group: GroupInterface;
 }
 
 export interface UserPreferenceInterface {

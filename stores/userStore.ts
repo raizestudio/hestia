@@ -4,7 +4,7 @@ import { defineStore } from "pinia";
 import type { UserInterface } from "@/interfaces/UserInterface";
 
 // Composables
-import { authenticate } from "@/composables/api/useAuth";
+import { authenticate, retrieve } from "@/composables/api/useAuth";
 import { getSessionId, retrieveSessionFromToken } from "~/composables/api/useSession";
 
 export const useUserStore = defineStore({
@@ -41,12 +41,17 @@ export const useUserStore = defineStore({
       if (!token) {
         throw new Error("No token found in local storage.");
       }
-      const response: any = await retrieveSessionFromToken();
-      this.user = response.user;
-      this.sessionId = response.session;
-      this.token = response.token;
-      this.refresh = response.refresh;
-      this.isAuthenticated = true;
+      try {
+        const response: any = await retrieve();
+        this.user = response.user;
+        this.sessionId = response.session;
+        this.token = response.token;
+        this.refresh = response.refresh;
+        this.isAuthenticated = true;
+      } catch (error) {
+        this.logout();
+      }
+      
     },
     async logout() {
       this.isAuthenticated = false;

@@ -18,13 +18,10 @@ const route = useRoute();
 
 onMounted(async () => {
   themeStore.initTheme();
+  coreStore.getSettings();
   try {
     await userStore.validateCurrentSession();
-    router.push(
-      (route.query.redirect as string) || route.path === "/auth/login"
-        ? "/dashboard"
-        : route.path
-    );
+    router.push((route.query.redirect as string) || "/dashboard");
   } catch (error) {
     userStore.getSession();
   } finally {
@@ -33,3 +30,10 @@ onMounted(async () => {
   coreStore.initHealthCheck();
 });
 </script>
+
+<style lang="css">
+body {
+  overflow: hidden;
+}
+
+</style>

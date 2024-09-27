@@ -11,7 +11,10 @@
       <NavBar />
       <div class="relative flex grow">
         <SideBar v-if="userStore.isAuthenticated" />
-        <slot />
+        <SectionComponent>
+          <ModalCreateGlobal />
+          <slot />
+        </SectionComponent>
       </div>
       <FooterComponent />
     </div>
@@ -25,6 +28,8 @@ import FooterComponent from "@/components/footer/FooterComponent.vue";
 import LoadingFull from "@/components/loading/LoadingFull.vue";
 import AlertComponent from "@/components/alert/AlertComponent.vue";
 import SideBar from "@/components/sidebar/SideBar.vue";
+import SectionComponent from "@/components/section/SectionComponent.vue";
+import ModalCreateGlobal from "@/components/modal/ModalCreateGlobal.vue";
 
 // Stores
 const themeStore = useThemeStore();

@@ -6,9 +6,9 @@
   >
     <Transition mode="out-in">
       <LoadingFull v-if="coreStore.isLoadingGlobal" />
-      <div v-else>
+      <div v-else class="flex flex-col grow">
         <NavBar />
-        <div class="flex grow">
+        <div class="flex h-full grow">
           <slot />
         </div>
       </div>

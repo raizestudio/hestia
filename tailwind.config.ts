@@ -13,9 +13,9 @@ const config: Config = {
     extend: {
       colors: {
         primary: {
-          "100": "#355bf5",
-          "200": "#9aadfa",
-          "300": "#aebdfb",
+          "100": "#f0560d ",  // Cayenne Orange
+          "200": "#dA5e24",
+          "300": "#f3783d",
         },
         light: {
           "100": "#f2f2f2",

@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-import { healthCheck } from "@/composables/api/useCore";
+import { healthCheck, fetchSettings } from "@/composables/api/useCore";
 interface ApiHealthInterface {
   isUp: boolean;
   latency: number;
@@ -19,6 +19,7 @@ export const useCoreStore = defineStore({
       latency: 0,
       lastFiveLatencies: [],
     } as ApiHealthInterface,
+    settings: {} as any,
   }),
   actions: {
     initHealthCheck() {
@@ -43,6 +44,10 @@ export const useCoreStore = defineStore({
       this.apiHealth.lastFiveLatencies.push(latency);
       this.apiHealth.latency = Math.floor(this.apiHealth.lastFiveLatencies.reduce((a, b) => a + b, 0) / this.apiHealth.lastFiveLatencies.length);
       
+    },
+    async getSettings() {
+      const response = await fetchSettings();
+      this.settings = response
     }
   },
 });

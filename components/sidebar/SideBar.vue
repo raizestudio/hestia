@@ -1,5 +1,6 @@
 <template>
   <div
+    v-if="!menuStore.isCollapsed"
     :class="
       clsx(
         'flex flex-col w-[250px]',
@@ -17,11 +18,13 @@
           )
         "
         padding-class="p-1"
+        @click="menuStore.toggleCollapse"
         ><CloseIcon :class="clsx('w-5 rotate-180', themeStore.current === 'light' ? 'fill-dark-200' : 'fill-light-200')"
       /></ButtonComponent>
     </div>
     <SideBarMenu />
   </div>
+  <SideBarCollapsed v-else />
 </template>
 
 <script setup lang="ts">
@@ -43,5 +46,14 @@ const menuStore = useMenuStore();
 
 onMounted(() => {
   menuStore.getMenus();
+});
+
+
+window.addEventListener("resize", () => {
+  if (window.innerWidth < 1024) {
+    menuStore.isCollapsed = true;
+  } else {
+    menuStore.isCollapsed = false;
+  }
 });
 </script>
