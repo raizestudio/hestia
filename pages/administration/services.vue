@@ -4,7 +4,7 @@
       <div :class="clsx('flex justify-between items-center mb-2')">
         <div class="flex items-center gap-2">
           <span :class="clsx('font-semibold text-xl')">Services</span>
-          <span :class="clsx('text-xs opacity-50 rounded p-0.5', themeStore.current === 'light' ? 'bg-light-300' : 'bg-dark-300')">{{ servicesStore.services.length }} services</span>
+          <span :class="clsx('text-xs opacity-50 rounded p-0.5', themeStore.current === 'light' ? 'bg-light-300' : 'bg-dark-300')">{{ serviceStore.services.length }} services</span>
         </div>
         <div>
           <ButtonComponent
@@ -19,8 +19,8 @@
         </div>
       </div>
       <DefaultTable
-        v-if="!coreStore.isLoadingLocal && servicesStore.services.length > 0"
-        :data="servicesStore.services"
+        v-if="!coreStore.isLoadingLocal && serviceStore.services.length > 0"
+        :data="serviceStore.services"
         :headers="headers"
         :columns="columns"
         option-key="username"
@@ -43,13 +43,13 @@ import ButtonComponent from "@/components/button/ButtonComponent.vue";
 import { type ServiceInterface } from '@/interfaces/ServiceInterface';
 
 // Stores
-const servicesStore = useServicesStore();
+const serviceStore = useServiceStore();
 const menuStore = useMenuStore();
 const themeStore = useThemeStore();
 const coreStore = useCoreStore();
 
 coreStore.isLoadingLocal = true;
-servicesStore.getServices();
+serviceStore.getServices();
 coreStore.isLoadingLocal = false;
 
 const headers: any[] = [

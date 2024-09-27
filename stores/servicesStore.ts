@@ -7,8 +7,8 @@ import { type ServiceInterface } from "@/interfaces/ServiceInterface";
 // Composables
 import { fetchServices } from "@/composables/api/useService";
 
-export const useServicesStore = defineStore({
-  id: "servicesStore",
+export const useServiceStore = defineStore({
+  id: "serviceStore",
   state: () => ({
     services: [] as ServiceInterface[],
     fakeServices: [] as any[],
