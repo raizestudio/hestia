@@ -41,7 +41,7 @@
       <ButtonComponent
         v-if="userStore.isAuthenticated"
         :class="clsx('mr-6 bg-primary-100 hover:bg-primary-300 text-light-100')"
-        @click="() => modalStore.showCreateModal = true"
+        @click="() => (modalStore.showCreateModal = true)"
         >Créer</ButtonComponent
       >
       <UserComponent v-if="userStore.isAuthenticated" />
@@ -54,8 +54,15 @@
             : 'hover:bg-dark-300'
         }`"
       >
-        <CircleComponent :class="clsx('absolute top-0 right-0 flex justify-center items-center z-10')">
-          <span class="text-xs font-semibold text-light-100">{{orderStore.orders.length}}</span>
+        <CircleComponent
+          v-if="orderStore.fakeCounter > 0"
+          :class="
+            clsx('absolute top-0 right-0 flex justify-center items-center z-10')
+          "
+        >
+          <span class="text-xs font-semibold text-light-100">{{
+            orderStore.fakeCounter
+          }}</span>
         </CircleComponent>
         <CartLargeAltIcon
           :class="
@@ -88,7 +95,7 @@ import ButtonComponent from "@/components/button/ButtonComponent.vue";
 import ProgressBar from "@/components/progress/ProgressBar.vue";
 import SupportChatDropdown from "@/components/chat/SupportChatDropdown.vue";
 import UserComponent from "./UserComponent.vue";
-import CircleComponent from "@/components/shape/CircleComponent.vue"
+import CircleComponent from "@/components/shape/CircleComponent.vue";
 
 // Icons
 // import HestiaLogoIcon from "@/components/icons/HestiaLogoIcon.vue";

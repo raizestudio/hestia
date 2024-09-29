@@ -8,7 +8,7 @@
           :key="service.id"
           :class="clsx('flex items-center gap-2')"
         >
-          <div :class="clsx('flex bg-light-200 p-1 rounded')">
+          <div :class="clsx('flex gap-2 bg-light-200 p-1 rounded')">
             <div>{{ service.name }}</div>
             <div>{{ service.description }}</div>
             <div>{{ service.estimated_duration }}</div>
@@ -23,15 +23,20 @@
           </div>
         </div>
       </div>
-      <div :class="clsx('bg-light-200 rounded p-1')">
+      <div :class="clsx('flex flex-col gap-2 p-1')">
         <span>Panier</span>
         <div
           v-for="(index, order) in fakeOrders"
           :id="index"
           :class="clsx('flex justify-between')"
         >
-          <div>{{ order }}</div>
-          <div>{{ index }}</div>
+          <div :class="clsx('flex grow justify-between items-center gap-2 bg-light-200 rounded')">
+            <div>{{ order }}</div>
+            <div :class="clsx('bg-light-300 rounded p-1')">{{ index }}</div>
+          </div>
+          <div>
+            <ButtonComponent @click="() => removeServiceFromOrder(order)">Retirer</ButtonComponent>
+          </div>
         </div>
       </div>
     </div>
@@ -79,6 +84,22 @@ const moveServiceToOrder = (service: any) => {
   }
 };
 
+const removeServiceFromOrder = (serviceName: any) => {
+  if (fakeOrders.value[serviceName]) {
+    fakeOrders.value[serviceName]--;
+    if (fakeOrders.value[serviceName] === 0) {
+      delete fakeOrders.value[serviceName];
+    }
+  }
+};
+
+watch(
+  fakeOrders,
+  (value) => {
+    orderStore.fakeCounter = Object.values(value).reduce((acc: any, curr: any) => acc + curr, 0);
+  },
+  { deep: true }
+);
 definePageMeta({
   middleware: "auth",
 });

@@ -11,7 +11,8 @@ export const useOrderStore = defineStore({
   id: "orderStore",
   state: () => ({
     orders: [] as any[],
-    fakeOrders: [] as any[]
+    fakeOrders: [] as any[],
+    fakeCounter: 0 as any,
   }),
   actions: {
 
